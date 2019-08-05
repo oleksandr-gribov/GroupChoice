@@ -18,6 +18,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         view.backgroundColor = .white
         self.navigationController?.navigationBar.isHidden = true 
         setupView()
+        loginView.emailTextField.delegate = self
+        loginView.passwordTextField.delegate = self
     }
     
     func setupView() {
@@ -33,13 +35,37 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             make.top.equalToSuperview()
         }
         loginView.loginButton.addTarget(self, action: #selector(loginButtonPressed), for: .touchUpInside)
+        loginView.signUpButton.addTarget(self, action: #selector(signUpButtonPressed), for: .touchUpInside)
         
+        let tapGestureRecognizer = UITapGestureRecognizer()
+        tapGestureRecognizer.addTarget(self, action: #selector(backgroundTapped))
+        tapGestureRecognizer.numberOfTapsRequired = 1
+        view.addGestureRecognizer(tapGestureRecognizer)
     }
     
     @objc func loginButtonPressed() {
         print("Login button Pressed")
         let tabBarViewController = TabBarViewController()
         self.navigationController?.pushViewController(TabBarViewController(), animated: true)
+    }
+    
+    @objc func signUpButtonPressed() {
+        let signUpVC = SignUpViewController()
+        self.navigationController?.pushViewController(signUpVC, animated: true)
+    }
+    
+    @objc func backgroundTapped() {
+        view.endEditing(true)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == loginView.emailTextField {
+            textField.resignFirstResponder()
+            loginView.passwordTextField.becomeFirstResponder()
+        } else  {
+            textField.resignFirstResponder()
+        }
+        return true
     }
     /*
     // MARK: - Navigation

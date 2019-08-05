@@ -42,7 +42,8 @@ class LoginView: UIView {
             make.center.equalToSuperview()
             make.leading.equalToSuperview().offset(62)
             make.trailing.equalToSuperview().offset(-62)
-            make.height.equalToSuperview().multipliedBy(0.2)
+            make.height.equalTo(142)
+            make.width.equalTo(275)
             
         }
         addSubview(loginButton)
@@ -75,7 +76,6 @@ class LoginView: UIView {
     let emailTextField: UITextField = {
         let tf = UITextField()
         tf.setuploginTextField(placeHolderText: "Email", keyboardType: .emailAddress)
-        tf.setLeftPadding(space: 20)
         return tf
     }()
     
@@ -83,14 +83,13 @@ class LoginView: UIView {
         let tf = UITextField()
         tf.setuploginTextField(placeHolderText: "Password", keyboardType: .default)
         tf.isSecureTextEntry = true
-        tf.setLeftPadding(space: 20)
         return tf
     }()
     
     let loginButton: UIButton = {
         let btn = UIButton()
         btn.backgroundColor = UIColor(red: 150/255, green: 211/255, blue: 255/255, alpha: 1)
-        btn.setAttributedTitle(NSAttributedString(string: "Sign In", attributes: [NSAttributedString.Key.font : UIFont(name: "Avenir Next", size: 22), NSAttributedString.Key.foregroundColor: UIColor.white]), for: .normal)
+        btn.setAttributedTitle(NSAttributedString(string: "Log In", attributes: [NSAttributedString.Key.font : UIFont(name: "Avenir Next", size: 22), NSAttributedString.Key.foregroundColor: UIColor.white]), for: .normal)
         btn.layer.cornerRadius = 10
         return btn
     }()

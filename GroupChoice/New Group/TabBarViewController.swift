@@ -18,6 +18,9 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
         messagesViewController.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "message_grey"), selectedImage: #imageLiteral(resourceName: "message_blue"))
         
         let searchViewController = UINavigationController(rootViewController:SearchViewController())
+        let textAttributes = [NSAttributedString.Key.foregroundColor : UIColor.red, NSAttributedString.Key.font: UIFont(name: "Avenir Next", size: 25)]
+        self.navigationController?.navigationBar.titleTextAttributes = textAttributes
+
         searchViewController.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "search_grey"), selectedImage: #imageLiteral(resourceName: "search_blue"))
         
         let createPollViewController =  CreatePollViewController()
