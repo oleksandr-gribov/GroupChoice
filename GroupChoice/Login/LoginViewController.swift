@@ -8,10 +8,11 @@
 
 import UIKit
 import SnapKit
+import Firebase
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
     var loginView: LoginView!
-    
+    let userDefaults = UserDefaults.standard
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -44,9 +45,20 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func loginButtonPressed() {
-        print("Login button Pressed")
-        let tabBarViewController = TabBarViewController()
-        self.navigationController?.pushViewController(TabBarViewController(), animated: true)
+        guard let email = loginView.emailTextField.text else { return }
+        guard let password = loginView.passwordTextField.text else { return }
+        
+        Auth.auth().signIn(withEmail: email, password: password) { (user, err) in
+            if let err = err {
+                print (err.localizedDescription)
+            } else {
+                if let user = user {
+                    self.userDefaults.set(true, forKey: "UserIsLoggedIn")
+                    print("User \(user.user.uid) signed in " )
+                    self.present(TabBarViewController(), animated: true, completion: nil)
+                }
+            }
+        }
     }
     
     @objc func signUpButtonPressed() {
@@ -67,14 +79,4 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
         return true
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

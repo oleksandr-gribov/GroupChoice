@@ -40,8 +40,8 @@ class LoginView: UIView {
         addSubview(stackView)
         stackView.snp.makeConstraints { (make) in
             make.center.equalToSuperview()
-            make.leading.equalToSuperview().offset(62)
-            make.trailing.equalToSuperview().offset(-62)
+            //make.leading.equalToSuperview().offset(62)
+            //make.trailing.equalToSuperview().offset(-62)
             make.height.equalTo(142)
             make.width.equalTo(275)
             

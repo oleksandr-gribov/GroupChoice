@@ -8,9 +8,12 @@
 
 import UIKit
 import SnapKit
+import Firebase
 
 class SignUpViewController: UIViewController, UITextFieldDelegate {
     var signUpView: SignUpView!
+    let userDefaults = UserDefaults.standard
+    var ref: DatabaseReference!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +34,39 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func signUpButtonClicked () {
-        print ("signUp button pressed")
+        guard let email = signUpView.emailTextField.text,
+            let password = signUpView.passwordTextField.text,
+            let username = signUpView.nameTextField.text else { return }
+        
+        Auth.auth().createUser(withEmail: email, password: password) { user, err in
+            if let err = err {
+                print (err.localizedDescription)
+                return
+            } else {
+                if let user = user {
+                    self.userDefaults.set(false, forKey: "UserIsLoggedIn")
+                    print ("created user : \(user.user.uid)")
+                    self.navigationController?.popViewController(animated: true)
+                    
+                    self.ref = Database.database().reference(fromURL: "https://groupchoice-18b05.firebaseio.com/")
+                    let userRef = self.ref.child("users").child(user.user.uid)
+                    let values = ["username": username, "email":email]
+                    userRef.updateChildValues(values, withCompletionBlock: { (error, ref) in
+                        if error != nil {
+                            print (error?.localizedDescription)
+                            return
+                        } else {
+                            print("Saved user into the Firebase db")
+                        }
+                    })
+                    
+                    
+                }
+            }
+            
+        }
+        
+        
     }
     
     @objc func backgroundTapped() {

@@ -28,6 +28,8 @@ extension UITextField {
         self.layer.cornerRadius = 10
         self.autocorrectionType = .no
         self.setLeftPadding(space: 20)
+        self.autocapitalizationType = .none
+        self.autocorrectionType = .no
     }
     func setLeftPadding (space: CGFloat) {
         let leftView = UIView(frame: CGRect(x: 0, y: 0, width: space, height: self.frame.size.height))

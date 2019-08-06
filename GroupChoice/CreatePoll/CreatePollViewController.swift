@@ -12,8 +12,24 @@ class CreatePollViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .orange
+        view.backgroundColor = .white
+        let navigationBar = UINavigationBar()
+        navigationBar.isTranslucent = false
+        navigationBar.tintColor = .black
+        navigationBar.frame = CGRect(x: 0, y: 20, width: self.view.frame.width, height: 500)
+        view.addSubview(navigationBar)
+        
+        
+        let navItem = UINavigationItem(title: "Create Poll")
+        let cancelButton  = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelMessage))
+        navItem.rightBarButtonItem = cancelButton
+        navigationBar.items = [navItem]
         // Do any additional setup after loading the view.
+    }
+
+    
+    @objc func cancelMessage() {
+        self.dismiss(animated: true, completion: nil)
     }
     
 

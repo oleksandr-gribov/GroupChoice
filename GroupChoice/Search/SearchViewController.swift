@@ -50,7 +50,7 @@ class SearchViewController: UIViewController {
             let pv = UIView(frame: CGRect(x: 0, y: 0, width: 45, height: 50))
             pv.layer.cornerRadius = 23
             pv.backgroundColor = .black
-            
+           
             return pv
         }()
         photoView.sizeToFit()

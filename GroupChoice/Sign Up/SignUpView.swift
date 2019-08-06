@@ -40,7 +40,6 @@ class SignUpView: UIView {
         addSubview(stackView)
         stackView.snp.makeConstraints { (make) in
             make.center.equalToSuperview()
-            make.bottom.equalTo(-185)
             make.height.equalTo(245)
             make.width.equalTo(277)
             
@@ -48,7 +47,6 @@ class SignUpView: UIView {
         addSubview(signUpButton)
         signUpButton.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.leading.equalToSuperview().offset(128)
             make.bottom.equalToSuperview().offset(-90)
             make.height.equalTo(52)
             make.width.equalTo(130)

@@ -21,6 +21,7 @@
 		D9AB6A2222F24D6C001101D1 /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AB6A2122F24D6C001101D1 /* MessagesViewController.swift */; };
 		D9AB6A2422F24D9F001101D1 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AB6A2322F24D9F001101D1 /* MapViewController.swift */; };
 		D9AB6A2622F25233001101D1 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AB6A2522F25233001101D1 /* SettingsViewController.swift */; };
+		D9CE424422F9B88E007ADE07 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D9CE424322F9B88E007ADE07 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		D9AB6A2122F24D6C001101D1 /* MessagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
 		D9AB6A2322F24D9F001101D1 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		D9AB6A2522F25233001101D1 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		D9CE424322F9B88E007ADE07 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,13 +115,13 @@
 			path = Map;
 			sourceTree = "<group>";
 		};
-		D91C938D22F2574A005113D9 /* New Group */ = {
+		D91C938D22F2574A005113D9 /* Main */ = {
 			isa = PBXGroup;
 			children = (
 				D91C938E22F2579C005113D9 /* TabBarViewController.swift */,
 				D91C939022F25AE8005113D9 /* AppDelegate.swift */,
 			);
-			path = "New Group";
+			path = Main;
 			sourceTree = "<group>";
 		};
 		D948169222F15D9800B8311E = {
@@ -146,7 +148,7 @@
 				D9617A1722F5173A0031F0B6 /* Sign Up */,
 				D9617A1422F4FC910031F0B6 /* CreatePoll */,
 				D97EA3C722F3A2D300E71FEF /* Extensions */,
-				D91C938D22F2574A005113D9 /* New Group */,
+				D91C938D22F2574A005113D9 /* Main */,
 				D91C938922F254A2005113D9 /* Messages */,
 				D91C938822F25494005113D9 /* Search */,
 				D91C938722F2548A005113D9 /* Login */,
@@ -155,6 +157,7 @@
 				D91C938A22F254AE005113D9 /* Settings */,
 				D9AB6A2722F25402001101D1 /* Assets */,
 				D94816AA22F15D9A00B8311E /* Info.plist */,
+				D9CE424322F9B88E007ADE07 /* GoogleService-Info.plist */,
 			);
 			path = GroupChoice;
 			sourceTree = "<group>";
@@ -261,6 +264,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D94816A622F15D9A00B8311E /* Assets.xcassets in Resources */,
+				D9CE424422F9B88E007ADE07 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
