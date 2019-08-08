@@ -10,6 +10,8 @@
 		C0189E202E2A93AC51487E8A /* Pods_GroupChoice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CD39B424430F76A372E889D /* Pods_GroupChoice.framework */; };
 		D91C938F22F2579C005113D9 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91C938E22F2579C005113D9 /* TabBarViewController.swift */; };
 		D91C939122F25AE8005113D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91C939022F25AE8005113D9 /* AppDelegate.swift */; };
+		D91FD0DC22FBF0A8009A9305 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91FD0DB22FBF0A8009A9305 /* Network.swift */; };
+		D93C11A322F9E9DA00CDD7E3 /* NewMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93C11A222F9E9DA00CDD7E3 /* NewMessageViewController.swift */; };
 		D94816A622F15D9A00B8311E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D94816A522F15D9A00B8311E /* Assets.xcassets */; };
 		D9617A1622F4FCAC0031F0B6 /* CreatePollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9617A1522F4FCAC0031F0B6 /* CreatePollViewController.swift */; };
 		D9617A1922F5190E0031F0B6 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9617A1822F5190E0031F0B6 /* SignUpViewController.swift */; };
@@ -30,6 +32,8 @@
 		C827ED626C52F0FB92CEE994 /* Pods-GroupChoice.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GroupChoice.debug.xcconfig"; path = "Target Support Files/Pods-GroupChoice/Pods-GroupChoice.debug.xcconfig"; sourceTree = "<group>"; };
 		D91C938E22F2579C005113D9 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		D91C939022F25AE8005113D9 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		D91FD0DB22FBF0A8009A9305 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		D93C11A222F9E9DA00CDD7E3 /* NewMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageViewController.swift; sourceTree = "<group>"; };
 		D948169B22F15D9800B8311E /* GroupChoice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GroupChoice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D94816A522F15D9A00B8311E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../Assets.xcassets; sourceTree = "<group>"; };
 		D94816AA22F15D9A00B8311E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -95,6 +99,7 @@
 			isa = PBXGroup;
 			children = (
 				D9AB6A2122F24D6C001101D1 /* MessagesViewController.swift */,
+				D93C11A222F9E9DA00CDD7E3 /* NewMessageViewController.swift */,
 			);
 			path = Messages;
 			sourceTree = "<group>";
@@ -124,6 +129,14 @@
 			path = Main;
 			sourceTree = "<group>";
 		};
+		D91FD0DA22FBF098009A9305 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				D91FD0DB22FBF0A8009A9305 /* Network.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
 		D948169222F15D9800B8311E = {
 			isa = PBXGroup;
 			children = (
@@ -145,6 +158,7 @@
 		D948169D22F15D9800B8311E /* GroupChoice */ = {
 			isa = PBXGroup;
 			children = (
+				D91FD0DA22FBF098009A9305 /* Network */,
 				D9617A1722F5173A0031F0B6 /* Sign Up */,
 				D9617A1422F4FC910031F0B6 /* CreatePoll */,
 				D97EA3C722F3A2D300E71FEF /* Extensions */,
@@ -325,9 +339,11 @@
 				D9AB6A2422F24D9F001101D1 /* MapViewController.swift in Sources */,
 				D9AB6A2022F24D0F001101D1 /* SearchViewController.swift in Sources */,
 				D97EA3C622F3993200E71FEF /* LoginViewController.swift in Sources */,
+				D93C11A322F9E9DA00CDD7E3 /* NewMessageViewController.swift in Sources */,
 				D9AB6A2222F24D6C001101D1 /* MessagesViewController.swift in Sources */,
 				D9617A1622F4FCAC0031F0B6 /* CreatePollViewController.swift in Sources */,
 				D91C938F22F2579C005113D9 /* TabBarViewController.swift in Sources */,
+				D91FD0DC22FBF0A8009A9305 /* Network.swift in Sources */,
 				D9AB6A2622F25233001101D1 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
