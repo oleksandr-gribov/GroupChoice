@@ -59,14 +59,9 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                             print("Saved user into the Firebase db")
                         }
                     })
-                    
-                    
                 }
             }
-            
         }
-        
-        
     }
     
     @objc func backgroundTapped() {
