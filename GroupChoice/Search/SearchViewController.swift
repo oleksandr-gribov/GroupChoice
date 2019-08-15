@@ -8,11 +8,40 @@
 
 import UIKit
 import SnapKit
+import MapKit
+import CoreLocation
 
 class SearchViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource{
     
+    var searchView: SearchView!
+    let locationManager = CLLocationManager()
+    let regionInMeters : Double  = 10000
     let placesCellId = "placesCellId"
-    
+
+    // MARK: - View Life Cycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.collectionView.delegate = self
+        self.collectionView.dataSource = self
+        collectionView.register(PlacesCell.self, forCellWithReuseIdentifier: placesCellId)
+        searchView = SearchView()
+        setupNavBar()
+        setupView()
+        checkLocationServices()
+        
+        
+    }
+    // MARK: - CollectionView methods
+    let collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumLineSpacing = 16
+        layout.scrollDirection = .horizontal
+        
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        
+        return cv
+    }()
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 15
@@ -30,28 +59,10 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     }
     
-    let collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = 16
-        layout.scrollDirection = .horizontal
-        
-        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        
-        return cv
-    }()
     
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        self.collectionView.delegate = self
-        self.collectionView.dataSource = self
-        
-        self.navigationItem.title = "Discover"
-        setupNavBar()
-        
-        collectionView.register(PlacesCell.self, forCellWithReuseIdentifier: placesCellId)
-        
+    // MARK: - View set up
+    func setupView() {
         view.backgroundColor = .white
         view.addSubview(collectionView)
         collectionView.backgroundColor = .clear
@@ -60,30 +71,26 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
             make.bottom.equalToSuperview().offset(-45)
             make.right.equalToSuperview()
             make.height.equalTo(250)
-            //make.top.equalToSuperview().offset(400)
         }
+        let mapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(mapTapped))
+        mapGestureRecognizer.numberOfTapsRequired = 2
+        searchView.mapView.addGestureRecognizer(mapGestureRecognizer)
         
-        
-        let backgroundImage = UIImageView(image: UIImage(imageLiteralResourceName: "Background"))
-        backgroundImage.contentMode = .scaleAspectFill
-        let backgroundGetsureRecognizer = UITapGestureRecognizer(target: self, action: #selector(backgroundImageTapped))
-        backgroundGetsureRecognizer.numberOfTapsRequired = 2
-        view.addGestureRecognizer(backgroundGetsureRecognizer)
-        
-        
-        view.addSubview(backgroundImage)
-        
-        backgroundImage.snp.makeConstraints { (make) in
-            make.center.equalToSuperview()
-            make.leading.equalToSuperview()
+        view.addSubview(searchView)
+        searchView.snp.makeConstraints { (make) in
             make.top.equalToSuperview()
+            make.left.equalToSuperview()
+            make.width.equalToSuperview()
+            make.height.equalToSuperview()
         }
         view.bringSubviewToFront(collectionView)
-        
     }
     
-    @objc func backgroundImageTapped() {
+    @objc func mapTapped() {
+        let tbvc = self.tabBarController as! TabBarViewController
+        tbvc.location = "london"
         navigationController?.tabBarController?.selectedIndex = 3
+       
     }
     func setupNavBar() {
         self.navigationController?.navigationBar.prefersLargeTitles = true
@@ -92,7 +99,8 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
-
+        self.navigationItem.title = "Discover"
+        
         let photoView : UIView = {
             let pv = UIView(frame: CGRect(x: 0, y: 0, width: 45, height: 50))
             pv.layer.cornerRadius = 23
@@ -105,100 +113,63 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: photoView)
     }
     
+    // MARK: - MapKit methods
+    func checkLocationServices() {
+        if CLLocationManager.locationServicesEnabled() {
+            setupLocationManager()
+            checkLocationAuthorization()
+        } else {
+            // show alert to user to turn it on
+        }
+    }
     
+    func setupLocationManager() {
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+    }
+    
+    func checkLocationAuthorization() {
+        switch CLLocationManager.authorizationStatus() {
+        case .authorizedWhenInUse:
+            searchView.mapView.showsUserLocation = true
+            centerViewOnUserLocation()
+            locationManager.startUpdatingLocation()
+            break
+        case .denied:
+            // Show alert instructing how to turn on permissions
+            break
+        case .notDetermined:
+            locationManager.requestWhenInUseAuthorization()
+            
+        case .restricted:
+            // Show an alert letting them know
+            break
+        case .authorizedAlways:
+            break
+        }
+    }
+    
+    func centerViewOnUserLocation() {
+        if let location = locationManager.location?.coordinate {
+            let region = MKCoordinateRegion.init(center: location, latitudinalMeters: regionInMeters, longitudinalMeters: 10000)
+            searchView.mapView.setRegion(region, animated: true)
+        }
+    }
 }
 
-class PlacesCell: UICollectionViewCell {
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        backgroundColor = .white
-        
-        self.layer.shadowOffset = CGSize(width: 1, height: 1)
-        self.layer.shadowColor = UIColor.black.cgColor
-        self.layer.shadowRadius = 5
-        self.layer.shadowOpacity = 0.25
-        self.clipsToBounds = false
-        self.layer.masksToBounds = false
-        self.layer.cornerRadius = 20
-        
-        setupViews()
+
+// MARK: - Extensions
+extension SearchViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let location = locations.last else { return }
+        let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+        let region = MKCoordinateRegion(center: center, latitudinalMeters: regionInMeters, longitudinalMeters: regionInMeters)
+        searchView.mapView.setRegion(region, animated: true)
     }
     
-    func setupViews() {
-        addSubview(imageView)
-        addSubview(nameLabel)
-        addSubview(addressLabel)
-        addSubview(ratingLabel)
-        addSubview(distanceLabel)
-        imageView.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(20)
-            make.centerX.equalToSuperview()
-            make.width.equalToSuperview().offset(-15)
-            make.bottom.equalToSuperview().offset(-90)
-            //make.height.equalTo(300)
-        }
-        nameLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(imageView.snp.bottom).offset(10)
-            make.left.equalToSuperview().offset(10)
-        }
-        
-        addressLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(nameLabel.snp.bottom).offset(5)
-            make.left.equalToSuperview().offset(10)
-        }
-        ratingLabel.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(10)
-            make.bottom.equalToSuperview().offset(-10)
-        }
-        distanceLabel.snp.makeConstraints { (make) in
-            make.bottom.equalToSuperview().offset(-10)
-            make.right.equalToSuperview().offset(-10)
-        }
-        
-        
-        
-    }
-    let imageView : UIImageView = {
-        let iv = UIImageView()
-        iv.contentMode = .scaleAspectFill
-        iv.clipsToBounds = true
-        iv.layer.cornerRadius = 5
-        iv.backgroundColor = .green
-        return iv
-    }()
-    
-    let nameLabel: UILabel = {
-        let lbl = UILabel()
-        lbl.text = "Name of place"
-        return lbl
-    }()
-    
-    
-    let addressLabel: UILabel = {
-        let lbl = UILabel()
-        lbl.text = "12 Smith Ave"
-        lbl.font = lbl.font.withSize(12)
-        lbl.textColor = .gray
-        
-        return lbl
-    }()
-    
-    let ratingLabel : UILabel = {
-        let lbl = UILabel()
-        lbl.text = "4.5"
-        lbl.font = lbl.font.withSize(9)
-        return lbl
-    }()
-    
-    let distanceLabel : UILabel = {
-        let lbl = UILabel()
-        lbl.text = "500m"
-        lbl.font = lbl.font.withSize(9)
-        
-        return lbl
-    }()
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        checkLocationAuthorization()
     }
 }
+
+

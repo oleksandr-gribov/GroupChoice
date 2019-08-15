@@ -24,6 +24,8 @@
 		D9AB6A2422F24D9F001101D1 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AB6A2322F24D9F001101D1 /* MapViewController.swift */; };
 		D9AB6A2622F25233001101D1 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AB6A2522F25233001101D1 /* SettingsViewController.swift */; };
 		D9CE424422F9B88E007ADE07 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D9CE424322F9B88E007ADE07 /* GoogleService-Info.plist */; };
+		D9EB97402305B81B00D5E8CB /* PlacesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EB973F2305B81B00D5E8CB /* PlacesCell.swift */; };
+		D9EB97422305C7C400D5E8CB /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EB97412305C7C400D5E8CB /* SearchView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +50,8 @@
 		D9AB6A2322F24D9F001101D1 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		D9AB6A2522F25233001101D1 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		D9CE424322F9B88E007ADE07 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		D9EB973F2305B81B00D5E8CB /* PlacesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesCell.swift; sourceTree = "<group>"; };
+		D9EB97412305C7C400D5E8CB /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +95,8 @@
 			isa = PBXGroup;
 			children = (
 				D9AB6A1F22F24D0F001101D1 /* SearchViewController.swift */,
+				D9EB973F2305B81B00D5E8CB /* PlacesCell.swift */,
+				D9EB97412305C7C400D5E8CB /* SearchView.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -343,6 +349,8 @@
 				D9AB6A2222F24D6C001101D1 /* MessagesViewController.swift in Sources */,
 				D9617A1622F4FCAC0031F0B6 /* CreatePollViewController.swift in Sources */,
 				D91C938F22F2579C005113D9 /* TabBarViewController.swift in Sources */,
+				D9EB97422305C7C400D5E8CB /* SearchView.swift in Sources */,
+				D9EB97402305B81B00D5E8CB /* PlacesCell.swift in Sources */,
 				D91FD0DC22FBF0A8009A9305 /* Network.swift in Sources */,
 				D9AB6A2622F25233001101D1 /* SettingsViewController.swift in Sources */,
 			);

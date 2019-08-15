@@ -14,6 +14,7 @@ class MapViewController: UIViewController {
     
     var mapview : MKMapView!
     var mainView: UIView!
+    var location = ""
     
     let bottomBlur: UIImageView = {
         let iv = UIImageView()
@@ -21,7 +22,13 @@ class MapViewController: UIViewController {
         iv.image = UIImage(named: "bottom blur")
         return iv
     }()
-    
+    override func viewWillAppear(_ animated: Bool) {
+        let tbvc = self.tabBarController as! TabBarViewController
+        
+        location = tbvc.location
+        
+        print (location)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         

@@ -9,7 +9,8 @@
 import UIKit
 
 class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
-
+    
+    var location = "not set"
     override func viewDidLoad() {
         super.viewDidLoad()
         self.delegate = self

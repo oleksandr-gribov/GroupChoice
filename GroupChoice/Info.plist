@@ -41,5 +41,7 @@
 	</array>
 	<key>NSPrincipalClass</key>
 	<string></string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Allow location services to display nearby points of interest</string>
 </dict>
 </plist>
