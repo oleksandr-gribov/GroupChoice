@@ -17,6 +17,8 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     let locationManager = CLLocationManager()
     let regionInMeters : Double  = 10000
     let placesCellId = "placesCellId"
+    var placesNearby = [Place]()
+    var currentLocation: CLLocationCoordinate2D?
 
     // MARK: - View Life Cycle
     override func viewDidLoad() {
@@ -32,6 +34,46 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         
         
     }
+    
+    // MARK: - Fetching data
+    func fetchPlaces() {
+        guard let currentLocation = currentLocation else {
+            print("no current location available")
+            return
+        }
+        guard let url = GooglePlacesAPI.genericURL(coordinate: currentLocation) else {
+            print("couldnt construct url")
+            return
+        }
+        Network.fetchGenericData(url: url) { (response: Response) in
+            for place in response.results {
+                self.placesNearby.append(place)
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+            }
+            self.fetchImages()
+        }
+    }
+    func fetchImages() {
+        for i in 0..<placesNearby.count {
+            guard let photos = placesNearby[i].photos else {
+                return
+            }
+            let reference = photos[0].reference
+            
+            guard let url = GooglePlacesAPI.imageURL(reference: reference) else  {
+                print ("Couldnt make image url")
+                return
+            }
+            let photo = Network.fetchImage(url: url)
+            print(photo)
+            placesNearby[i].photo = photo
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+        }
+    }
     // MARK: - CollectionView methods
     let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -44,12 +86,36 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     }()
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 15
+        if placesNearby.count < 20 {
+            return placesNearby.count
+        }
+        return 20
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: placesCellId, for: indexPath) as! PlacesCell
-       
+        if placesNearby.count > 0 {
+            let place = placesNearby[indexPath.row]
+            
+            cell.nameLabel.text = place.name
+            cell.addressLabel.text = place.address
+            if let rating = place.rating {
+                cell.ratingLabel.text = String(rating)
+            }
+            //cell.imageView.image = #imageLiteral(resourceName: "Background")
+            guard let photos = place.photos else {
+                return cell
+            }
+            let reference = photos[0].reference
+            
+            guard let url = GooglePlacesAPI.imageURL(reference: reference) else {
+                return cell
+            }
+            let data = NSData(contentsOf: url)
+            cell.imageView.image = UIImage(data: data as! Data)
+            
+        }
+        
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -57,6 +123,21 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+    }
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+//        var place = placesNearby[indexPath.row]
+//        guard let photos = place.photos else {
+//            return
+//        }
+//        let reference = photos[0].reference
+//
+//        guard let url = GooglePlacesAPI.imageURL(reference: reference) else  {
+//            print ("Couldnt make image url")
+//            return
+//        }
+//        let photo = Network.fetchImage(url: url)
+//        placesNearby[indexPath.row].photo = photo
+//        print (photo)
     }
     
     
@@ -134,6 +215,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
             searchView.mapView.showsUserLocation = true
             centerViewOnUserLocation()
             locationManager.startUpdatingLocation()
+            fetchPlaces()
             break
         case .denied:
             // Show alert instructing how to turn on permissions
@@ -151,7 +233,8 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     func centerViewOnUserLocation() {
         if let location = locationManager.location?.coordinate {
-            let region = MKCoordinateRegion.init(center: location, latitudinalMeters: regionInMeters, longitudinalMeters: 10000)
+            currentLocation = location
+            let region = MKCoordinateRegion.init(center: location, latitudinalMeters: regionInMeters, longitudinalMeters: 2000)
             searchView.mapView.setRegion(region, animated: true)
         }
     }
@@ -165,6 +248,7 @@ extension SearchViewController: CLLocationManagerDelegate {
         let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
         let region = MKCoordinateRegion(center: center, latitudinalMeters: regionInMeters, longitudinalMeters: regionInMeters)
         searchView.mapView.setRegion(region, animated: true)
+       // fetchPlaces()
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {

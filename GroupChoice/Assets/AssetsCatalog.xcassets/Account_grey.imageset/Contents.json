@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "top blur.png",
+      "filename" : "Account_grey.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "top blur@2x.png",
+      "filename" : "Account_grey@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "top blur@3x.png",
+      "filename" : "Account_grey@3x.png",
       "scale" : "3x"
     }
   ],

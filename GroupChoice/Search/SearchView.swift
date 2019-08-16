@@ -14,7 +14,6 @@ class SearchView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         setup()
     }
     
@@ -41,6 +40,7 @@ class SearchView: UIView {
         
         return mp
     }()
+    
     
     func setup() {
         addSubview(topblur)

@@ -25,13 +25,13 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
         searchViewController.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "search_grey"), selectedImage: #imageLiteral(resourceName: "search_blue"))
         
         let createPollViewController =  CreatePollViewController()
-        createPollViewController.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "FAB-1"), selectedImage: #imageLiteral(resourceName: "FAB-1"))
+        createPollViewController.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "FAB"), selectedImage: #imageLiteral(resourceName: "FAB"))
         
         let mapViewController = UINavigationController(rootViewController: MapViewController())
         mapViewController.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "map_grey"), selectedImage: #imageLiteral(resourceName: "map_blue"))
         
         let settingsViewController = UINavigationController(rootViewController: SettingsViewController())
-        settingsViewController.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "account_grey"), selectedImage: #imageLiteral(resourceName: "account_blue"))
+        settingsViewController.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "Account_grey"), selectedImage: #imageLiteral(resourceName: "account_blue"))
         
         let viewControllerList = [searchViewController,messagesViewController, createPollViewController, mapViewController, settingsViewController]
         

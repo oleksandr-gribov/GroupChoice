@@ -7,17 +7,15 @@
 //
 
 import Foundation
+import UIKit
 
 
 struct Network {
     
-    func fetchGenericData<T: Codable>(url: String, completion: @escaping (T) -> () ) {
-        let url = URL(string: url)
+    static func fetchGenericData<T: Codable>(url: URL, completion: @escaping (T) -> () ) {
+        //let url = URL(string: url)
         
-        //let accessToken = "dpg0Fzxn401atueQqn3xQXnSGfx-7G9QyFrB79VYxp341NVO66XLB8-ziOXyqndjrW8gV6zcnqlT3oaJ38n8kP2pb5C8MKqVvaOZnMYJaYdj93g_r74v5b41dJKXXYx"
-       // var request = URLRequest(url: url!)
-        //request.setValue("Bearer " + accessToken, forHTTPHeaderField: "Authorization" )
-        URLSession.shared.dataTask(with: url!) { (data, response, err) in
+        URLSession.shared.dataTask(with: url) { (data, response, err) in
             
             if let err = err {
                 print(err.localizedDescription)
@@ -32,5 +30,19 @@ struct Network {
                 print ("Failed to decode json: ", jsonError)
             }
             }.resume()
+    }
+    
+    static func fetchImage(url: URL) -> UIImage {
+        var image = UIImage()
+        let task = URLSession.shared.dataTask(with: url, completionHandler: {
+            (data, error, response) in
+            if let data = data,
+                let imageData = UIImage(data: data) {
+                print(String(data: data, encoding: .utf8))
+                image = imageData
+            }
+        })
+        return image
+        task.resume()
     }
 }
