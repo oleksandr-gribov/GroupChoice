@@ -42,7 +42,7 @@ struct GooglePlacesAPI {
     }
     
     static func genericURL(coordinate: CLLocationCoordinate2D) -> URL?  {
-        let urlString = "\(basePath)location=\(coordinate.latitude),\(coordinate.longitude)&radius=1000&key=\(apiKey)"
+        let urlString = "\(basePath)location=\(coordinate.latitude),\(coordinate.longitude)&radius=500&key=\(apiKey)"
         
         let url = URL(string: urlString)
         

@@ -27,6 +27,14 @@ class SearchView: UIView {
         return iv
     }()
     
+    let nearbyLabel : UILabel = {
+        let lbl = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height: 10))
+        lbl.text = "Great Places Nearby"
+        lbl.textColor = .black
+        
+        return lbl
+    }()
+    
     
     let bottomBlur: UIImageView = {
         let iv = UIImageView()
@@ -46,6 +54,7 @@ class SearchView: UIView {
         addSubview(topblur)
         addSubview(bottomBlur)
         addSubview(mapView)
+       // addSubview(nearbyLabel)
         topblur.snp.makeConstraints { (make) in
             make.leading.equalToSuperview()
             make.top.equalToSuperview()
@@ -62,8 +71,14 @@ class SearchView: UIView {
         mapView.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(50)
             make.width.equalToSuperview()
-            make.bottom.equalToSuperview()
+            make.bottom.equalToSuperview().inset(225)
         }
+//        nearbyLabel.snp.makeConstraints { (make) in
+//            make.bottom.equalToSuperview().offset(-280)
+//            make.left.equalToSuperview().inset(20)
+//            make.width.equalTo(200)
+//            make.height.equalTo(20)
+//        }
         bringSubviewToFront(topblur)
         bringSubviewToFront(bottomBlur)
        

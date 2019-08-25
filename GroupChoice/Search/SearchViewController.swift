@@ -11,14 +11,15 @@ import SnapKit
 import MapKit
 import CoreLocation
 
-class SearchViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource{
+class SearchViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, MKMapViewDelegate{
     
     var searchView: SearchView!
     let locationManager = CLLocationManager()
-    let regionInMeters : Double  = 10000
+    let regionInMeters : Double  = 1000
     let placesCellId = "placesCellId"
     var placesNearby = [Place]()
     var currentLocation: CLLocationCoordinate2D?
+    var mapView : MKMapView!
 
     // MARK: - View Life Cycle
     override func viewDidLoad() {
@@ -27,11 +28,19 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         collectionView.register(PlacesCell.self, forCellWithReuseIdentifier: placesCellId)
-        searchView = SearchView()
+        
         setupNavBar()
+        searchView = SearchView()
+        mapView = searchView.mapView
+        mapView.delegate = self
         setupView()
         checkLocationServices()
+
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
+       
         
     }
     
@@ -50,30 +59,26 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
                 self.placesNearby.append(place)
                 DispatchQueue.main.async {
                     self.collectionView.reloadData()
+                    self.placePins()
                 }
             }
-            self.fetchImages()
         }
     }
-    func fetchImages() {
-        for i in 0..<placesNearby.count {
-            guard let photos = placesNearby[i].photos else {
-                return
-            }
-            let reference = photos[0].reference
+    
+    func placePins() {
+        for place in placesNearby {
+            let placePin = MKPointAnnotation()
+            let placeCoordinate = CLLocationCoordinate2D(latitude: Double(place.geometry.location.latitude), longitude: Double(place.geometry.location.longitude))
             
-            guard let url = GooglePlacesAPI.imageURL(reference: reference) else  {
-                print ("Couldnt make image url")
-                return
-            }
-            let photo = Network.fetchImage(url: url)
-            print(photo)
-            placesNearby[i].photo = photo
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
-            }
+            placePin.coordinate = placeCoordinate
+            placePin.title = place.name
+
+            
+            searchView.mapView.addAnnotation(placePin)
         }
     }
+   
+    
     // MARK: - CollectionView methods
     let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -102,7 +107,6 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
             if let rating = place.rating {
                 cell.ratingLabel.text = String(rating)
             }
-            //cell.imageView.image = #imageLiteral(resourceName: "Background")
             guard let photos = place.photos else {
                 return cell
             }
@@ -111,9 +115,16 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
             guard let url = GooglePlacesAPI.imageURL(reference: reference) else {
                 return cell
             }
-            let data = NSData(contentsOf: url)
-            cell.imageView.image = UIImage(data: data as! Data)
+            let userLocation = CLLocation(latitude: currentLocation!.latitude, longitude: currentLocation!.longitude)
             
+            let placeLocation = CLLocation(latitude: CLLocationDegrees(place.geometry.location.latitude), longitude: CLLocationDegrees(place.geometry.location.longitude))
+            
+            let distanceTo = userLocation.distance(from: placeLocation)
+            let distanceStr = NSString(format: "%.f", distanceTo)
+            cell.distanceLabel.text = "\(distanceStr) m"
+            
+           
+            cell.imageView.fetchImage(url: url)
         }
         
         return cell
@@ -124,24 +135,14 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     }
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-//        var place = placesNearby[indexPath.row]
-//        guard let photos = place.photos else {
-//            return
-//        }
-//        let reference = photos[0].reference
-//
-//        guard let url = GooglePlacesAPI.imageURL(reference: reference) else  {
-//            print ("Couldnt make image url")
-//            return
-//        }
-//        let photo = Network.fetchImage(url: url)
-//        placesNearby[indexPath.row].photo = photo
-//        print (photo)
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let place = placesNearby[indexPath.row]
+        let detailVC = PlaceDetailViewController()
+        detailVC.place = place
+        self.navigationController?.pushViewController(detailVC, animated: true)
+        
     }
-    
-    
-    
+
     // MARK: - View set up
     func setupView() {
         view.backgroundColor = .white
@@ -194,6 +195,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: photoView)
     }
     
+    
     // MARK: - MapKit methods
     func checkLocationServices() {
         if CLLocationManager.locationServicesEnabled() {
@@ -234,7 +236,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     func centerViewOnUserLocation() {
         if let location = locationManager.location?.coordinate {
             currentLocation = location
-            let region = MKCoordinateRegion.init(center: location, latitudinalMeters: regionInMeters, longitudinalMeters: 2000)
+            let region = MKCoordinateRegion.init(center: location, latitudinalMeters: 1000, longitudinalMeters: 1000)
             searchView.mapView.setRegion(region, animated: true)
         }
     }
@@ -247,8 +249,7 @@ extension SearchViewController: CLLocationManagerDelegate {
         guard let location = locations.last else { return }
         let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
         let region = MKCoordinateRegion(center: center, latitudinalMeters: regionInMeters, longitudinalMeters: regionInMeters)
-        searchView.mapView.setRegion(region, animated: true)
-       // fetchPlaces()
+        //searchView.mapView.setRegion(region, animated: true)
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {

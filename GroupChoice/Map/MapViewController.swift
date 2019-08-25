@@ -12,27 +12,50 @@ import SnapKit
 
 class MapViewController: UIViewController {
     
-    var mapview : MKMapView!
+    var mapView : MKMapView!
     var mainView: UIView!
-    var location = ""
+    var coordinate: CLLocationCoordinate2D?
+    var place: Place?
     
-    let bottomBlur: UIImageView = {
-        let iv = UIImageView()
-        iv.contentMode = .scaleAspectFill
-        iv.image = UIImage(named: "bottom blur")
-        return iv
-    }()
+    let locationManager = CLLocationManager()
+    
+  
     override func viewWillAppear(_ animated: Bool) {
         let tbvc = self.tabBarController as! TabBarViewController
         
-        location = tbvc.location
+        centerMapOnLocation(center: coordinate)
+        let placePin = MKPointAnnotation()
+        if let coordinate = coordinate {
+            print (coordinate)
+            placePin.coordinate = coordinate
+            placePin.title = place?.name
+            mapView.addAnnotation(placePin)
+        }
+       
+    }
+   
+    
+    func centerMapOnLocation(center: CLLocationCoordinate2D?) {
         
-        print (location)
+        if let center = center {
+             let region = MKCoordinateRegion.init(center: center, latitudinalMeters: 500, longitudinalMeters: 500)
+            mapView.setRegion(region, animated: true)
+        } else {
+            if let location = locationManager.location?.coordinate {
+                 let region = MKCoordinateRegion.init(center: location, latitudinalMeters: 500, longitudinalMeters: 2000)
+                mapView.setRegion(region, animated: true)
+            }
+        
+        }
+    }
+    func setupLocationManager() {
+        locationManager.delegate = self as! CLLocationManagerDelegate
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+
         mainView = view
         self.navigationItem.title = "Map"
         self.navigationController?.navigationBar.prefersLargeTitles = true
@@ -41,72 +64,65 @@ class MapViewController: UIViewController {
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(collapseMap))
+        
         self.navigationItem.leftBarButtonItem?.isEnabled = false
-        mapview = MKMapView(frame: view.bounds)
-        self.mapview.frame = self.view.bounds
+        mapView = MKMapView(frame: view.bounds)
+        self.mapView.frame = self.view.bounds
         
-        let topblur: UIImageView = {
-            let iv = UIImageView()
-            iv.contentMode = .scaleAspectFill
-            iv.image = UIImage(named: "top blur")
-            return iv
-        }()
+        view.addSubview(mapView)
         
-        view.addSubview(mapview)
-        view.addSubview(topblur)
-        view.addSubview(bottomBlur)
-        view.bringSubviewToFront(topblur)
-        topblur.snp.makeConstraints { (make) in
-            make.leading.equalToSuperview()
-            make.top.equalToSuperview()
-            make.width.equalToSuperview()
-            make.height.equalToSuperview().multipliedBy(0.35)
+    
+        
+    }
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard annotation is MKPointAnnotation else {
+            return nil
         }
-        bottomBlur.snp.makeConstraints { (make) in
-            make.bottom.equalToSuperview()
-            make.trailing.equalToSuperview()
-            make.height.equalToSuperview().multipliedBy(0.4)
-            
+        let identifier = "identifier"
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+        
+        if annotationView == nil {
+            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            annotationView!.canShowCallout = true
+        } else {
+            annotationView!.annotation = annotation
         }
         
-        let expandGestureRecognizer = UITapGestureRecognizer()
-        expandGestureRecognizer.numberOfTapsRequired = 1
-        expandGestureRecognizer.addTarget(self, action: #selector(expandMap))
-        mapview.addGestureRecognizer(expandGestureRecognizer)
+        return annotationView
     }
   
     
-    @objc func expandMap() {
-        mainView.bringSubviewToFront(mapview)
-   
-        zoomMap(byFactor: 2)
-        self.navigationController?.navigationBar.prefersLargeTitles = false
-        self.navigationItem.leftBarButtonItem?.isEnabled = true
-       // self.navigationController?.setNavigationBarHidden(true, animated: true)
-        
-    }
-    @objc func collapseMap() {
-        mainView.sendSubviewToBack(mapview)
-        self.navigationController?.navigationBar.prefersLargeTitles = true
-        self.navigationItem.leftBarButtonItem?.isEnabled = false
-        zoomOut(byFactor: 2)
-    }
-    func zoomMap(byFactor delta: Double) {
-        var region: MKCoordinateRegion = self.mapview.region
-        var span: MKCoordinateSpan = mapview.region.span
-        span.latitudeDelta /= delta
-        span.longitudeDelta /= delta
-        region.span = span
-        mapview.setRegion(region, animated: true)
-    }
-    func zoomOut(byFactor delta: Double) {
-        var region: MKCoordinateRegion = self.mapview.region
-        var span: MKCoordinateSpan = mapview.region.span
-        span.latitudeDelta *= delta
-        span.longitudeDelta *= delta
-        region.span = span
-        mapview.setRegion(region, animated: true)
+    func checkLocationAuthorization() {
+        switch CLLocationManager.authorizationStatus() {
+        case .authorizedWhenInUse:
+            mapView.showsUserLocation = true
+            locationManager.startUpdatingLocation()
+            break
+        case .denied:
+            // Show alert instructing how to turn on permissions
+            break
+        case .notDetermined:
+            locationManager.requestWhenInUseAuthorization()
+            
+        case .restricted:
+            // Show an alert letting them know
+            break
+        case .authorizedAlways:
+            break
+        }
     }
     
+}
+
+// MARK: - Extensions
+extension MapViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let location = locations.last else { return }
+        let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+        let region = MKCoordinateRegion(center: center, latitudinalMeters: 1000, longitudinalMeters: 1000)
+        mapView.setRegion(region, animated: true)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+    }
 }

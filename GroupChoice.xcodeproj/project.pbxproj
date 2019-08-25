@@ -15,10 +15,11 @@
 		D9617A1622F4FCAC0031F0B6 /* CreatePollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9617A1522F4FCAC0031F0B6 /* CreatePollViewController.swift */; };
 		D9617A1922F5190E0031F0B6 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9617A1822F5190E0031F0B6 /* SignUpViewController.swift */; };
 		D9617A1B22F519AE0031F0B6 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9617A1A22F519AE0031F0B6 /* SignUpView.swift */; };
+		D96FA469230B279F003E9214 /* PlaceDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96FA468230B279F003E9214 /* PlaceDetailViewController.swift */; };
+		D96FA46B230B27B6003E9214 /* PlaceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96FA46A230B27B6003E9214 /* PlaceDetailView.swift */; };
 		D97EA3C422F398AE00E71FEF /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D97EA3C322F398AE00E71FEF /* LoginView.swift */; };
 		D97EA3C622F3993200E71FEF /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D97EA3C522F3993200E71FEF /* LoginViewController.swift */; };
 		D97EA3C922F3A2EA00E71FEF /* UITextField+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D97EA3C822F3A2EA00E71FEF /* UITextField+Extension.swift */; };
-		D98D41A62306F63B00489C58 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98D41A52306F63B00489C58 /* Constants.swift */; };
 		D98D41A82306FB3F00489C58 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98D41A72306FB3F00489C58 /* Place.swift */; };
 		D98D41AA2306FC4100489C58 /* GooglePlacesAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98D41A92306FC4100489C58 /* GooglePlacesAPI.swift */; };
 		D9AB6A2022F24D0F001101D1 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AB6A1F22F24D0F001101D1 /* SearchViewController.swift */; };
@@ -29,6 +30,7 @@
 		D9EB97402305B81B00D5E8CB /* PlacesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EB973F2305B81B00D5E8CB /* PlacesCell.swift */; };
 		D9EB97422305C7C400D5E8CB /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EB97412305C7C400D5E8CB /* SearchView.swift */; };
 		D9EB97442305D30D00D5E8CB /* AssetsCatalog.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9EB97432305D30D00D5E8CB /* AssetsCatalog.xcassets */; };
+		D9F442642309BABE004F9834 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F442632309BABE004F9834 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,10 +46,11 @@
 		D9617A1522F4FCAC0031F0B6 /* CreatePollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePollViewController.swift; sourceTree = "<group>"; };
 		D9617A1822F5190E0031F0B6 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		D9617A1A22F519AE0031F0B6 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		D96FA468230B279F003E9214 /* PlaceDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailViewController.swift; sourceTree = "<group>"; };
+		D96FA46A230B27B6003E9214 /* PlaceDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailView.swift; sourceTree = "<group>"; };
 		D97EA3C322F398AE00E71FEF /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		D97EA3C522F3993200E71FEF /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D97EA3C822F3A2EA00E71FEF /* UITextField+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extension.swift"; sourceTree = "<group>"; };
-		D98D41A52306F63B00489C58 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		D98D41A72306FB3F00489C58 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		D98D41A92306FC4100489C58 /* GooglePlacesAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePlacesAPI.swift; sourceTree = "<group>"; };
 		D9AB6A1F22F24D0F001101D1 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -58,6 +61,7 @@
 		D9EB973F2305B81B00D5E8CB /* PlacesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesCell.swift; sourceTree = "<group>"; };
 		D9EB97412305C7C400D5E8CB /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		D9EB97432305D30D00D5E8CB /* AssetsCatalog.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AssetsCatalog.xcassets; sourceTree = "<group>"; };
+		D9F442632309BABE004F9834 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,8 +106,10 @@
 			isa = PBXGroup;
 			children = (
 				D9AB6A1F22F24D0F001101D1 /* SearchViewController.swift */,
+				D96FA468230B279F003E9214 /* PlaceDetailViewController.swift */,
 				D9EB973F2305B81B00D5E8CB /* PlacesCell.swift */,
 				D9EB97412305C7C400D5E8CB /* SearchView.swift */,
+				D96FA46A230B27B6003E9214 /* PlaceDetailView.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -186,7 +192,7 @@
 				D9AB6A2722F25402001101D1 /* Assets */,
 				D94816AA22F15D9A00B8311E /* Info.plist */,
 				D9CE424322F9B88E007ADE07 /* GoogleService-Info.plist */,
-				D98D41A52306F63B00489C58 /* Constants.swift */,
+				D9F442632309BABE004F9834 /* Constants.swift */,
 			);
 			path = GroupChoice;
 			sourceTree = "<group>";
@@ -347,9 +353,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				D9617A1922F5190E0031F0B6 /* SignUpViewController.swift in Sources */,
-				D98D41A62306F63B00489C58 /* Constants.swift in Sources */,
+				D9F442642309BABE004F9834 /* Constants.swift in Sources */,
 				D97EA3C922F3A2EA00E71FEF /* UITextField+Extension.swift in Sources */,
 				D91C939122F25AE8005113D9 /* AppDelegate.swift in Sources */,
+				D96FA46B230B27B6003E9214 /* PlaceDetailView.swift in Sources */,
 				D97EA3C422F398AE00E71FEF /* LoginView.swift in Sources */,
 				D9617A1B22F519AE0031F0B6 /* SignUpView.swift in Sources */,
 				D9AB6A2422F24D9F001101D1 /* MapViewController.swift in Sources */,
@@ -363,6 +370,7 @@
 				D9EB97422305C7C400D5E8CB /* SearchView.swift in Sources */,
 				D9EB97402305B81B00D5E8CB /* PlacesCell.swift in Sources */,
 				D98D41A82306FB3F00489C58 /* Place.swift in Sources */,
+				D96FA469230B279F003E9214 /* PlaceDetailViewController.swift in Sources */,
 				D91FD0DC22FBF0A8009A9305 /* Network.swift in Sources */,
 				D9AB6A2622F25233001101D1 /* SettingsViewController.swift in Sources */,
 			);

@@ -31,18 +31,7 @@ struct Network {
             }
             }.resume()
     }
-    
-    static func fetchImage(url: URL) -> UIImage {
-        var image = UIImage()
-        let task = URLSession.shared.dataTask(with: url, completionHandler: {
-            (data, error, response) in
-            if let data = data,
-                let imageData = UIImage(data: data) {
-                print(String(data: data, encoding: .utf8))
-                image = imageData
-            }
-        })
-        return image
-        task.resume()
-    }
 }
+
+
+

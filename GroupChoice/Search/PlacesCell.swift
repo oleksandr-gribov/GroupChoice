@@ -31,6 +31,11 @@ class PlacesCell: UICollectionViewCell {
         self.layer.masksToBounds = false
         self.layer.cornerRadius = 20
     }
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        imageView.image = nil
+    }
     
     func setupViews() {
         addSubview(imageView)
@@ -80,8 +85,8 @@ class PlacesCell: UICollectionViewCell {
         }
     }
     
-    let imageView : UIImageView = {
-        let iv = UIImageView()
+    let imageView : CustomImageView = {
+        let iv = CustomImageView()
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         iv.layer.cornerRadius = 5
@@ -140,4 +145,45 @@ class PlacesCell: UICollectionViewCell {
         
         return lbl
     }()
+}
+
+let imageCache = NSCache<NSString, UIImage>()
+
+
+class CustomImageView: UIImageView {
+    
+    var imageUrl : String?
+    func fetchImage(url: URL)  {
+        let urlString = url.absoluteString
+        imageUrl = urlString
+        
+        image = nil
+        
+        if let cachedImage = imageCache.object(forKey: urlString as NSString) {
+            self.image = cachedImage
+            return
+        }
+        
+        let task = URLSession.shared.dataTask(with: url, completionHandler: {
+            (data, err, response) in
+            
+            if let data = data {
+                
+                let imageData = UIImage(data: data)
+                DispatchQueue.main.async {
+                    if self.imageUrl == url.absoluteString {
+                        self.image = imageData
+                        imageCache.setObject(imageData!, forKey: urlString as NSString)
+                    }
+                    
+                }
+                
+            } else {
+                DispatchQueue.main.async {
+                    self.image = #imageLiteral(resourceName: "no_image")
+                }
+            }
+        })
+        task.resume()
+    }
 }
