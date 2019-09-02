@@ -67,3 +67,13 @@ struct Response : Codable {
 }
 
 
+extension Place: Equatable {
+    static func == (lhs: Place, rhs: Place) -> Bool {
+        if lhs.id == rhs.id {
+            return true
+        }
+        return false
+        }
+    }  
+
+

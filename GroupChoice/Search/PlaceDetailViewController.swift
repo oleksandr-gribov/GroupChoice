@@ -13,10 +13,12 @@ class PlaceDetailViewController: UIViewController, MKMapViewDelegate {
     var detailView: PlaceDetailView!
     var place: Place!
     var placeCoordinate: CLLocationCoordinate2D!
-    
+    var userLocation: CLLocationCoordinate2D!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
+        
         
         setupView()
         setupNavBar()
@@ -32,12 +34,15 @@ class PlaceDetailViewController: UIViewController, MKMapViewDelegate {
     
     
     func setupView() {
-        view.backgroundColor = .white
+        
         
         detailView = PlaceDetailView()
         view.addSubview(detailView)
         detailView.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview()
+            make.top.equalToSuperview()
+            make.left.equalToSuperview()
+            make.bottom.equalToSuperview().inset(30)
+            make.right.equalToSuperview()
             
         }
 
@@ -134,6 +139,9 @@ class PlaceDetailViewController: UIViewController, MKMapViewDelegate {
     }
     
     func centerMapOnLocation() {
+        if placeCoordinate != nil {
+            
+        }
         let region = MKCoordinateRegion.init(center: placeCoordinate, latitudinalMeters: 500, longitudinalMeters: 500)
         detailView.mapView.setRegion(region, animated: true)
     }

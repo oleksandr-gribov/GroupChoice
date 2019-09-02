@@ -24,6 +24,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white 
         
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
@@ -56,11 +57,13 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
         Network.fetchGenericData(url: url) { (response: Response) in
             for place in response.results {
-                self.placesNearby.append(place)
-                DispatchQueue.main.async {
-                    self.collectionView.reloadData()
-                    self.placePins()
+                 if !(self.placesNearby.contains(place)) {
+                        self.placesNearby.append(place)
+                    }
                 }
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+                self.placePins()
             }
         }
     }
@@ -75,6 +78,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
 
             
             searchView.mapView.addAnnotation(placePin)
+//            print("Id: \(place.id), lat: \(place.geometry.location.latitude), lng: \(place.geometry.location.longitude)")
         }
     }
    
@@ -139,6 +143,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         let place = placesNearby[indexPath.row]
         let detailVC = PlaceDetailViewController()
         detailVC.place = place
+        detailVC.userLocation = currentLocation 
         self.navigationController?.pushViewController(detailVC, animated: true)
         
     }
@@ -247,9 +252,19 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
 extension SearchViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
-        let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-        let region = MKCoordinateRegion(center: center, latitudinalMeters: regionInMeters, longitudinalMeters: regionInMeters)
-        //searchView.mapView.setRegion(region, animated: true)
+        
+        if currentLocation == nil { return }
+        let userLocation = CLLocation(latitude: currentLocation!.latitude, longitude: currentLocation!.longitude)
+        
+        let distanceTo = userLocation.distance(from: location)
+        if distanceTo > 500 {
+            let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+            let region = MKCoordinateRegion(center: center, latitudinalMeters: regionInMeters, longitudinalMeters: regionInMeters)
+            searchView.mapView.setRegion(region, animated: true)
+            let newUserLocation = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+            currentLocation = newUserLocation
+            fetchPlaces()
+        }
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
