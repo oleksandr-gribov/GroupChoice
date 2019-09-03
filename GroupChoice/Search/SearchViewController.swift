@@ -147,6 +147,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         self.navigationController?.pushViewController(detailVC, animated: true)
         
     }
+    
 
     // MARK: - View set up
     func setupView() {
@@ -198,6 +199,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
 
         photoView.sizeToFit()
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: photoView)
+        
     }
     
     
@@ -252,8 +254,8 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
 extension SearchViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
-        
-        if currentLocation == nil { return }
+        print (currentLocation)
+        if currentLocation == nil  { return }
         let userLocation = CLLocation(latitude: currentLocation!.latitude, longitude: currentLocation!.longitude)
         
         let distanceTo = userLocation.distance(from: location)

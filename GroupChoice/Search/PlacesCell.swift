@@ -152,15 +152,25 @@ let imageCache = NSCache<NSString, UIImage>()
 
 class CustomImageView: UIImageView {
     
+    var activityIndicator = UIActivityIndicatorView(style: .gray)
     var imageUrl : String?
+    
+    
     func fetchImage(url: URL)  {
         let urlString = url.absoluteString
         imageUrl = urlString
-        
+        activityIndicator.frame = CGRect(x: 0, y: 0, width: 46, height: 46)
+        activityIndicator.hidesWhenStopped = true
+        self.addSubview(activityIndicator)
+        activityIndicator.snp.makeConstraints { (make) in
+            make.center.equalToSuperview()
+        }
+        self.activityIndicator.startAnimating()
         image = nil
         
         if let cachedImage = imageCache.object(forKey: urlString as NSString) {
             self.image = cachedImage
+            self.activityIndicator.stopAnimating()
             return
         }
         
@@ -174,14 +184,18 @@ class CustomImageView: UIImageView {
                     if self.imageUrl == url.absoluteString {
                         self.image = imageData
                         imageCache.setObject(imageData!, forKey: urlString as NSString)
+                        self.activityIndicator.stopAnimating()
+                    } else {
+                        DispatchQueue.main.async {
+                            self.activityIndicator.stopAnimating()
+                            self.image = #imageLiteral(resourceName: "no_image")
+                        }
                     }
                     
                 }
                 
             } else {
-                DispatchQueue.main.async {
-                    self.image = #imageLiteral(resourceName: "no_image")
-                }
+                
             }
         })
         task.resume()
