@@ -15,7 +15,7 @@ struct Place: Codable {
     var name: String
     var rating: Double?
     var price: Int?
-    var address: String
+    var address: String?
     var photos: [Photo]?
     var types: [String]
     var photo: UIImage?

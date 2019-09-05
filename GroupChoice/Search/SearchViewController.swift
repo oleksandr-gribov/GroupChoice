@@ -38,23 +38,19 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         checkLocationServices()
 
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-       
-        
-    }
+ 
     
     // MARK: - Fetching data
     func fetchPlaces() {
+        self.placesNearby.removeAll()
         guard let currentLocation = currentLocation else {
-            print("no current location available")
             return
         }
         guard let url = GooglePlacesAPI.genericURL(coordinate: currentLocation) else {
             print("couldnt construct url")
             return
         }
+        print(url)
         Network.fetchGenericData(url: url) { (response: Response) in
             for place in response.results {
                  if !(self.placesNearby.contains(place)) {
@@ -107,17 +103,23 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
             let place = placesNearby[indexPath.row]
             
             cell.nameLabel.text = place.name
-            cell.addressLabel.text = place.address
+            if let addressText = place.address {
+                cell.addressLabel.text = place.address
+            } else {
+                cell.addressLabel.text = "Address not available"
+            }
+            
             if let rating = place.rating {
                 cell.ratingLabel.text = String(rating)
             }
-            guard let photos = place.photos else {
-                return cell
-            }
-            let reference = photos[0].reference
-            
-            guard let url = GooglePlacesAPI.imageURL(reference: reference) else {
-                return cell
+            if let photos = place.photos  {
+                let reference = photos[0].reference
+                guard let url = GooglePlacesAPI.imageURL(reference: reference) else {
+                    return cell
+                }
+                cell.imageView.fetchImage(url: url)
+            } else {
+                cell.imageView.image = #imageLiteral(resourceName: "no_image")
             }
             let userLocation = CLLocation(latitude: currentLocation!.latitude, longitude: currentLocation!.longitude)
             
@@ -127,8 +129,6 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
             let distanceStr = NSString(format: "%.f", distanceTo)
             cell.distanceLabel.text = "\(distanceStr) m"
             
-           
-            cell.imageView.fetchImage(url: url)
         }
         
         return cell
@@ -243,8 +243,11 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     func centerViewOnUserLocation() {
         if let location = locationManager.location?.coordinate {
             currentLocation = location
+            print ("current location is: \(currentLocation)")
             let region = MKCoordinateRegion.init(center: location, latitudinalMeters: 1000, longitudinalMeters: 1000)
             searchView.mapView.setRegion(region, animated: true)
+        } else {
+            print("no center view location")
         }
     }
 }
@@ -255,11 +258,14 @@ extension SearchViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         print (currentLocation)
-        if currentLocation == nil  { return }
+        if currentLocation == nil  {
+            currentLocation = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+        }
         let userLocation = CLLocation(latitude: currentLocation!.latitude, longitude: currentLocation!.longitude)
         
         let distanceTo = userLocation.distance(from: location)
-        if distanceTo > 500 {
+        print (distanceTo)
+        if distanceTo > 500  {
             let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
             let region = MKCoordinateRegion(center: center, latitudinalMeters: regionInMeters, longitudinalMeters: regionInMeters)
             searchView.mapView.setRegion(region, animated: true)

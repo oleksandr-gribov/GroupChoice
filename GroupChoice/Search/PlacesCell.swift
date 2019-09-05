@@ -173,10 +173,9 @@ class CustomImageView: UIImageView {
             self.activityIndicator.stopAnimating()
             return
         }
-        
+    
         let task = URLSession.shared.dataTask(with: url, completionHandler: {
             (data, err, response) in
-            
             if let data = data {
                 
                 let imageData = UIImage(data: data)
@@ -191,9 +190,7 @@ class CustomImageView: UIImageView {
                             self.image = #imageLiteral(resourceName: "no_image")
                         }
                     }
-                    
                 }
-                
             } else {
                 
             }
