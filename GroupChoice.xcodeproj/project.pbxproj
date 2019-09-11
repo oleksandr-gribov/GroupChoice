@@ -17,6 +17,7 @@
 		D9617A1B22F519AE0031F0B6 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9617A1A22F519AE0031F0B6 /* SignUpView.swift */; };
 		D96FA469230B279F003E9214 /* PlaceDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96FA468230B279F003E9214 /* PlaceDetailViewController.swift */; };
 		D96FA46B230B27B6003E9214 /* PlaceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96FA46A230B27B6003E9214 /* PlaceDetailView.swift */; };
+		D97D53242326FE7100B4FD51 /* MapSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D97D53232326FE7100B4FD51 /* MapSearchView.swift */; };
 		D97EA3C422F398AE00E71FEF /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D97EA3C322F398AE00E71FEF /* LoginView.swift */; };
 		D97EA3C622F3993200E71FEF /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D97EA3C522F3993200E71FEF /* LoginViewController.swift */; };
 		D97EA3C922F3A2EA00E71FEF /* UITextField+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D97EA3C822F3A2EA00E71FEF /* UITextField+Extension.swift */; };
@@ -48,6 +49,7 @@
 		D9617A1A22F519AE0031F0B6 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		D96FA468230B279F003E9214 /* PlaceDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailViewController.swift; sourceTree = "<group>"; };
 		D96FA46A230B27B6003E9214 /* PlaceDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailView.swift; sourceTree = "<group>"; };
+		D97D53232326FE7100B4FD51 /* MapSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSearchView.swift; sourceTree = "<group>"; };
 		D97EA3C322F398AE00E71FEF /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		D97EA3C522F3993200E71FEF /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D97EA3C822F3A2EA00E71FEF /* UITextField+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extension.swift"; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				D9AB6A2322F24D9F001101D1 /* MapViewController.swift */,
+				D97D53232326FE7100B4FD51 /* MapSearchView.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -355,6 +358,7 @@
 				D9617A1922F5190E0031F0B6 /* SignUpViewController.swift in Sources */,
 				D9F442642309BABE004F9834 /* Constants.swift in Sources */,
 				D97EA3C922F3A2EA00E71FEF /* UITextField+Extension.swift in Sources */,
+				D97D53242326FE7100B4FD51 /* MapSearchView.swift in Sources */,
 				D91C939122F25AE8005113D9 /* AppDelegate.swift in Sources */,
 				D96FA46B230B27B6003E9214 /* PlaceDetailView.swift in Sources */,
 				D97EA3C422F398AE00E71FEF /* LoginView.swift in Sources */,

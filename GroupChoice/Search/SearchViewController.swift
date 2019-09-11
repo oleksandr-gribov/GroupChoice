@@ -62,6 +62,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
                 self.placePins()
             }
         }
+        
     }
     
     func placePins() {
@@ -74,10 +75,9 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
 
             
             searchView.mapView.addAnnotation(placePin)
-//            print("Id: \(place.id), lat: \(place.geometry.location.latitude), lng: \(place.geometry.location.longitude)")
         }
     }
-   
+    
     
     // MARK: - CollectionView methods
     let collectionView: UICollectionView = {
@@ -104,7 +104,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
             
             cell.nameLabel.text = place.name
             if let addressText = place.address {
-                cell.addressLabel.text = place.address
+                cell.addressLabel.text = addressText
             } else {
                 cell.addressLabel.text = "Address not available"
             }
@@ -257,14 +257,14 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
 extension SearchViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
-        print (currentLocation)
+        
         if currentLocation == nil  {
             currentLocation = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
         }
         let userLocation = CLLocation(latitude: currentLocation!.latitude, longitude: currentLocation!.longitude)
         
         let distanceTo = userLocation.distance(from: location)
-        print (distanceTo)
+        
         if distanceTo > 500  {
             let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
             let region = MKCoordinateRegion(center: center, latitudinalMeters: regionInMeters, longitudinalMeters: regionInMeters)

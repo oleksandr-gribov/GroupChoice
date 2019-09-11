@@ -92,7 +92,7 @@ class PlaceDetailViewController: UIViewController, MKMapViewDelegate {
         print("map tapped")
         let nav = self.tabBarController?.viewControllers![3] as! UINavigationController
         let vc = nav.topViewController as! MapViewController
-        vc.coordinate = placeCoordinate
+        vc.currentUserLocation = placeCoordinate
         vc.place = place
         navigationController?.tabBarController?.selectedIndex = 3
     }

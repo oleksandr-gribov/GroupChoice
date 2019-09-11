@@ -10,31 +10,92 @@ import UIKit
 import MapKit
 import SnapKit
 
-class MapViewController: UIViewController {
+class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    var options = ["restaurant":GooglePlacesAPI.Endpoint.restaurant, "cafe":GooglePlacesAPI.Endpoint.cafe, "bar":GooglePlacesAPI.Endpoint.bar, "gym":GooglePlacesAPI.Endpoint.gym, "night club": GooglePlacesAPI.Endpoint.nightClub, "museum":GooglePlacesAPI.Endpoint.museum, "amusement park": GooglePlacesAPI.Endpoint.amusementPark, "art gallery": GooglePlacesAPI.Endpoint.artGallery, "park": GooglePlacesAPI.Endpoint.park, "bowling alley": GooglePlacesAPI.Endpoint.bowlingAlley]
+
     var mapView : MKMapView!
     var mainView: UIView!
-    var coordinate: CLLocationCoordinate2D?
+    var currentUserLocation: CLLocationCoordinate2D?
     var place: Place?
-    
+    var mapSearchView: MapSearchView!
+    var tableView: UITableView!
+    let optionsCellID = "optionsCell"
+    var optionsLabel: UILabel!
     let locationManager = CLLocationManager()
     
-  
-    override func viewWillAppear(_ animated: Bool) {
-        let tbvc = self.tabBarController as! TabBarViewController
+    // MARK: - View Life Cycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.navigationController?.navigationBar.isHidden = true
+        setupView()
+    
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: optionsCellID)
+        tableView.tableFooterView = UIView()
+        tableView.isScrollEnabled = false
         
-        centerMapOnLocation(center: coordinate)
-        let placePin = MKPointAnnotation()
-        if let coordinate = coordinate {
-            print (coordinate)
-            placePin.coordinate = coordinate
-            placePin.title = place?.name
-            mapView.addAnnotation(placePin)
-        }
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(labelTapped))
+        tapGestureRecognizer.numberOfTapsRequired = 1
+        optionsLabel.isUserInteractionEnabled = true
+        optionsLabel.addGestureRecognizer(tapGestureRecognizer)
+        
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
        
     }
-   
     
+    fileprivate func setupView() {
+        mapView = MKMapView(frame: view.bounds)
+        self.mapView.frame = self.view.bounds
+        view.addSubview(mapView)
+        mapSearchView = MapSearchView()
+        view.addSubview(mapSearchView)
+        mapSearchView.snp.makeConstraints { (make) in
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
+            make.top.equalToSuperview()
+            make.bottom.equalToSuperview().inset((self.tabBarController?.tabBar.frame.size.height)!)
+        }
+        view.bringSubviewToFront(mapSearchView)
+        
+        optionsLabel = mapSearchView.optionsLabel
+        tableView = mapSearchView.tableView
+    }
+    
+    // MARK: - Table View Methods
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return options.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: optionsCellID) as! UITableViewCell
+        let keys = Array(options.keys)
+        let item = keys[indexPath.row]
+        cell.textLabel?.text = item.capitalized
+        
+        return cell
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let index = indexPath.row
+        let keys = Array(options.keys)
+        let optionKey = keys[index]
+        let optionSelected = options[optionKey]
+        mapSearchView.optionsLabel.text = optionKey.capitalized
+        tableView.isHidden = true
+        
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let height = self.tableView.frame.height
+        let cellHeight = height/CGFloat(options.count)
+        return cellHeight
+    }
+   
+    // MARK: - Location methods
     func centerMapOnLocation(center: CLLocationCoordinate2D?) {
         
         if let center = center {
@@ -44,6 +105,8 @@ class MapViewController: UIViewController {
             if let location = locationManager.location?.coordinate {
                  let region = MKCoordinateRegion.init(center: location, latitudinalMeters: 500, longitudinalMeters: 2000)
                 mapView.setRegion(region, animated: true)
+                currentUserLocation = location
+                print ("current user location is: \(currentUserLocation)")
             }
         
         }
@@ -52,28 +115,13 @@ class MapViewController: UIViewController {
         locationManager.delegate = self as! CLLocationManagerDelegate
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
     }
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-
-        mainView = view
-        self.navigationItem.title = "Map"
-        self.navigationController?.navigationBar.prefersLargeTitles = true
-        let textAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white, NSAttributedString.Key.font: UIFont(name: "AvenirNext-DemiBold", size: 33)]
-        self.navigationController?.navigationBar.largeTitleTextAttributes = textAttributes
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        self.navigationController?.navigationBar.isTranslucent = true
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        
-        self.navigationItem.leftBarButtonItem?.isEnabled = false
-        mapView = MKMapView(frame: view.bounds)
-        self.mapView.frame = self.view.bounds
-        
-        view.addSubview(mapView)
-        
+   
     
-        
+    @objc func labelTapped() {
+        tableView.isHidden = false
     }
+    
+    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard annotation is MKPointAnnotation else {
             return nil
