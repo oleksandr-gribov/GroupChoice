@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 
 class MapSearchView: UIView {
     
@@ -45,8 +46,9 @@ class MapSearchView: UIView {
             make.left.equalToSuperview()
             make.bottom.equalToSuperview()
         }
-        bringSubviewToFront(optionsLabel)
-        bringSubviewToFront(locationLabel)
+        addSubview(mapView)
+        bringSubviewToFront(topSquare)
+        bringSubviewToFront(tableView)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -80,4 +82,10 @@ class MapSearchView: UIView {
         
         return tv
     }()
+    let mapView: MKMapView = {
+        let mp = MKMapView()
+        
+        return mp
+    }()
+    
 }

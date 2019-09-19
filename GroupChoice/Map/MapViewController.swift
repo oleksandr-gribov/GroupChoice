@@ -12,7 +12,7 @@ import SnapKit
 
 class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    var options = ["restaurant":GooglePlacesAPI.Endpoint.restaurant, "cafe":GooglePlacesAPI.Endpoint.cafe, "bar":GooglePlacesAPI.Endpoint.bar, "gym":GooglePlacesAPI.Endpoint.gym, "night club": GooglePlacesAPI.Endpoint.nightClub, "museum":GooglePlacesAPI.Endpoint.museum, "amusement park": GooglePlacesAPI.Endpoint.amusementPark, "art gallery": GooglePlacesAPI.Endpoint.artGallery, "park": GooglePlacesAPI.Endpoint.park, "bowling alley": GooglePlacesAPI.Endpoint.bowlingAlley]
+   
 
     var mapView : MKMapView!
     var mainView: UIView!
@@ -23,12 +23,15 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     let optionsCellID = "optionsCell"
     var optionsLabel: UILabel!
     let locationManager = CLLocationManager()
+    var placesNearby = [Place]()
+    var options = ["restaurant":GooglePlacesAPI.Endpoint.restaurant, "cafe":GooglePlacesAPI.Endpoint.cafe, "bar":GooglePlacesAPI.Endpoint.bar, "gym":GooglePlacesAPI.Endpoint.gym, "night club": GooglePlacesAPI.Endpoint.nightClub, "museum":GooglePlacesAPI.Endpoint.museum, "amusement park": GooglePlacesAPI.Endpoint.amusementPark, "art gallery": GooglePlacesAPI.Endpoint.artGallery, "park": GooglePlacesAPI.Endpoint.park, "bowling alley": GooglePlacesAPI.Endpoint.bowlingAlley]
     
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.isHidden = true
         setupView()
+        checkLocationServices()
     
         tableView.dataSource = self
         tableView.delegate = self
@@ -40,31 +43,27 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         tapGestureRecognizer.numberOfTapsRequired = 1
         optionsLabel.isUserInteractionEnabled = true
         optionsLabel.addGestureRecognizer(tapGestureRecognizer)
-        
-    }
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-        
        
     }
     
+    
     fileprivate func setupView() {
-        mapView = MKMapView(frame: view.bounds)
-        self.mapView.frame = self.view.bounds
-        view.addSubview(mapView)
+        
         mapSearchView = MapSearchView()
         view.addSubview(mapSearchView)
+        mapView = mapSearchView.mapView
+        self.mapView.frame = self.view.bounds
+       
         mapSearchView.snp.makeConstraints { (make) in
             make.left.equalToSuperview()
             make.right.equalToSuperview()
             make.top.equalToSuperview()
             make.bottom.equalToSuperview().inset((self.tabBarController?.tabBar.frame.size.height)!)
         }
-        view.bringSubviewToFront(mapSearchView)
-        
         optionsLabel = mapSearchView.optionsLabel
         tableView = mapSearchView.tableView
+     
+        mapView.isUserInteractionEnabled = true
     }
     
     // MARK: - Table View Methods
@@ -84,7 +83,11 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         let index = indexPath.row
         let keys = Array(options.keys)
         let optionKey = keys[index]
-        let optionSelected = options[optionKey]
+       
+        guard let endpointSelected = options[optionKey] else {
+            return
+        }
+        fetchPlaces(endpoint: endpointSelected)
         mapSearchView.optionsLabel.text = optionKey.capitalized
         tableView.isHidden = true
         
@@ -93,6 +96,45 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         let height = self.tableView.frame.height
         let cellHeight = height/CGFloat(options.count)
         return cellHeight
+    }
+    // MARK: - Fetching data
+    func fetchPlaces(endpoint: GooglePlacesAPI.Endpoint) {
+        self.placesNearby.removeAll()
+        guard let currentLocation = currentUserLocation else {
+            print ("no location in fetchPlaces()")
+            return
+        }
+        guard let url = GooglePlacesAPI.makeUrl(endpoint: endpoint, radius: 500, coordinate: currentLocation) else {
+            print("couldnt construct url")
+            return
+        }
+        print(url)
+        Network.fetchGenericData(url: url) { (response: Response) in
+            for place in response.results {
+                if !(self.placesNearby.contains(place)) {
+                    self.placesNearby.append(place)
+                }
+            }
+            DispatchQueue.main.async {
+                self.placePins()
+            }
+        }
+        
+    }
+    
+    func placePins() {
+        let mapAnnotations = mapView.annotations
+        mapView.removeAnnotations(mapAnnotations)
+        for place in placesNearby {
+            let placePin = MKPointAnnotation()
+            let placeCoordinate = CLLocationCoordinate2D(latitude: Double(place.geometry.location.latitude), longitude: Double(place.geometry.location.longitude))
+            
+            placePin.coordinate = placeCoordinate
+            placePin.title = place.name
+            
+            
+            self.mapView.addAnnotation(placePin)
+        }
     }
    
     // MARK: - Location methods
@@ -114,6 +156,14 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     func setupLocationManager() {
         locationManager.delegate = self as! CLLocationManagerDelegate
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
+    }
+    func checkLocationServices() {
+        if CLLocationManager.locationServicesEnabled() {
+            setupLocationManager()
+            checkLocationAuthorization()
+        } else {
+            // show alert to user to turn it on
+        }
     }
    
     
@@ -165,10 +215,15 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 // MARK: - Extensions
 extension MapViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location = locations.last else { return }
+        guard let location = locations.last else {
+            print ("no location in didUpdateLocations")
+            return }
         let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
         let region = MKCoordinateRegion(center: center, latitudinalMeters: 1000, longitudinalMeters: 1000)
         mapView.setRegion(region, animated: true)
+        currentUserLocation = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+  
+        print ("current location in MapVC is: \(currentUserLocation)")
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {

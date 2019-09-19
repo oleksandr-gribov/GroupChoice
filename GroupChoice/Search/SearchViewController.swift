@@ -35,8 +35,12 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         mapView = searchView.mapView
         mapView.delegate = self
         setupView()
-        checkLocationServices()
+       
 
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+         checkLocationServices()
     }
  
     
@@ -222,8 +226,8 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         switch CLLocationManager.authorizationStatus() {
         case .authorizedWhenInUse:
             searchView.mapView.showsUserLocation = true
-            centerViewOnUserLocation()
             locationManager.startUpdatingLocation()
+            centerViewOnUserLocation()
             fetchPlaces()
             break
         case .denied:
@@ -272,6 +276,8 @@ extension SearchViewController: CLLocationManagerDelegate {
             let newUserLocation = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
             currentLocation = newUserLocation
             fetchPlaces()
+            centerViewOnUserLocation()
+
         }
     }
     

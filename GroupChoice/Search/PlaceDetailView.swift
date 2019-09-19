@@ -25,8 +25,7 @@ class PlaceDetailView: UIView {
     
     func setupView() {
         
-        
-        let subviews = [imageView, nameLabel, addressLabel, descriptionTypes,openNow, locationPin, starPin, ratingLabel, distanceLabel, mapView, testLabel]
+        let subviews = [imageView, nameLabel, addressLabel, descriptionTypes,openNow, locationPin, starPin, ratingLabel, distanceLabel, mapView]
         
         subviews.forEach { [weak self] in
             addSubview($0)
@@ -64,15 +63,12 @@ class PlaceDetailView: UIView {
         }
         
         mapView.snp.makeConstraints { (make) in
-            make.top.equalTo(addressLabel.snp.bottom).offset(10)
+            make.bottom.equalToSuperview().inset(20)
             make.left.equalToSuperview().inset(20)
             make.height.equalTo(200)
             make.right.equalToSuperview().offset(-20)
         }
-        testLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(mapView.snp_bottom).offset(200)
-            make.left.equalToSuperview().inset(20)
-        }
+        
         
         
     }
@@ -109,17 +105,6 @@ class PlaceDetailView: UIView {
         return lbl
     }()
     
-    let testLabel: UILabel = {
-        let lbl = UILabel()
-        lbl.text = "Testing label text"
-        lbl.font = lbl.font.withSize(18)
-        lbl.textColor = .gray
-        lbl.adjustsFontSizeToFitWidth = false
-        lbl.lineBreakMode = .byWordWrapping
-        lbl.numberOfLines = 0
-        
-        return lbl
-    }()
     let descriptionTypes: UILabel = {
         let lbl = UILabel()
         lbl.text = "Coffee, Bar, Cool place"

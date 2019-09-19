@@ -38,10 +38,11 @@ class PlaceDetailViewController: UIViewController, MKMapViewDelegate {
         
         detailView = PlaceDetailView()
         view.addSubview(detailView)
+        //self.view.frame = self.view.bounds
         detailView.snp.makeConstraints { (make) in
             make.top.equalToSuperview()
             make.left.equalToSuperview()
-            make.bottom.equalToSuperview().inset(30)
+            make.bottom.equalToSuperview().inset((self.tabBarController?.tabBar.frame.size.height)!)
             make.right.equalToSuperview()
             
         }
@@ -78,24 +79,12 @@ class PlaceDetailViewController: UIViewController, MKMapViewDelegate {
         detailView.mapView.isUserInteractionEnabled = true
        
         
-        let tapgestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(mapTapped))
-        tapgestureRecognizer.numberOfTapsRequired = 1
-        
-        detailView.mapView.addGestureRecognizer(tapgestureRecognizer)
-
         centerMapOnLocation()
     }
     @objc func testingClicked() {
         print ("Button clicked")
     }
-    @objc func mapTapped() {
-        print("map tapped")
-        let nav = self.tabBarController?.viewControllers![3] as! UINavigationController
-        let vc = nav.topViewController as! MapViewController
-        vc.currentUserLocation = placeCoordinate
-        vc.place = place
-        navigationController?.tabBarController?.selectedIndex = 3
-    }
+    
     
     func typesDescription() -> String {
         let types = place.types
@@ -145,16 +134,5 @@ class PlaceDetailViewController: UIViewController, MKMapViewDelegate {
         let region = MKCoordinateRegion.init(center: placeCoordinate, latitudinalMeters: 500, longitudinalMeters: 500)
         detailView.mapView.setRegion(region, animated: true)
     }
-
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
