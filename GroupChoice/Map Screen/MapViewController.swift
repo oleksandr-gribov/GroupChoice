@@ -110,14 +110,24 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         }
         print(url)
         Network.fetchGenericData(url: url) { (response: Response) in
-            for place in response.results {
-                if !(self.placesNearby.contains(place)) {
-                    self.placesNearby.append(place)
+            if response.results.count != 0 {
+                for place in response.results {
+                    if !(self.placesNearby.contains(place)) {
+                        self.placesNearby.append(place)
+                    }
+                }
+                DispatchQueue.main.async {
+                    self.placePins()
+                }
+            } else {
+                // display an alert
+                DispatchQueue.main.async {
+                     var alert = UIAlertController(title: "No results found", message: "Sorry, there are no results in the specified location", preferredStyle: UIAlertController.Style.alert)
+                    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
                 }
             }
-            DispatchQueue.main.async {
-                self.placePins()
-            }
+            
         }
         
     }
@@ -148,7 +158,7 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
                  let region = MKCoordinateRegion.init(center: location, latitudinalMeters: 500, longitudinalMeters: 2000)
                 mapView.setRegion(region, animated: true)
                 currentUserLocation = location
-                print ("current user location is: \(currentUserLocation)")
+                
             }
         
         }
@@ -223,7 +233,7 @@ extension MapViewController: CLLocationManagerDelegate {
         mapView.setRegion(region, animated: true)
         currentUserLocation = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
   
-        print ("current location in MapVC is: \(currentUserLocation)")
+        
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {

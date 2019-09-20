@@ -29,7 +29,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         collectionView.register(PlacesCell.self, forCellWithReuseIdentifier: placesCellId)
-        
+        self.collectionView.allowsSelection = true
         setupNavBar()
         searchView = SearchView()
         mapView = searchView.mapView
@@ -71,12 +71,13 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     func placePins() {
         for place in placesNearby {
-            let placePin = MKPointAnnotation()
+            let placePin = CustomMapAnnotation()
+            let indexOfPlace = placesNearby.firstIndex(of: place)
+            placePin.index = indexOfPlace
             let placeCoordinate = CLLocationCoordinate2D(latitude: Double(place.geometry.location.latitude), longitude: Double(place.geometry.location.longitude))
             
             placePin.coordinate = placeCoordinate
             placePin.title = place.name
-
             
             searchView.mapView.addAnnotation(placePin)
         }
@@ -144,6 +145,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print ("index path of the collection view cell selected: \(indexPath)")
         let place = placesNearby[indexPath.row]
         let detailVC = PlaceDetailViewController()
         detailVC.place = place
@@ -208,6 +210,13 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     
     // MARK: - MapKit methods
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        if let annotation = view.annotation as? CustomMapAnnotation {
+            let indexPath = IndexPath(row: annotation.index!, section: 0)
+            self.collectionView.selectItem(at: indexPath, animated: true, scrollPosition: UICollectionView.ScrollPosition.centeredHorizontally)
+        }
+    }
+    
     func checkLocationServices() {
         if CLLocationManager.locationServicesEnabled() {
             setupLocationManager()

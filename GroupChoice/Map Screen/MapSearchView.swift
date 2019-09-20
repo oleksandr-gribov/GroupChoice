@@ -67,7 +67,9 @@ class MapSearchView: UIView {
         let lbl = UILabel()
         lbl.text = "Restaurant, bars, movies, etc"
         lbl.backgroundColor = .white
-        lbl.isUserInteractionEnabled = true 
+        lbl.isUserInteractionEnabled = true
+        lbl.layer.cornerRadius = 10
+        lbl.layer.masksToBounds = true
         return lbl
     }()
     
@@ -75,6 +77,9 @@ class MapSearchView: UIView {
         let lbl = UILabel()
         lbl.text = "Current Location"
         lbl.backgroundColor = .white
+        lbl.layer.cornerRadius = 10
+        lbl.layer.masksToBounds = true
+       
         return lbl
     }()
     let tableView: UITableView = {
@@ -84,8 +89,8 @@ class MapSearchView: UIView {
     }()
     let mapView: MKMapView = {
         let mp = MKMapView()
-        
         return mp
     }()
+  
     
 }

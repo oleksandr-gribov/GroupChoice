@@ -18,6 +18,7 @@
 		D96FA469230B279F003E9214 /* PlaceDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96FA468230B279F003E9214 /* PlaceDetailViewController.swift */; };
 		D96FA46B230B27B6003E9214 /* PlaceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96FA46A230B27B6003E9214 /* PlaceDetailView.swift */; };
 		D97D53242326FE7100B4FD51 /* MapSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D97D53232326FE7100B4FD51 /* MapSearchView.swift */; };
+		D97D9F2523354CBA007A0C48 /* CustomMapAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D97D9F2423354CBA007A0C48 /* CustomMapAnnotation.swift */; };
 		D97EA3C422F398AE00E71FEF /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D97EA3C322F398AE00E71FEF /* LoginView.swift */; };
 		D97EA3C622F3993200E71FEF /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D97EA3C522F3993200E71FEF /* LoginViewController.swift */; };
 		D97EA3C922F3A2EA00E71FEF /* UITextField+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D97EA3C822F3A2EA00E71FEF /* UITextField+Extension.swift */; };
@@ -50,6 +51,7 @@
 		D96FA468230B279F003E9214 /* PlaceDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailViewController.swift; sourceTree = "<group>"; };
 		D96FA46A230B27B6003E9214 /* PlaceDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailView.swift; sourceTree = "<group>"; };
 		D97D53232326FE7100B4FD51 /* MapSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSearchView.swift; sourceTree = "<group>"; };
+		D97D9F2423354CBA007A0C48 /* CustomMapAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMapAnnotation.swift; sourceTree = "<group>"; };
 		D97EA3C322F398AE00E71FEF /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		D97EA3C522F3993200E71FEF /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D97EA3C822F3A2EA00E71FEF /* UITextField+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extension.swift"; sourceTree = "<group>"; };
@@ -95,16 +97,16 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		D91C938722F2548A005113D9 /* Login */ = {
+		D91C938722F2548A005113D9 /* Login Screen */ = {
 			isa = PBXGroup;
 			children = (
 				D97EA3C322F398AE00E71FEF /* LoginView.swift */,
 				D97EA3C522F3993200E71FEF /* LoginViewController.swift */,
 			);
-			path = Login;
+			path = "Login Screen";
 			sourceTree = "<group>";
 		};
-		D91C938822F25494005113D9 /* Search */ = {
+		D91C938822F25494005113D9 /* Search Screen */ = {
 			isa = PBXGroup;
 			children = (
 				D9AB6A1F22F24D0F001101D1 /* SearchViewController.swift */,
@@ -112,34 +114,35 @@
 				D9EB973F2305B81B00D5E8CB /* PlacesCell.swift */,
 				D9EB97412305C7C400D5E8CB /* SearchView.swift */,
 				D96FA46A230B27B6003E9214 /* PlaceDetailView.swift */,
+				D97D9F2423354CBA007A0C48 /* CustomMapAnnotation.swift */,
 			);
-			path = Search;
+			path = "Search Screen";
 			sourceTree = "<group>";
 		};
-		D91C938922F254A2005113D9 /* Messages */ = {
+		D91C938922F254A2005113D9 /* Messages Screen */ = {
 			isa = PBXGroup;
 			children = (
 				D9AB6A2122F24D6C001101D1 /* MessagesViewController.swift */,
 				D93C11A222F9E9DA00CDD7E3 /* NewMessageViewController.swift */,
 			);
-			path = Messages;
+			path = "Messages Screen";
 			sourceTree = "<group>";
 		};
-		D91C938A22F254AE005113D9 /* Settings */ = {
+		D91C938A22F254AE005113D9 /* Settings Screen */ = {
 			isa = PBXGroup;
 			children = (
 				D9AB6A2522F25233001101D1 /* SettingsViewController.swift */,
 			);
-			path = Settings;
+			path = "Settings Screen";
 			sourceTree = "<group>";
 		};
-		D91C938B22F254C1005113D9 /* Map */ = {
+		D91C938B22F254C1005113D9 /* Map Screen */ = {
 			isa = PBXGroup;
 			children = (
 				D9AB6A2322F24D9F001101D1 /* MapViewController.swift */,
 				D97D53232326FE7100B4FD51 /* MapSearchView.swift */,
 			);
-			path = Map;
+			path = "Map Screen";
 			sourceTree = "<group>";
 		};
 		D91C938D22F2574A005113D9 /* Main */ = {
@@ -182,16 +185,16 @@
 			isa = PBXGroup;
 			children = (
 				D91FD0DA22FBF098009A9305 /* Network */,
-				D9617A1722F5173A0031F0B6 /* Sign Up */,
-				D9617A1422F4FC910031F0B6 /* CreatePoll */,
+				D9617A1722F5173A0031F0B6 /* Sign Up Screen */,
+				D9617A1422F4FC910031F0B6 /* CreatePoll Screen */,
 				D97EA3C722F3A2D300E71FEF /* Extensions */,
 				D91C938D22F2574A005113D9 /* Main */,
-				D91C938922F254A2005113D9 /* Messages */,
-				D91C938822F25494005113D9 /* Search */,
-				D91C938722F2548A005113D9 /* Login */,
+				D91C938922F254A2005113D9 /* Messages Screen */,
+				D91C938822F25494005113D9 /* Search Screen */,
+				D91C938722F2548A005113D9 /* Login Screen */,
 				D91C938622F2546F005113D9 /* Model */,
-				D91C938B22F254C1005113D9 /* Map */,
-				D91C938A22F254AE005113D9 /* Settings */,
+				D91C938B22F254C1005113D9 /* Map Screen */,
+				D91C938A22F254AE005113D9 /* Settings Screen */,
 				D9AB6A2722F25402001101D1 /* Assets */,
 				D94816AA22F15D9A00B8311E /* Info.plist */,
 				D9CE424322F9B88E007ADE07 /* GoogleService-Info.plist */,
@@ -200,21 +203,21 @@
 			path = GroupChoice;
 			sourceTree = "<group>";
 		};
-		D9617A1422F4FC910031F0B6 /* CreatePoll */ = {
+		D9617A1422F4FC910031F0B6 /* CreatePoll Screen */ = {
 			isa = PBXGroup;
 			children = (
 				D9617A1522F4FCAC0031F0B6 /* CreatePollViewController.swift */,
 			);
-			path = CreatePoll;
+			path = "CreatePoll Screen";
 			sourceTree = "<group>";
 		};
-		D9617A1722F5173A0031F0B6 /* Sign Up */ = {
+		D9617A1722F5173A0031F0B6 /* Sign Up Screen */ = {
 			isa = PBXGroup;
 			children = (
 				D9617A1822F5190E0031F0B6 /* SignUpViewController.swift */,
 				D9617A1A22F519AE0031F0B6 /* SignUpView.swift */,
 			);
-			path = "Sign Up";
+			path = "Sign Up Screen";
 			sourceTree = "<group>";
 		};
 		D97EA3C722F3A2D300E71FEF /* Extensions */ = {
@@ -367,6 +370,7 @@
 				D9AB6A2022F24D0F001101D1 /* SearchViewController.swift in Sources */,
 				D98D41AA2306FC4100489C58 /* GooglePlacesAPI.swift in Sources */,
 				D97EA3C622F3993200E71FEF /* LoginViewController.swift in Sources */,
+				D97D9F2523354CBA007A0C48 /* CustomMapAnnotation.swift in Sources */,
 				D93C11A322F9E9DA00CDD7E3 /* NewMessageViewController.swift in Sources */,
 				D9AB6A2222F24D6C001101D1 /* MessagesViewController.swift in Sources */,
 				D9617A1622F4FCAC0031F0B6 /* CreatePollViewController.swift in Sources */,
