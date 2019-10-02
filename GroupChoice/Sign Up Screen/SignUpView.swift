@@ -24,33 +24,31 @@ class SignUpView: UIView {
     func setup() {
         addSubview(backgroundImageView)
         backgroundImageView.snp.makeConstraints { (make) in
-            make.trailing.equalToSuperview()
-            make.leading.equalToSuperview()
-            make.top.equalToSuperview()
-            make.bottom.equalToSuperview()
+            make.edges.equalToSuperview()
         }
         let stackView = mainStackView()
         
         addSubview(stackView)
         stackView.snp.makeConstraints { (make) in
-            make.center.equalToSuperview()
-            make.height.equalTo(245)
-            make.width.equalTo(277)
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().offset(UIScreen.main.bounds.size.height * 0.12)
+            make.height.equalToSuperview().multipliedBy(0.38)
+            make.width.equalToSuperview().multipliedBy(0.7)
             
         }
         addSubview(signUpButton)
         signUpButton.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-90)
-            make.height.equalTo(52)
-            make.width.equalTo(130)
+            make.top.equalTo(stackView.snp.bottom).offset(20)
+            make.height.equalToSuperview().multipliedBy(0.07)
+            make.width.equalToSuperview().multipliedBy(0.4)
         }
-       
+
     }
     
     let backgroundImageView: UIImageView =  {
         let iv = UIImageView()
-        iv.image = UIImage(named: "aerial-architecture-blue-sky-466685")
+        iv.image = UIImage(named: "architectural-design-architecture-birds-eye-view-1722183")
         iv.contentMode = .scaleAspectFill
         
         return iv
@@ -95,10 +93,6 @@ class SignUpView: UIView {
         stv.axis = .vertical
         stv.distribution = .fillEqually
         stv.spacing = 10
-        
-    
-        
-        
         return stv
     }
 }

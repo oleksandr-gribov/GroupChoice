@@ -20,25 +20,24 @@ class MapSearchView: UIView {
             make.left.equalToSuperview()
             make.right.equalToSuperview()
             make.top.equalToSuperview()
-            make.height.equalTo(100)
+            make.height.equalTo(50)
         }
         topSquare.addSubview(optionsLabel)
         
         optionsLabel.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().inset(20)
-            make.right.equalToSuperview().inset(20)
-            make.top.equalToSuperview().inset(20)
-            make.height.equalToSuperview().multipliedBy(0.3)
+            make.center.equalToSuperview()
+            make.width.equalToSuperview().multipliedBy(0.95)
+            make.height.equalToSuperview().multipliedBy(0.75)
         }
         
-        topSquare.addSubview(locationLabel)
-        
-        locationLabel.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().inset(20)
-            make.right.equalToSuperview().inset(20)
-            make.top.equalTo(optionsLabel.snp.bottom).offset(10)
-            make.height.equalToSuperview().multipliedBy(0.3)
-        }
+       // topSquare.addSubview(locationLabel)
+//
+//        //locationLabel.snp.makeConstraints { (make) in
+//            make.left.equalToSuperview().inset(20)
+//            make.right.equalToSuperview().inset(20)
+//            make.top.equalTo(optionsLabel.snp.bottom).offset(10)
+//            make.height.equalToSuperview().multipliedBy(0.3)
+//        }
         addSubview(tableView)
         tableView.snp.makeConstraints { (make) in
             make.top.equalTo(topSquare.snp.bottom)
@@ -63,19 +62,21 @@ class MapSearchView: UIView {
         return iv 
     }()
     
-    let optionsLabel: UILabel = {
-        let lbl = UILabel()
-        lbl.text = "Restaurant, bars, movies, etc"
+    let optionsLabel: UITextField = {
+        let lbl = UITextField()
+        lbl.placeholder = "Restaurant, bars, movies, etc"
         lbl.backgroundColor = .white
         lbl.isUserInteractionEnabled = true
         lbl.layer.cornerRadius = 10
         lbl.layer.masksToBounds = true
+        lbl.keyboardType = UIKeyboardType.webSearch
         return lbl
     }()
     
     let locationLabel: UILabel = {
         let lbl = UILabel()
         lbl.text = "Current Location"
+        lbl.textColor = UIColor(displayP3Red: 0/255, green: 122/255, blue: 255/255, alpha: 1)
         lbl.backgroundColor = .white
         lbl.layer.cornerRadius = 10
         lbl.layer.masksToBounds = true

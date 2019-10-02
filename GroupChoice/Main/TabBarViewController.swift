@@ -15,20 +15,20 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
         super.viewDidLoad()
         self.delegate = self
         
-        let messagesViewController = UINavigationController(rootViewController: MessagesViewController())
+        let messagesViewController = UINavigationController(rootViewController: AllMessagesViewController())
         messagesViewController.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "message_grey"), selectedImage: #imageLiteral(resourceName: "message_blue"))
         
         let searchViewController = UINavigationController(rootViewController:SearchViewController())
         let textAttributes = [NSAttributedString.Key.foregroundColor : UIColor.red, NSAttributedString.Key.font: UIFont(name: "Avenir Next", size: 25)]
         self.navigationController?.navigationBar.titleTextAttributes = textAttributes
 
-        searchViewController.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "search_grey"), selectedImage: #imageLiteral(resourceName: "search_blue"))
+        searchViewController.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "map_grey"), selectedImage: #imageLiteral(resourceName: "map_blue"))
         
         let createPollViewController =  CreatePollViewController()
         createPollViewController.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "FAB"), selectedImage: #imageLiteral(resourceName: "FAB"))
         
         let mapViewController = UINavigationController(rootViewController: MapViewController())
-        mapViewController.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "map_grey"), selectedImage: #imageLiteral(resourceName: "map_blue"))
+        mapViewController.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "search_grey"), selectedImage: #imageLiteral(resourceName: "search_blue"))
         
         let settingsViewController = UINavigationController(rootViewController: SettingsViewController())
         settingsViewController.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "Account_grey"), selectedImage: #imageLiteral(resourceName: "account_blue"))
@@ -37,10 +37,7 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
         
         viewControllers = viewControllerList
         tabBar.barTintColor = .white
-        
-        // comment
-        
-       
+   
     }
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         if viewController.isKind(of: CreatePollViewController.self)  {

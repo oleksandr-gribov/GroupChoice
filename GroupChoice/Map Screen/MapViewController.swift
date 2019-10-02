@@ -10,10 +10,8 @@ import UIKit
 import MapKit
 import SnapKit
 
-class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     
-   
-
     var mapView : MKMapView!
     var mainView: UIView!
     var currentUserLocation: CLLocationCoordinate2D?
@@ -21,7 +19,7 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     var mapSearchView: MapSearchView!
     var tableView: UITableView!
     let optionsCellID = "optionsCell"
-    var optionsLabel: UILabel!
+    var optionsTextField: UITextField!
     let locationManager = CLLocationManager()
     var placesNearby = [Place]()
     var options = ["restaurant":GooglePlacesAPI.Endpoint.restaurant, "cafe":GooglePlacesAPI.Endpoint.cafe, "bar":GooglePlacesAPI.Endpoint.bar, "gym":GooglePlacesAPI.Endpoint.gym, "night club": GooglePlacesAPI.Endpoint.nightClub, "museum":GooglePlacesAPI.Endpoint.museum, "amusement park": GooglePlacesAPI.Endpoint.amusementPark, "art gallery": GooglePlacesAPI.Endpoint.artGallery, "park": GooglePlacesAPI.Endpoint.park, "bowling alley": GooglePlacesAPI.Endpoint.bowlingAlley]
@@ -29,24 +27,57 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.isHidden = true
+        
         setupView()
-        checkLocationServices()
+        let cancelBarButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelSearch))
+        cancelBarButton.tintColor = .white
+         let searchButton = UIBarButtonItem(title: "Search", style: .plain, target: self, action: #selector(performSearch))
+        searchButton.tintColor = .white
+        
+        
     
+        self.navigationItem.leftBarButtonItem = cancelBarButton
+        self.navigationItem.rightBarButtonItem = searchButton
+        self.navigationController?.navigationBar.barTintColor = UIColor(displayP3Red: 150/255, green: 211/255, blue: 255/255, alpha: 1.0)
+        
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: optionsCellID)
         tableView.tableFooterView = UIView()
         tableView.isScrollEnabled = false
         
+        optionsTextField.delegate = self
+        
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(labelTapped))
         tapGestureRecognizer.numberOfTapsRequired = 1
-        optionsLabel.isUserInteractionEnabled = true
-        optionsLabel.addGestureRecognizer(tapGestureRecognizer)
+        optionsTextField.isUserInteractionEnabled = true
+        optionsTextField.addGestureRecognizer(tapGestureRecognizer)
        
     }
-    
-    
+    @objc func cancelSearch() {
+        self.tableView.isHidden = true
+        self.optionsTextField.resignFirstResponder()
+    }
+    @objc func performSearch() {
+        searchByQuery()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        checkLocationServices()
+        
+    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        searchByQuery()
+        return true
+    }
+  
+    func searchByQuery() {
+        tableView.isHidden = true
+        optionsTextField.resignFirstResponder()
+        let queryText = optionsTextField.text?.trimmingCharacters(in: .whitespaces)
+        fetchPlaces(endpoint: .general, keyword: queryText)
+    }
+   
     fileprivate func setupView() {
         
         mapSearchView = MapSearchView()
@@ -57,10 +88,10 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         mapSearchView.snp.makeConstraints { (make) in
             make.left.equalToSuperview()
             make.right.equalToSuperview()
-            make.top.equalToSuperview()
+            make.top.equalTo(topLayoutGuide.snp.bottom)
             make.bottom.equalToSuperview().inset((self.tabBarController?.tabBar.frame.size.height)!)
         }
-        optionsLabel = mapSearchView.optionsLabel
+        optionsTextField = mapSearchView.optionsLabel
         tableView = mapSearchView.tableView
      
         mapView.isUserInteractionEnabled = true
@@ -87,7 +118,7 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         guard let endpointSelected = options[optionKey] else {
             return
         }
-        fetchPlaces(endpoint: endpointSelected)
+        fetchPlaces(endpoint: endpointSelected, keyword: nil)
         mapSearchView.optionsLabel.text = optionKey.capitalized
         tableView.isHidden = true
         
@@ -98,16 +129,19 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         return cellHeight
     }
     // MARK: - Fetching data
-    func fetchPlaces(endpoint: GooglePlacesAPI.Endpoint) {
+    func fetchPlaces(endpoint: GooglePlacesAPI.Endpoint, keyword: String?) {
         self.placesNearby.removeAll()
         guard let currentLocation = currentUserLocation else {
             print ("no location in fetchPlaces()")
             return
         }
-        guard let url = GooglePlacesAPI.makeUrl(endpoint: endpoint, radius: 500, coordinate: currentLocation) else {
-            print("couldnt construct url")
-            return
+        
+        guard let url = GooglePlacesAPI.makeUrl(endpoint: endpoint, radius: 2000, coordinate: currentLocation, keyword: keyword) else {
+                print("couldnt construct url")
+                return
         }
+        
+        
         print(url)
         Network.fetchGenericData(url: url) { (response: Response) in
             if response.results.count != 0 {
@@ -122,15 +156,14 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
             } else {
                 // display an alert
                 DispatchQueue.main.async {
-                     var alert = UIAlertController(title: "No results found", message: "Sorry, there are no results in the specified location", preferredStyle: UIAlertController.Style.alert)
+                    let alert = UIAlertController(title: "No results found", message: "Sorry, there are no results in the specified location", preferredStyle: UIAlertController.Style.alert)
                     alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
                     self.present(alert, animated: true, completion: nil)
                 }
             }
-            
         }
-        
     }
+    
     
     func placePins() {
         let mapAnnotations = mapView.annotations
@@ -151,11 +184,11 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     func centerMapOnLocation(center: CLLocationCoordinate2D?) {
         
         if let center = center {
-             let region = MKCoordinateRegion.init(center: center, latitudinalMeters: 500, longitudinalMeters: 500)
+             let region = MKCoordinateRegion.init(center: center, latitudinalMeters: 4000, longitudinalMeters: 4000)
             mapView.setRegion(region, animated: true)
         } else {
             if let location = locationManager.location?.coordinate {
-                 let region = MKCoordinateRegion.init(center: location, latitudinalMeters: 500, longitudinalMeters: 2000)
+                 let region = MKCoordinateRegion.init(center: location, latitudinalMeters: 4000, longitudinalMeters: 4000)
                 mapView.setRegion(region, animated: true)
                 currentUserLocation = location
                 
@@ -229,7 +262,7 @@ extension MapViewController: CLLocationManagerDelegate {
             print ("no location in didUpdateLocations")
             return }
         let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-        let region = MKCoordinateRegion(center: center, latitudinalMeters: 1000, longitudinalMeters: 1000)
+        let region = MKCoordinateRegion(center: center, latitudinalMeters: 4000, longitudinalMeters: 4000)
         mapView.setRegion(region, animated: true)
         currentUserLocation = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
   
@@ -237,5 +270,18 @@ extension MapViewController: CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .authorizedWhenInUse || status == .authorizedAlways {
+            locationManager.startUpdatingLocation()
+            print ("now authorized")
+            
+        }
+        if status == .denied {
+            let alert = UIAlertController(title: "Location disabled", message: "We need your location to show you nearby places", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "Enable Location Services", style: UIAlertAction.Style.default, handler: { (alert: UIAlertAction!) in
+                print("")
+                UIApplication.shared.openURL(NSURL(string:UIApplication.openSettingsURLString)! as URL)
+            }))
+            self.present(alert,animated: true, completion: nil)
+        }
     }
 }

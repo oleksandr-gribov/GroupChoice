@@ -18,6 +18,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        ref = Database.database().reference()
         setNavbar()
         setupView()
         setTextFieldDelegate()
@@ -72,9 +73,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         signUpView = SignUpView()
         view.addSubview(signUpView)
         signUpView.snp.makeConstraints { (make) in
-            make.trailing.equalToSuperview()
-            make.leading.equalToSuperview()
-            make.center.equalToSuperview()
+            make.edges.equalToSuperview()
         }
         
     }
@@ -84,7 +83,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
         self.navigationItem.title = "Sign Up"
-        let textAttributes = [NSAttributedString.Key.foregroundColor : UIColor.red]
+        let textAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
         self.navigationController?.navigationBar.titleTextAttributes = textAttributes
         
     }

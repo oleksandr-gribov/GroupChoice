@@ -30,36 +30,32 @@ class LoginView: UIView {
     func setup() {
         addSubview(backgroundImageView)
         backgroundImageView.snp.makeConstraints { (make) in
-            make.trailing.equalToSuperview()
-            make.leading.equalToSuperview()
-            make.top.equalToSuperview()
-            make.bottom.equalToSuperview()
+            make.edges.equalToSuperview()
         }
         let stackView = mainStackView()
         
         addSubview(stackView)
         stackView.snp.makeConstraints { (make) in
-            make.center.equalToSuperview()
-            //make.leading.equalToSuperview().offset(62)
-            //make.trailing.equalToSuperview().offset(-62)
-            make.height.equalTo(142)
-            make.width.equalTo(275)
+            make.centerX.equalToSuperview()
+            make.height.equalToSuperview().multipliedBy(0.2)
+            make.width.equalToSuperview().multipliedBy(0.7)
+            make.top.equalToSuperview().offset(UIScreen.main.bounds.size.height * 0.25)
             
         }
         addSubview(loginButton)
         loginButton.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.leading.equalToSuperview().offset(128)
-            make.trailing.equalToSuperview().offset(-128)
-            make.bottom.equalToSuperview().offset(-181)
-            make.height.equalTo(52)
+            //make.leading.equalToSuperview().offset(50)
+            make.top.equalTo(stackView.snp.bottom).offset(20)
+            make.height.equalToSuperview().multipliedBy(0.07)
+            make.width.equalToSuperview().multipliedBy(0.4)
         }
         let smallerStack = smallerStackView()
         addSubview(smallerStack)
         smallerStack.snp.makeConstraints { (make) in
             make.height.equalTo(29)
             make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-106)
+            make.top.equalTo(loginButton.snp.bottom).offset(15)
             make.width.equalTo(232)
        
         }
@@ -67,7 +63,7 @@ class LoginView: UIView {
     
     let backgroundImageView: UIImageView =  {
         let iv = UIImageView()
-        iv.image = UIImage(named: "aerial-architecture-blue-sky-466685")
+        iv.image = UIImage(named: "architectural-design-architecture-birds-eye-view-1722183")
         iv.contentMode = .scaleAspectFill
         
         return iv

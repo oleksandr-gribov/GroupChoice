@@ -8,10 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		C0189E202E2A93AC51487E8A /* Pods_GroupChoice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CD39B424430F76A372E889D /* Pods_GroupChoice.framework */; };
+		D90E56D0233E699900FC5852 /* ChatLogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90E56CF233E699900FC5852 /* ChatLogViewController.swift */; };
+		D90E56D2233E79AE00FC5852 /* ChatLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90E56D1233E79AE00FC5852 /* ChatLogView.swift */; };
 		D91C938F22F2579C005113D9 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91C938E22F2579C005113D9 /* TabBarViewController.swift */; };
 		D91C939122F25AE8005113D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91C939022F25AE8005113D9 /* AppDelegate.swift */; };
 		D91FD0DC22FBF0A8009A9305 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91FD0DB22FBF0A8009A9305 /* Network.swift */; };
 		D93C11A322F9E9DA00CDD7E3 /* NewMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93C11A222F9E9DA00CDD7E3 /* NewMessageViewController.swift */; };
+		D94A7727233BA54C00A5831C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94A7726233BA54C00A5831C /* User.swift */; };
 		D9617A1622F4FCAC0031F0B6 /* CreatePollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9617A1522F4FCAC0031F0B6 /* CreatePollViewController.swift */; };
 		D9617A1922F5190E0031F0B6 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9617A1822F5190E0031F0B6 /* SignUpViewController.swift */; };
 		D9617A1B22F519AE0031F0B6 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9617A1A22F519AE0031F0B6 /* SignUpView.swift */; };
@@ -25,7 +28,7 @@
 		D98D41A82306FB3F00489C58 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98D41A72306FB3F00489C58 /* Place.swift */; };
 		D98D41AA2306FC4100489C58 /* GooglePlacesAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98D41A92306FC4100489C58 /* GooglePlacesAPI.swift */; };
 		D9AB6A2022F24D0F001101D1 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AB6A1F22F24D0F001101D1 /* SearchViewController.swift */; };
-		D9AB6A2222F24D6C001101D1 /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AB6A2122F24D6C001101D1 /* MessagesViewController.swift */; };
+		D9AB6A2222F24D6C001101D1 /* AllMessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AB6A2122F24D6C001101D1 /* AllMessagesViewController.swift */; };
 		D9AB6A2422F24D9F001101D1 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AB6A2322F24D9F001101D1 /* MapViewController.swift */; };
 		D9AB6A2622F25233001101D1 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AB6A2522F25233001101D1 /* SettingsViewController.swift */; };
 		D9CE424422F9B88E007ADE07 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D9CE424322F9B88E007ADE07 /* GoogleService-Info.plist */; };
@@ -39,12 +42,15 @@
 		029ABA0E3DCCFE543DF5D51A /* Pods-GroupChoice.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GroupChoice.release.xcconfig"; path = "Target Support Files/Pods-GroupChoice/Pods-GroupChoice.release.xcconfig"; sourceTree = "<group>"; };
 		3CD39B424430F76A372E889D /* Pods_GroupChoice.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GroupChoice.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C827ED626C52F0FB92CEE994 /* Pods-GroupChoice.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GroupChoice.debug.xcconfig"; path = "Target Support Files/Pods-GroupChoice/Pods-GroupChoice.debug.xcconfig"; sourceTree = "<group>"; };
+		D90E56CF233E699900FC5852 /* ChatLogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLogViewController.swift; sourceTree = "<group>"; };
+		D90E56D1233E79AE00FC5852 /* ChatLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLogView.swift; sourceTree = "<group>"; };
 		D91C938E22F2579C005113D9 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		D91C939022F25AE8005113D9 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D91FD0DB22FBF0A8009A9305 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		D93C11A222F9E9DA00CDD7E3 /* NewMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageViewController.swift; sourceTree = "<group>"; };
 		D948169B22F15D9800B8311E /* GroupChoice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GroupChoice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D94816AA22F15D9A00B8311E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D94A7726233BA54C00A5831C /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		D9617A1522F4FCAC0031F0B6 /* CreatePollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePollViewController.swift; sourceTree = "<group>"; };
 		D9617A1822F5190E0031F0B6 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		D9617A1A22F519AE0031F0B6 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
@@ -58,7 +64,7 @@
 		D98D41A72306FB3F00489C58 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		D98D41A92306FC4100489C58 /* GooglePlacesAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePlacesAPI.swift; sourceTree = "<group>"; };
 		D9AB6A1F22F24D0F001101D1 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
-		D9AB6A2122F24D6C001101D1 /* MessagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
+		D9AB6A2122F24D6C001101D1 /* AllMessagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllMessagesViewController.swift; sourceTree = "<group>"; };
 		D9AB6A2322F24D9F001101D1 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		D9AB6A2522F25233001101D1 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		D9CE424322F9B88E007ADE07 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -93,6 +99,7 @@
 			isa = PBXGroup;
 			children = (
 				D98D41A72306FB3F00489C58 /* Place.swift */,
+				D94A7726233BA54C00A5831C /* User.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -122,8 +129,10 @@
 		D91C938922F254A2005113D9 /* Messages Screen */ = {
 			isa = PBXGroup;
 			children = (
-				D9AB6A2122F24D6C001101D1 /* MessagesViewController.swift */,
+				D9AB6A2122F24D6C001101D1 /* AllMessagesViewController.swift */,
 				D93C11A222F9E9DA00CDD7E3 /* NewMessageViewController.swift */,
+				D90E56CF233E699900FC5852 /* ChatLogViewController.swift */,
+				D90E56D1233E79AE00FC5852 /* ChatLogView.swift */,
 			);
 			path = "Messages Screen";
 			sourceTree = "<group>";
@@ -371,13 +380,16 @@
 				D98D41AA2306FC4100489C58 /* GooglePlacesAPI.swift in Sources */,
 				D97EA3C622F3993200E71FEF /* LoginViewController.swift in Sources */,
 				D97D9F2523354CBA007A0C48 /* CustomMapAnnotation.swift in Sources */,
+				D90E56D2233E79AE00FC5852 /* ChatLogView.swift in Sources */,
 				D93C11A322F9E9DA00CDD7E3 /* NewMessageViewController.swift in Sources */,
-				D9AB6A2222F24D6C001101D1 /* MessagesViewController.swift in Sources */,
+				D9AB6A2222F24D6C001101D1 /* AllMessagesViewController.swift in Sources */,
+				D90E56D0233E699900FC5852 /* ChatLogViewController.swift in Sources */,
 				D9617A1622F4FCAC0031F0B6 /* CreatePollViewController.swift in Sources */,
 				D91C938F22F2579C005113D9 /* TabBarViewController.swift in Sources */,
 				D9EB97422305C7C400D5E8CB /* SearchView.swift in Sources */,
 				D9EB97402305B81B00D5E8CB /* PlacesCell.swift in Sources */,
 				D98D41A82306FB3F00489C58 /* Place.swift in Sources */,
+				D94A7727233BA54C00A5831C /* User.swift in Sources */,
 				D96FA469230B279F003E9214 /* PlaceDetailViewController.swift in Sources */,
 				D91FD0DC22FBF0A8009A9305 /* Network.swift in Sources */,
 				D9AB6A2622F25233001101D1 /* SettingsViewController.swift in Sources */,

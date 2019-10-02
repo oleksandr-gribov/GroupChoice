@@ -33,8 +33,13 @@ struct GooglePlacesAPI {
 
     }
     
-    static func makeUrl(endpoint: Endpoint, radius: Float, coordinate: CLLocationCoordinate2D) -> URL?  {
-        let urlString = "\(basePath)location=\(coordinate.latitude),\(coordinate.longitude)&type=\(endpoint.rawValue)&radius=\(radius)&key=\(apiKey)"
+    static func makeUrl(endpoint: Endpoint, radius: Float, coordinate: CLLocationCoordinate2D, keyword: String?) -> URL?  {
+        
+        var urlString = "\(basePath)location=\(coordinate.latitude),\(coordinate.longitude)&type=\(endpoint.rawValue)&radius=\(radius)&key=\(apiKey)"
+        
+        if let keyword = keyword {
+            urlString.append("&keyword=\(keyword)")
+        }
         
         let url = URL(string: urlString)
         

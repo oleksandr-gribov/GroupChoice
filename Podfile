@@ -8,5 +8,6 @@ target 'GroupChoice' do
   pod 'Firebase/Analytics'
   pod 'Firebase/Auth'
   pod 'Firebase/Database'
+  pod 'MessageKit'
 end
 

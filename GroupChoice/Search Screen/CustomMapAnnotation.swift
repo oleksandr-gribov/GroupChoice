@@ -13,5 +13,4 @@ class CustomMapAnnotation: MKPointAnnotation {
     
     var index: Int!
     
-    
 }

@@ -64,7 +64,10 @@ PODS:
   - GoogleUtilities/UserDefaults (6.2.3):
     - GoogleUtilities/Logger
   - GTMSessionFetcher/Core (1.2.2)
+  - InputBarAccessoryView (4.2.2)
   - leveldb-library (1.20)
+  - MessageKit (3.0.0):
+    - InputBarAccessoryView (~> 4.2.2)
   - nanopb (0.3.901):
     - nanopb/decode (= 0.3.901)
     - nanopb/encode (= 0.3.901)
@@ -76,6 +79,7 @@ DEPENDENCIES:
   - Firebase/Analytics
   - Firebase/Auth
   - Firebase/Database
+  - MessageKit
   - SnapKit (~> 4.0.0)
 
 SPEC REPOS:
@@ -90,7 +94,9 @@ SPEC REPOS:
     - GoogleAppMeasurement
     - GoogleUtilities
     - GTMSessionFetcher
+    - InputBarAccessoryView
     - leveldb-library
+    - MessageKit
     - nanopb
     - SnapKit
 
@@ -105,10 +111,12 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: 183bd916af7f80deb67c01888368f1108d641832
   GoogleUtilities: d2b0e277a95962e09bb27f5cd42f5f0b6a506c7d
   GTMSessionFetcher: 61bb0f61a4cb560030f1222021178008a5727a23
+  InputBarAccessoryView: 2b937602598e2fab3149f37f51dd7ad795653812
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
+  MessageKit: e892a9ca49ebe6d82684d3a93ad84021fa23e2c6
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
 
-PODFILE CHECKSUM: f6915e74d34dbce298262f684d35a00618b5f699
+PODFILE CHECKSUM: 1f6c062c2524e26207f7a71977b256a265aad474
 
 COCOAPODS: 1.7.5
