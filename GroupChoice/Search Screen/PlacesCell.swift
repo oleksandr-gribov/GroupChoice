@@ -36,6 +36,27 @@ class PlacesCell: UICollectionViewCell {
         
         imageView.image = nil
     }
+    func setupCellData(place: Place) {
+        self.nameLabel.text = place.name
+                  if let addressText = place.address {
+                      self.addressLabel.text = addressText
+                  } else {
+                    self.addressLabel.text = "Address not available"
+                  }
+                  
+                  if let rating = place.rating {
+                    self.ratingLabel.text = String(rating)
+                  }
+                  if let photos = place.photos  {
+                      let reference = photos[0].reference
+                      guard let url = GooglePlacesAPI.imageURL(reference: reference) else {
+                          return
+                      }
+                      self.imageView.fetchImage(url: url)
+                  } else {
+                      self.imageView.image = #imageLiteral(resourceName: "no_image")
+                  }
+    }
     
     func setupViews() {
         addSubview(imageView)

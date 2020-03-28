@@ -29,7 +29,7 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
         
         let mapViewController = UINavigationController(rootViewController: MapViewController())
         mapViewController.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "search_grey"), selectedImage: #imageLiteral(resourceName: "search_blue"))
-        
+            
         let settingsViewController = UINavigationController(rootViewController: SettingsViewController())
         settingsViewController.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "Account_grey"), selectedImage: #imageLiteral(resourceName: "account_blue"))
         

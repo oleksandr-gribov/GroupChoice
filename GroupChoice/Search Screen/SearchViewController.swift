@@ -11,7 +11,7 @@ import SnapKit
 import MapKit
 import CoreLocation
 
-class SearchViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, MKMapViewDelegate, CLLocationManagerDelegate{
+class SearchViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, MKMapViewDelegate, CLLocationManagerDelegate, PlaceMapPins{
     
     var searchView: SearchView!
     let locationManager = CLLocationManager()
@@ -33,7 +33,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         setupNavBar()
         searchView = SearchView()
         mapView = searchView.mapView
-        mapView.delegate = self
+        mapView.delegate = self 
         setupView()
         print ("num of places in viewdidload \(placesNearby.count)")
 
@@ -72,25 +72,8 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
                 self.placePins()
             }
         }
-        
     }
-    
-    func placePins() {
-        for place in placesNearby {
-            let placePin = CustomMapAnnotation()
-            let indexOfPlace = placesNearby.firstIndex(of: place)
-            placePin.index = indexOfPlace
-           
-            let placeCoordinate = CLLocationCoordinate2D(latitude: Double(place.geometry.location.latitude), longitude: Double(place.geometry.location.longitude))
-            
-            placePin.coordinate = placeCoordinate
-            placePin.title = place.name
-            
-            searchView.mapView.addAnnotation(placePin)
-        }
-    }
-    
-    
+
     // MARK: - CollectionView methods
     let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -114,25 +97,8 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         if placesNearby.count > 0 {
             let place = placesNearby[indexPath.row]
             
-            cell.nameLabel.text = place.name
-            if let addressText = place.address {
-                cell.addressLabel.text = addressText
-            } else {
-                cell.addressLabel.text = "Address not available"
-            }
-            
-            if let rating = place.rating {
-                cell.ratingLabel.text = String(rating)
-            }
-            if let photos = place.photos  {
-                let reference = photos[0].reference
-                guard let url = GooglePlacesAPI.imageURL(reference: reference) else {
-                    return cell
-                }
-                cell.imageView.fetchImage(url: url)
-            } else {
-                cell.imageView.image = #imageLiteral(resourceName: "no_image")
-            }
+            cell.setupCellData(place: place)
+
             let userLocation = CLLocation(latitude: currentLocation!.latitude, longitude: currentLocation!.longitude)
             
             let placeLocation = CLLocation(latitude: CLLocationDegrees(place.geometry.location.latitude), longitude: CLLocationDegrees(place.geometry.location.longitude))
@@ -254,7 +220,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
             fetchPlaces()
             break
         case .denied:
-            let alert = UIAlertController(title: "Location disabled", message: "We need your location to show you nearby places", preferredStyle: UIAlertController.Style.alert)
+            let alert = UIAlertController(title: "Location disabled", message: "We need your location to show nearby places", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "Enable Location Services", style: UIAlertAction.Style.default, handler: { (alert: UIAlertAction!) in
                 print("")
                 UIApplication.shared.openURL(NSURL(string:UIApplication.openSettingsURLString)! as URL)
@@ -302,37 +268,26 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         guard let location = locations.last else {
             print ("no new location in didupdatalocations")
             return }
-        
-        if currentLocation == nil  {
+        if currentLocation == nil {
             currentLocation = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-            let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-            let region = MKCoordinateRegion(center: center, latitudinalMeters: regionInMeters, longitudinalMeters: regionInMeters)
-            searchView.mapView.setRegion(region, animated: true)
-            let newUserLocation = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-            currentLocation = newUserLocation
-            fetchPlaces()
-            centerViewOnUserLocation()
-            return
-
+            recenterMap(location: CLLocation(latitude: currentLocation!.latitude, longitude: currentLocation!.longitude))
         } else {
-            let userLocation = CLLocation(latitude: currentLocation!.latitude, longitude: currentLocation!.longitude)
+            let newUserLocation = CLLocation(latitude: currentLocation!.latitude, longitude: currentLocation!.longitude)
             
-            let distanceTo = userLocation.distance(from: location)
-            
-            if distanceTo > 500  {
-                let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-                let region = MKCoordinateRegion(center: center, latitudinalMeters: regionInMeters, longitudinalMeters: regionInMeters)
-                searchView.mapView.setRegion(region, animated: true)
-                let newUserLocation = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-                currentLocation = newUserLocation
-                fetchPlaces()
-                centerViewOnUserLocation()
+            let distanceTo = newUserLocation.distance(from: location)
+            if distanceTo > 500 {
+                recenterMap(location: newUserLocation)
             }
         }
         
     }
-    
-    
+    func recenterMap(location: CLLocation) {
+        let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+        let region = MKCoordinateRegion(center: center, latitudinalMeters: regionInMeters, longitudinalMeters: regionInMeters)
+        searchView.mapView.setRegion(region, animated: true)
+        centerViewOnUserLocation()
+        fetchPlaces()
+    }
 }
 
 

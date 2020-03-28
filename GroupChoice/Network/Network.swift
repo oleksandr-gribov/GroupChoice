@@ -13,8 +13,6 @@ import UIKit
 struct Network {
     
     static func fetchGenericData<T: Codable>(url: URL, completion: @escaping (T) -> () ) {
-        //let url = URL(string: url)
-        
         URLSession.shared.dataTask(with: url) { (data, response, err) in
             
             if let err = err {

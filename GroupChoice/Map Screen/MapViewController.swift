@@ -10,9 +10,10 @@ import UIKit
 import MapKit
 import SnapKit
 
-class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
+class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, MKMapViewDelegate, PlaceMapPins {
+
+    var mapView: MKMapView!
     
-    var mapView : MKMapView!
     var mainView: UIView!
     var currentUserLocation: CLLocationCoordinate2D?
     var place: Place?
@@ -140,8 +141,7 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
                 print("couldnt construct url")
                 return
         }
-        
-        
+
         print(url)
         Network.fetchGenericData(url: url) { (response: Response) in
             if response.results.count != 0 {
@@ -161,22 +161,6 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
                     self.present(alert, animated: true, completion: nil)
                 }
             }
-        }
-    }
-    
-    
-    func placePins() {
-        let mapAnnotations = mapView.annotations
-        mapView.removeAnnotations(mapAnnotations)
-        for place in placesNearby {
-            let placePin = MKPointAnnotation()
-            let placeCoordinate = CLLocationCoordinate2D(latitude: Double(place.geometry.location.latitude), longitude: Double(place.geometry.location.longitude))
-            
-            placePin.coordinate = placeCoordinate
-            placePin.title = place.name
-            
-            
-            self.mapView.addAnnotation(placePin)
         }
     }
    
@@ -214,7 +198,7 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         tableView.isHidden = false
     }
     
-    
+    //MARK: - MapView Methods
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard annotation is MKPointAnnotation else {
             return nil
@@ -230,6 +214,16 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         }
         
         return annotationView
+    }
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        if let annotation = view.annotation as? CustomMapAnnotation {
+            let indexPath = IndexPath(row: annotation.index!, section: 0)
+            print("index path of the selected annotation is \(indexPath)")
+            let placeSelected = self.placesNearby[indexPath.row]
+            print("Place Selected on the map is \(placeSelected.name)")
+        } else {
+            print("couldn't select pin")
+        }
     }
   
     

@@ -15,6 +15,7 @@
 		D91FD0DC22FBF0A8009A9305 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91FD0DB22FBF0A8009A9305 /* Network.swift */; };
 		D93C11A322F9E9DA00CDD7E3 /* NewMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93C11A222F9E9DA00CDD7E3 /* NewMessageViewController.swift */; };
 		D94A7727233BA54C00A5831C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94A7726233BA54C00A5831C /* User.swift */; };
+		D950723A24300B3600D4E0CD /* MapPinsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D950723924300B3600D4E0CD /* MapPinsProtocol.swift */; };
 		D9617A1622F4FCAC0031F0B6 /* CreatePollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9617A1522F4FCAC0031F0B6 /* CreatePollViewController.swift */; };
 		D9617A1922F5190E0031F0B6 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9617A1822F5190E0031F0B6 /* SignUpViewController.swift */; };
 		D9617A1B22F519AE0031F0B6 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9617A1A22F519AE0031F0B6 /* SignUpView.swift */; };
@@ -51,6 +52,7 @@
 		D948169B22F15D9800B8311E /* GroupChoice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GroupChoice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D94816AA22F15D9A00B8311E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D94A7726233BA54C00A5831C /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		D950723924300B3600D4E0CD /* MapPinsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPinsProtocol.swift; sourceTree = "<group>"; };
 		D9617A1522F4FCAC0031F0B6 /* CreatePollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePollViewController.swift; sourceTree = "<group>"; };
 		D9617A1822F5190E0031F0B6 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		D9617A1A22F519AE0031F0B6 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
@@ -193,6 +195,7 @@
 		D948169D22F15D9800B8311E /* GroupChoice */ = {
 			isa = PBXGroup;
 			children = (
+				D950723824300B1B00D4E0CD /* Protocols */,
 				D91FD0DA22FBF098009A9305 /* Network */,
 				D9617A1722F5173A0031F0B6 /* Sign Up Screen */,
 				D9617A1422F4FC910031F0B6 /* CreatePoll Screen */,
@@ -210,6 +213,14 @@
 				D9F442632309BABE004F9834 /* Constants.swift */,
 			);
 			path = GroupChoice;
+			sourceTree = "<group>";
+		};
+		D950723824300B1B00D4E0CD /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				D950723924300B3600D4E0CD /* MapPinsProtocol.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 		D9617A1422F4FC910031F0B6 /* CreatePoll Screen */ = {
@@ -388,6 +399,7 @@
 				D91C938F22F2579C005113D9 /* TabBarViewController.swift in Sources */,
 				D9EB97422305C7C400D5E8CB /* SearchView.swift in Sources */,
 				D9EB97402305B81B00D5E8CB /* PlacesCell.swift in Sources */,
+				D950723A24300B3600D4E0CD /* MapPinsProtocol.swift in Sources */,
 				D98D41A82306FB3F00489C58 /* Place.swift in Sources */,
 				D94A7727233BA54C00A5831C /* User.swift in Sources */,
 				D96FA469230B279F003E9214 /* PlaceDetailViewController.swift in Sources */,

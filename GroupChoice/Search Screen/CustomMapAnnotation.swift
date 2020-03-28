@@ -10,7 +10,7 @@ import Foundation
 import MapKit
 
 class CustomMapAnnotation: MKPointAnnotation {
-    
+
     var index: Int!
-    
+
 }
