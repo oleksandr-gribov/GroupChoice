@@ -39,7 +39,7 @@ class NearbyPlacesViewController: BaseViewControllerWithLocation, UICollectionVi
         checkLocationServices()
     }
     override func viewDidAppear(_ animated: Bool) {
-        fetchPlaces()
+        fetchPlaces(endpoint: nil, keyword: nil)
     }
  
     override func updateCollectionComponents() {
@@ -152,7 +152,6 @@ class NearbyPlacesViewController: BaseViewControllerWithLocation, UICollectionVi
 
         photoView.sizeToFit()
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: photoView)
-        
     }
     
     
@@ -167,7 +166,7 @@ class NearbyPlacesViewController: BaseViewControllerWithLocation, UICollectionVi
     }
     override func recenterMap(location: CLLocation) {
         super.recenterMap(location: location)
-        self.fetchPlaces()
+        self.fetchPlaces(endpoint: nil, keyword: nil)
         print ("number of places fetched in the child VC \(self.placesNearby.count)")
     }
 }

@@ -29,15 +29,6 @@ class MapSearchView: UIView {
             make.width.equalToSuperview().multipliedBy(0.95)
             make.height.equalToSuperview().multipliedBy(0.75)
         }
-        
-       // topSquare.addSubview(locationLabel)
-//
-//        //locationLabel.snp.makeConstraints { (make) in
-//            make.left.equalToSuperview().inset(20)
-//            make.right.equalToSuperview().inset(20)
-//            make.top.equalTo(optionsLabel.snp.bottom).offset(10)
-//            make.height.equalToSuperview().multipliedBy(0.3)
-//        }
         addSubview(tableView)
         tableView.snp.makeConstraints { (make) in
             make.top.equalTo(topSquare.snp.bottom)

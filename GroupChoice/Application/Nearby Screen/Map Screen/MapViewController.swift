@@ -37,6 +37,7 @@ class MapViewController: BaseViewControllerWithLocation, UITableViewDelegate, UI
         
     
         self.navigationItem.leftBarButtonItem = cancelBarButton
+        
         self.navigationItem.rightBarButtonItem = searchButton
         self.navigationController?.navigationBar.barTintColor = UIColor(displayP3Red: 150/255, green: 211/255, blue: 255/255, alpha: 1.0)
         
@@ -55,8 +56,13 @@ class MapViewController: BaseViewControllerWithLocation, UITableViewDelegate, UI
        
     }
     @objc func cancelSearch() {
-        self.tableView.isHidden = true
-        self.optionsTextField.resignFirstResponder()
+        if self.tableView.isHidden {
+            self.tabBarController?.selectedIndex = 0
+        } else {
+            self.tableView.isHidden = true
+            self.optionsTextField.resignFirstResponder()
+        }
+        
     }
     @objc func performSearch() {
         searchByQuery()
@@ -119,7 +125,7 @@ class MapViewController: BaseViewControllerWithLocation, UITableViewDelegate, UI
             return
         }
         fetchPlaces(endpoint: endpointSelected, keyword: nil)
-        mapSearchView.optionsLabel.text = optionKey.capitalized
+        mapSearchView.optionsLabel.text = ("  \(optionKey.capitalized)")
         tableView.isHidden = true
         
     }
@@ -128,38 +134,12 @@ class MapViewController: BaseViewControllerWithLocation, UITableViewDelegate, UI
         let cellHeight = height/CGFloat(options.count)
         return cellHeight
     }
-    // MARK: - Fetching data
-    func fetchPlaces(endpoint: GooglePlacesAPI.Endpoint, keyword: String?) {
-        self.placesNearby.removeAll()
-        guard let currentUserLocation = currentLocation else {
-            print ("no location in fetchPlaces()")
-            return
-        }
-        
-        guard let url = GooglePlacesAPI.makeUrl(endpoint: endpoint, radius: 2000, coordinate: currentUserLocation, keyword: keyword) else {
-                print("couldnt construct url")
-                return
-        }
-
-        print(url)
-        Network.fetchGenericData(url: url) { (response: Response) in
-            if response.results.count != 0 {
-                for place in response.results {
-                    if !(self.placesNearby.contains(place)) {
-                        self.placesNearby.append(place)
-                    }
-                }
-                DispatchQueue.main.async {
-                    self.placePins()
-                }
-            } else {
-                // display an alert
-                DispatchQueue.main.async {
-                    let alert = UIAlertController(title: "No results found", message: "Sorry, there are no results in the specified location", preferredStyle: UIAlertController.Style.alert)
-                    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
-                    self.present(alert, animated: true, completion: nil)
-                }
-            }
+    
+    override func displayAlert() {
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: "No results found", message: "Sorry, there are no results in the specified location", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         }
     }
     

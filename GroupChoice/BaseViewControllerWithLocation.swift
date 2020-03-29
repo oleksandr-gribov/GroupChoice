@@ -57,7 +57,7 @@ class BaseViewControllerWithLocation: UIViewController,CLLocationManagerDelegate
             self.mapView.showsUserLocation = true
             locationManager.startUpdatingLocation()
             centerViewOnUserLocation()
-            fetchPlaces()
+            fetchPlaces(endpoint: nil, keyword: nil)
             break
         case .denied:
             let alert = UIAlertController(title: "Location disabled", message: "We need your location to show nearby places", preferredStyle: UIAlertController.Style.alert)
@@ -87,38 +87,44 @@ class BaseViewControllerWithLocation: UIViewController,CLLocationManagerDelegate
               }
           }
     // MARK: - Fetching Data
-    func fetchPlaces() {
-           self.placesNearby.removeAll()
-           guard let currentLocation = currentLocation else {
-               print ("no location in fetch places")
-               return
-           }
-           guard let url = GooglePlacesAPI.genericURL(coordinate: currentLocation) else {
-               print("couldnt construct url")
-               return
-           }
-           print(url)
-           Network.fetchGenericData(url: url) { (response: Response) in
-               for place in response.results {
-                    if !(self.placesNearby.contains(place)) {
-                           self.placesNearby.append(place)
-                       }
-                   }
-               DispatchQueue.main.async {
-                   print ("number of places fetched in fetchPlaces is \(self.placesNearby.count)")
-                   DispatchQueue.main.async {
-                                   print ("number of places fetched in fetchPlaces is \(self.placesNearby.count)")
-                                   self.placePins()
+    func fetchPlaces(endpoint: GooglePlacesAPI.Endpoint?, keyword:String?) {
+        self.placesNearby.removeAll()
+        guard let currentLocation = currentLocation else {
+            print ("no location in fetch places")
+            return
+        }
+        guard let url = GooglePlacesAPI.makeUrl(endpoint: endpoint ?? GooglePlacesAPI.Endpoint.general, radius: 500, coordinate: currentLocation, keyword: keyword ?? nil) else {
+            print("couldnt construct url")
+            return
+        }
+        
+        print(url)
+        Network.fetchGenericData(url: url) { (response: Response) in
+            if response.results.count != 0 {
+            for place in response.results {
+                if !(self.placesNearby.contains(place)) {
+                    self.placesNearby.append(place)
+                }
+            }
+            DispatchQueue.main.async {
+                print ("number of places fetched in fetchPlaces is \(self.placesNearby.count)")
+                DispatchQueue.main.async {
+                    print ("number of places fetched in fetchPlaces is \(self.placesNearby.count)")
+                    self.placePins()
                     self.updateCollectionComponents()
-                    
-
-               }
-           }
-       }
+                }
+            }
+            } else {
+                self.displayAlert()
+            }
+              }
     }
-   
+    
     
     func updateCollectionComponents() {
+        
+    }
+    func displayAlert() {
         
     }
     
