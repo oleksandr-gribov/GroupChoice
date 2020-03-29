@@ -11,15 +11,10 @@ import SnapKit
 import MapKit
 import CoreLocation
 
-class SearchViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, MKMapViewDelegate, CLLocationManagerDelegate, PlaceMapPins{
+class NearbyPlacesViewController: BaseViewControllerWithLocation, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource{
     
     var searchView: SearchView!
-    let locationManager = CLLocationManager()
-    let regionInMeters : Double  = 1000
     let placesCellId = "placesCellId"
-    var placesNearby = [Place]()
-    var currentLocation: CLLocationCoordinate2D?
-    var mapView : MKMapView!
 
     // MARK: - View Life Cycle
     override func viewDidLoad() {
@@ -47,31 +42,8 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         fetchPlaces()
     }
  
-    
-    // MARK: - Fetching data
-    func fetchPlaces() {
-        self.placesNearby.removeAll()
-        guard let currentLocation = currentLocation else {
-            print ("no location in fetch places")
-            return
-        }
-        guard let url = GooglePlacesAPI.genericURL(coordinate: currentLocation) else {
-            print("couldnt construct url")
-            return
-        }
-        print(url)
-        Network.fetchGenericData(url: url) { (response: Response) in
-            for place in response.results {
-                 if !(self.placesNearby.contains(place)) {
-                        self.placesNearby.append(place)
-                    }
-                }
-            DispatchQueue.main.async {
-                print ("number of places fetched in fetchPlaces is \(self.placesNearby.count)")
-                self.collectionView.reloadData()
-                self.placePins()
-            }
-        }
+    override func updateCollectionComponents() {
+        self.collectionView.reloadData()
     }
 
     // MARK: - CollectionView methods
@@ -126,6 +98,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         self.navigationController?.pushViewController(detailVC, animated: true)
         
     }
+    
     
     
 
@@ -188,107 +161,17 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         if let annotation = view.annotation as? CustomMapAnnotation {
             let indexPath = IndexPath(row: annotation.index!, section: 0)
             self.collectionView.selectItem(at: indexPath, animated: true, scrollPosition: UICollectionView.ScrollPosition.centeredHorizontally)
-        }
-    }
-    
-    func checkLocationServices() {
-        if CLLocationManager.locationServicesEnabled() {
-            setupLocationManager()
-            checkLocationAuthorization()
         } else {
-            // show alert to user to turn it on
-            let alert = UIAlertController(title: "Location disabled", message: "Location access is restricted. Please enable GPS in the Settings app under Privacy, Location Services.", preferredStyle: UIAlertController.Style.alert)
-            alert.addAction(UIAlertAction(title: "Go to Settings now", style: UIAlertAction.Style.default, handler: { (alert: UIAlertAction!) in
-                print("")
-                UIApplication.shared.openURL(NSURL(string:UIApplication.openSettingsURLString)! as URL)
-            }))
-            self.present(alert,animated: true, completion: nil)
+            print("No annotation selected")
         }
     }
-    
-    func setupLocationManager() {
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-    }
-    
-    func checkLocationAuthorization() {
-        switch CLLocationManager.authorizationStatus() {
-        case .authorizedWhenInUse:
-            searchView.mapView.showsUserLocation = true
-            locationManager.startUpdatingLocation()
-            centerViewOnUserLocation()
-            fetchPlaces()
-            break
-        case .denied:
-            let alert = UIAlertController(title: "Location disabled", message: "We need your location to show nearby places", preferredStyle: UIAlertController.Style.alert)
-            alert.addAction(UIAlertAction(title: "Enable Location Services", style: UIAlertAction.Style.default, handler: { (alert: UIAlertAction!) in
-                print("")
-                UIApplication.shared.openURL(NSURL(string:UIApplication.openSettingsURLString)! as URL)
-            }))
-            
-            break
-        case .notDetermined:
-            locationManager.requestWhenInUseAuthorization()
-            
-        case .restricted:
-            // Show an alert letting them know
-            break
-        case .authorizedAlways:
-            break
-        }
-    }
-    
-    
-    func centerViewOnUserLocation() {
-        if let location = locationManager.location?.coordinate {
-            currentLocation = location
-            let region = MKCoordinateRegion.init(center: location, latitudinalMeters: 1000, longitudinalMeters: 1000)
-            searchView.mapView.setRegion(region, animated: true)
-        } else {
-            print("no center view location")
-        }
-    }
-    
-    // MARK: - Location Manager Methods
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if status == .authorizedWhenInUse || status == .authorizedAlways {
-            locationManager.startUpdatingLocation()
-        }
-        if status == .denied {
-            let alert = UIAlertController(title: "Location disabled", message: "We need your location to show you nearby places", preferredStyle: UIAlertController.Style.alert)
-            alert.addAction(UIAlertAction(title: "Enable Location Services", style: UIAlertAction.Style.default, handler: { (alert: UIAlertAction!) in
-                print("")
-                UIApplication.shared.openURL(NSURL(string:UIApplication.openSettingsURLString)! as URL)
-            }))
-            self.present(alert,animated: true, completion: nil)
-        }
-    }
-
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location = locations.last else {
-            print ("no new location in didupdatalocations")
-            return }
-        if currentLocation == nil {
-            currentLocation = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-            recenterMap(location: CLLocation(latitude: currentLocation!.latitude, longitude: currentLocation!.longitude))
-        } else {
-            let newUserLocation = CLLocation(latitude: currentLocation!.latitude, longitude: currentLocation!.longitude)
-            
-            let distanceTo = newUserLocation.distance(from: location)
-            if distanceTo > 500 {
-                recenterMap(location: newUserLocation)
-            }
-        }
-        
-    }
-    func recenterMap(location: CLLocation) {
-        let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-        let region = MKCoordinateRegion(center: center, latitudinalMeters: regionInMeters, longitudinalMeters: regionInMeters)
-        searchView.mapView.setRegion(region, animated: true)
-        centerViewOnUserLocation()
-        fetchPlaces()
+    override func recenterMap(location: CLLocation) {
+        super.recenterMap(location: location)
+        self.fetchPlaces()
+        print ("number of places fetched in the child VC \(self.placesNearby.count)")
     }
 }
+
 
 
 

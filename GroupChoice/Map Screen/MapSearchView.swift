@@ -64,7 +64,7 @@ class MapSearchView: UIView {
     
     let optionsLabel: UITextField = {
         let lbl = UITextField()
-        lbl.placeholder = "Restaurant, bars, movies, etc"
+        lbl.placeholder = "  Restaurants, bars, movies, etc"
         lbl.backgroundColor = .white
         lbl.isUserInteractionEnabled = true
         lbl.layer.cornerRadius = 10

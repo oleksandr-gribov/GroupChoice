@@ -16,6 +16,7 @@
 		D93C11A322F9E9DA00CDD7E3 /* NewMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93C11A222F9E9DA00CDD7E3 /* NewMessageViewController.swift */; };
 		D94A7727233BA54C00A5831C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94A7726233BA54C00A5831C /* User.swift */; };
 		D950723A24300B3600D4E0CD /* MapPinsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D950723924300B3600D4E0CD /* MapPinsProtocol.swift */; };
+		D950723E2430143300D4E0CD /* BaseViewControllerWithLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D950723D2430143300D4E0CD /* BaseViewControllerWithLocation.swift */; };
 		D9617A1622F4FCAC0031F0B6 /* CreatePollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9617A1522F4FCAC0031F0B6 /* CreatePollViewController.swift */; };
 		D9617A1922F5190E0031F0B6 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9617A1822F5190E0031F0B6 /* SignUpViewController.swift */; };
 		D9617A1B22F519AE0031F0B6 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9617A1A22F519AE0031F0B6 /* SignUpView.swift */; };
@@ -28,7 +29,7 @@
 		D97EA3C922F3A2EA00E71FEF /* UITextField+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D97EA3C822F3A2EA00E71FEF /* UITextField+Extension.swift */; };
 		D98D41A82306FB3F00489C58 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98D41A72306FB3F00489C58 /* Place.swift */; };
 		D98D41AA2306FC4100489C58 /* GooglePlacesAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98D41A92306FC4100489C58 /* GooglePlacesAPI.swift */; };
-		D9AB6A2022F24D0F001101D1 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AB6A1F22F24D0F001101D1 /* SearchViewController.swift */; };
+		D9AB6A2022F24D0F001101D1 /* NearbyPlacesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AB6A1F22F24D0F001101D1 /* NearbyPlacesViewController.swift */; };
 		D9AB6A2222F24D6C001101D1 /* AllMessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AB6A2122F24D6C001101D1 /* AllMessagesViewController.swift */; };
 		D9AB6A2422F24D9F001101D1 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AB6A2322F24D9F001101D1 /* MapViewController.swift */; };
 		D9AB6A2622F25233001101D1 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AB6A2522F25233001101D1 /* SettingsViewController.swift */; };
@@ -53,6 +54,7 @@
 		D94816AA22F15D9A00B8311E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D94A7726233BA54C00A5831C /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		D950723924300B3600D4E0CD /* MapPinsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPinsProtocol.swift; sourceTree = "<group>"; };
+		D950723D2430143300D4E0CD /* BaseViewControllerWithLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewControllerWithLocation.swift; sourceTree = "<group>"; };
 		D9617A1522F4FCAC0031F0B6 /* CreatePollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePollViewController.swift; sourceTree = "<group>"; };
 		D9617A1822F5190E0031F0B6 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		D9617A1A22F519AE0031F0B6 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
@@ -65,7 +67,7 @@
 		D97EA3C822F3A2EA00E71FEF /* UITextField+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extension.swift"; sourceTree = "<group>"; };
 		D98D41A72306FB3F00489C58 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		D98D41A92306FC4100489C58 /* GooglePlacesAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePlacesAPI.swift; sourceTree = "<group>"; };
-		D9AB6A1F22F24D0F001101D1 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		D9AB6A1F22F24D0F001101D1 /* NearbyPlacesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyPlacesViewController.swift; sourceTree = "<group>"; };
 		D9AB6A2122F24D6C001101D1 /* AllMessagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllMessagesViewController.swift; sourceTree = "<group>"; };
 		D9AB6A2322F24D9F001101D1 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		D9AB6A2522F25233001101D1 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -115,17 +117,17 @@
 			path = "Login Screen";
 			sourceTree = "<group>";
 		};
-		D91C938822F25494005113D9 /* Search Screen */ = {
+		D91C938822F25494005113D9 /* Nearby Screen */ = {
 			isa = PBXGroup;
 			children = (
-				D9AB6A1F22F24D0F001101D1 /* SearchViewController.swift */,
+				D9AB6A1F22F24D0F001101D1 /* NearbyPlacesViewController.swift */,
 				D96FA468230B279F003E9214 /* PlaceDetailViewController.swift */,
 				D9EB973F2305B81B00D5E8CB /* PlacesCell.swift */,
 				D9EB97412305C7C400D5E8CB /* SearchView.swift */,
 				D96FA46A230B27B6003E9214 /* PlaceDetailView.swift */,
 				D97D9F2423354CBA007A0C48 /* CustomMapAnnotation.swift */,
 			);
-			path = "Search Screen";
+			path = "Nearby Screen";
 			sourceTree = "<group>";
 		};
 		D91C938922F254A2005113D9 /* Messages Screen */ = {
@@ -202,7 +204,7 @@
 				D97EA3C722F3A2D300E71FEF /* Extensions */,
 				D91C938D22F2574A005113D9 /* Main */,
 				D91C938922F254A2005113D9 /* Messages Screen */,
-				D91C938822F25494005113D9 /* Search Screen */,
+				D91C938822F25494005113D9 /* Nearby Screen */,
 				D91C938722F2548A005113D9 /* Login Screen */,
 				D91C938622F2546F005113D9 /* Model */,
 				D91C938B22F254C1005113D9 /* Map Screen */,
@@ -211,6 +213,7 @@
 				D94816AA22F15D9A00B8311E /* Info.plist */,
 				D9CE424322F9B88E007ADE07 /* GoogleService-Info.plist */,
 				D9F442632309BABE004F9834 /* Constants.swift */,
+				D950723D2430143300D4E0CD /* BaseViewControllerWithLocation.swift */,
 			);
 			path = GroupChoice;
 			sourceTree = "<group>";
@@ -384,10 +387,11 @@
 				D97D53242326FE7100B4FD51 /* MapSearchView.swift in Sources */,
 				D91C939122F25AE8005113D9 /* AppDelegate.swift in Sources */,
 				D96FA46B230B27B6003E9214 /* PlaceDetailView.swift in Sources */,
+				D950723E2430143300D4E0CD /* BaseViewControllerWithLocation.swift in Sources */,
 				D97EA3C422F398AE00E71FEF /* LoginView.swift in Sources */,
 				D9617A1B22F519AE0031F0B6 /* SignUpView.swift in Sources */,
 				D9AB6A2422F24D9F001101D1 /* MapViewController.swift in Sources */,
-				D9AB6A2022F24D0F001101D1 /* SearchViewController.swift in Sources */,
+				D9AB6A2022F24D0F001101D1 /* NearbyPlacesViewController.swift in Sources */,
 				D98D41AA2306FC4100489C58 /* GooglePlacesAPI.swift in Sources */,
 				D97EA3C622F3993200E71FEF /* LoginViewController.swift in Sources */,
 				D97D9F2523354CBA007A0C48 /* CustomMapAnnotation.swift in Sources */,

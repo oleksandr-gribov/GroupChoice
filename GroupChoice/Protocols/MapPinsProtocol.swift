@@ -18,15 +18,15 @@ protocol PlaceMapPins {
 
 extension PlaceMapPins {
     func placePins() {
-        let mapAnnotations = mapView.annotations
-        mapView.removeAnnotations(mapAnnotations)
         for place in placesNearby {
-            let placePin = MKPointAnnotation()
+            let placePin = CustomMapAnnotation()
+            let indexOfPlace = placesNearby.firstIndex(of: place)
+            placePin.index = indexOfPlace
+            
             let placeCoordinate = CLLocationCoordinate2D(latitude: Double(place.geometry.location.latitude), longitude: Double(place.geometry.location.longitude))
             
             placePin.coordinate = placeCoordinate
             placePin.title = place.name
-            
             
             self.mapView.addAnnotation(placePin)
         }
