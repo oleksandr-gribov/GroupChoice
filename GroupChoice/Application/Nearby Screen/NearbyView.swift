@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 
 
-class SearchView: UIView {
+class NearbyView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
