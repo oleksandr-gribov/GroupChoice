@@ -83,6 +83,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
         self.navigationItem.title = "Sign Up"
+        self.navigationController?.navigationBar.tintColor = UIColor.white
         let textAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
         self.navigationController?.navigationBar.titleTextAttributes = textAttributes
         

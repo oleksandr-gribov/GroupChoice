@@ -13,7 +13,7 @@ import CoreLocation
 
 class NearbyPlacesViewController: BaseViewControllerWithLocation, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource{
     
-    var searchView: SearchView!
+    var searchView: NearbyView!
     let placesCellId = "placesCellId"
 
     // MARK: - View Life Cycle
@@ -26,7 +26,7 @@ class NearbyPlacesViewController: BaseViewControllerWithLocation, UICollectionVi
         collectionView.register(PlacesCell.self, forCellWithReuseIdentifier: placesCellId)
         self.collectionView.allowsSelection = true
         setupNavBar()
-        searchView = SearchView()
+        searchView = NearbyView()
         mapView = searchView.mapView
         mapView.delegate = self 
         setupView()
@@ -98,18 +98,16 @@ class NearbyPlacesViewController: BaseViewControllerWithLocation, UICollectionVi
         self.navigationController?.pushViewController(detailVC, animated: true)
         
     }
-    
-    
-    
-
     // MARK: - View set up
-    func setupView() {
+    private func setupView() {
         view.backgroundColor = .white
         view.addSubview(collectionView)
+        let tabBarHeight = self.tabBarController?.tabBar.frame.height;
         collectionView.backgroundColor = .clear
         collectionView.snp.makeConstraints { (make) in
             make.left.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-45)
+            //make.bottom.equalToSuperview().offset(-45)
+            make.bottom.equalToSuperview().inset(tabBarHeight!+10)
             make.right.equalToSuperview()
             make.height.equalTo(250)
         }
@@ -133,7 +131,7 @@ class NearbyPlacesViewController: BaseViewControllerWithLocation, UICollectionVi
         navigationController?.tabBarController?.selectedIndex = 3
        
     }
-    func setupNavBar() {
+    fileprivate func setupNavBar() {
         self.navigationController?.navigationBar.prefersLargeTitles = true
         let textAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white, NSAttributedString.Key.font: UIFont(name: "AvenirNext-DemiBold", size: 33)]
         self.navigationController?.navigationBar.largeTitleTextAttributes = textAttributes
@@ -142,16 +140,6 @@ class NearbyPlacesViewController: BaseViewControllerWithLocation, UICollectionVi
         self.navigationController?.navigationBar.isTranslucent = true
         self.navigationItem.title = "Discover"
         
-        let photoView : UIView = {
-            let pv = UIView(frame: CGRect(x: 0, y: 0, width: 45, height: 50))
-            pv.layer.cornerRadius = 23
-            pv.backgroundColor = .black
-           
-            return pv
-        }()
-
-        photoView.sizeToFit()
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: photoView)
     }
     
     

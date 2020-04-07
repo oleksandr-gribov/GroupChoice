@@ -23,12 +23,9 @@ class BaseViewControllerWithLocation: UIViewController,CLLocationManagerDelegate
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        checkLocationServices()
     }
     
     // MARK: - Location Methods

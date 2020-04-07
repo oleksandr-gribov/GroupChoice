@@ -14,7 +14,6 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .purple
-        //self.navigationController?.navigationBar.isHidden = false
         self.navigationItem.title = "Settings"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log out", style: .plain, target: self, action: #selector(logoutPressed))
     }
@@ -24,7 +23,8 @@ class SettingsViewController: UIViewController {
             try Auth.auth().signOut()
             userDefaults.set(false, forKey: "UserIsLoggedIn")
             let loginViewController = UINavigationController(rootViewController: LoginViewController())
-            present(loginViewController, animated: true, completion: nil)
+            loginViewController.modalPresentationStyle = .fullScreen
+            self.present(loginViewController, animated: true, completion: nil)
         } catch let err {
             print (err)
         }

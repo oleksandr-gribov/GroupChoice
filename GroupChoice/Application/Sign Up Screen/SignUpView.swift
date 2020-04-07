@@ -30,8 +30,7 @@ class SignUpView: UIView {
         
         addSubview(stackView)
         stackView.snp.makeConstraints { (make) in
-            make.centerX.equalToSuperview()
-            make.top.equalToSuperview().offset(UIScreen.main.bounds.size.height * 0.12)
+            make.center.equalToSuperview()
             make.height.equalToSuperview().multipliedBy(0.38)
             make.width.equalToSuperview().multipliedBy(0.7)
             

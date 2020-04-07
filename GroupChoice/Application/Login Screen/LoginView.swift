@@ -36,10 +36,9 @@ class LoginView: UIView {
         
         addSubview(stackView)
         stackView.snp.makeConstraints { (make) in
-            make.centerX.equalToSuperview()
-            make.height.equalToSuperview().multipliedBy(0.2)
+            make.center.equalToSuperview()
+            make.height.equalToSuperview().multipliedBy(0.3)
             make.width.equalToSuperview().multipliedBy(0.7)
-            make.top.equalToSuperview().offset(UIScreen.main.bounds.size.height * 0.25)
             
         }
         addSubview(loginButton)
@@ -75,6 +74,15 @@ class LoginView: UIView {
         return tf
     }()
     
+    let incorrectLogin: UILabel = {
+        let lbl = UILabel()
+        lbl.text = ""
+        lbl.textColor = UIColor.red
+        lbl.textAlignment = .center
+        
+        return lbl
+    }()
+    
     let passwordTextField: UITextField = {
         let tf = UITextField()
         tf.setuploginTextField(placeHolderText: "Password", keyboardType: .default)
@@ -106,7 +114,7 @@ class LoginView: UIView {
     }()
     
     func mainStackView () -> UIStackView {
-        let stv = UIStackView( arrangedSubviews: [emailTextField, passwordTextField])
+        let stv = UIStackView( arrangedSubviews: [emailTextField, passwordTextField, incorrectLogin])
         stv.axis = .vertical
         stv.distribution = .fillEqually
         stv.spacing = 10
@@ -120,7 +128,6 @@ class LoginView: UIView {
         let stv = UIStackView(arrangedSubviews: [noAccountTextLabel, signUpButton])
         stv.axis = .horizontal
         stv.distribution = .fill
-//        stv.spacing = 10
         return stv
     }
 }

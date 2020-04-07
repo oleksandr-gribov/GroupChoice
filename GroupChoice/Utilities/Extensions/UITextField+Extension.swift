@@ -13,10 +13,7 @@ extension UITextField {
     
     func setuploginTextField ( placeHolderText: String, keyboardType: UIKeyboardType){
         
-       
         self.keyboardType = keyboardType
-        //self.borderStyle = .none
-       
         let placeholder = NSAttributedString(attributedString: NSAttributedString(string: placeHolderText,
                                                                                        attributes: [
                                                                                         NSAttributedString.Key.font: UIFont(name: "Avenir Next", size: 22)!,.foregroundColor: UIColor(white: 1.0, alpha: 0.6)]))

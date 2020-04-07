@@ -43,7 +43,6 @@ class PlacesCell: UICollectionViewCell {
                   } else {
                     self.addressLabel.text = "Address not available"
                   }
-                  
                   if let rating = place.rating {
                     self.ratingLabel.text = String(rating)
                   }
@@ -111,7 +110,6 @@ class PlacesCell: UICollectionViewCell {
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         iv.layer.cornerRadius = 5
-       // iv.backgroundColor = .green
         
         return iv
     }()
@@ -119,6 +117,7 @@ class PlacesCell: UICollectionViewCell {
     let nameLabel: UILabel = {
         let lbl = UILabel()
         lbl.text = "Name of place"
+        
         return lbl
     }()
     
@@ -138,6 +137,7 @@ class PlacesCell: UICollectionViewCell {
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         iv.image = #imageLiteral(resourceName: "Location pin")
+        
         return iv
     }()
     
@@ -150,12 +150,11 @@ class PlacesCell: UICollectionViewCell {
         return iv
     }()
     
-    
-    
     let ratingLabel : UILabel = {
         let lbl = UILabel()
         lbl.text = "4.5"
         lbl.font = lbl.font.withSize(9)
+        
         return lbl
     }()
     
@@ -170,12 +169,9 @@ class PlacesCell: UICollectionViewCell {
 
 let imageCache = NSCache<NSString, UIImage>()
 
-
 class CustomImageView: UIImageView {
-    
     var activityIndicator = UIActivityIndicatorView(style: .gray)
     var imageUrl : String?
-    
     
     func fetchImage(url: URL)  {
         let urlString = url.absoluteString
@@ -194,11 +190,9 @@ class CustomImageView: UIImageView {
             self.activityIndicator.stopAnimating()
             return
         }
-    
         let task = URLSession.shared.dataTask(with: url, completionHandler: {
             (data, err, response) in
             if let data = data {
-                
                 let imageData = UIImage(data: data)
                 DispatchQueue.main.async {
                     if self.imageUrl == url.absoluteString {
@@ -213,7 +207,6 @@ class CustomImageView: UIImageView {
                     }
                 }
             } else {
-                
             }
         })
         task.resume()

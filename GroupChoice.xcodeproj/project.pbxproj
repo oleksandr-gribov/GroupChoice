@@ -14,10 +14,10 @@
 		D91C939122F25AE8005113D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91C939022F25AE8005113D9 /* AppDelegate.swift */; };
 		D91FD0DC22FBF0A8009A9305 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91FD0DB22FBF0A8009A9305 /* Network.swift */; };
 		D93C11A322F9E9DA00CDD7E3 /* NewMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93C11A222F9E9DA00CDD7E3 /* NewMessageViewController.swift */; };
+		D93C16952436C4F5001EBB49 /* FormTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93C16942436C4F5001EBB49 /* FormTableViewController.swift */; };
 		D94A7727233BA54C00A5831C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94A7726233BA54C00A5831C /* User.swift */; };
 		D950723A24300B3600D4E0CD /* MapPinsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D950723924300B3600D4E0CD /* MapPinsProtocol.swift */; };
 		D950723E2430143300D4E0CD /* BaseViewControllerWithLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D950723D2430143300D4E0CD /* BaseViewControllerWithLocation.swift */; };
-		D9617A1622F4FCAC0031F0B6 /* CreatePollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9617A1522F4FCAC0031F0B6 /* CreatePollViewController.swift */; };
 		D9617A1922F5190E0031F0B6 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9617A1822F5190E0031F0B6 /* SignUpViewController.swift */; };
 		D9617A1B22F519AE0031F0B6 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9617A1A22F519AE0031F0B6 /* SignUpView.swift */; };
 		D96FA469230B279F003E9214 /* PlaceDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96FA468230B279F003E9214 /* PlaceDetailViewController.swift */; };
@@ -35,9 +35,12 @@
 		D9AB6A2622F25233001101D1 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AB6A2522F25233001101D1 /* SettingsViewController.swift */; };
 		D9CE424422F9B88E007ADE07 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D9CE424322F9B88E007ADE07 /* GoogleService-Info.plist */; };
 		D9EB97402305B81B00D5E8CB /* PlacesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EB973F2305B81B00D5E8CB /* PlacesCell.swift */; };
-		D9EB97422305C7C400D5E8CB /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EB97412305C7C400D5E8CB /* SearchView.swift */; };
+		D9EB97422305C7C400D5E8CB /* NearbyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EB97412305C7C400D5E8CB /* NearbyView.swift */; };
 		D9EB97442305D30D00D5E8CB /* AssetsCatalog.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9EB97432305D30D00D5E8CB /* AssetsCatalog.xcassets */; };
 		D9F442642309BABE004F9834 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F442632309BABE004F9834 /* Constants.swift */; };
+		D9FEFB5B2436942E00A9ED5F /* CreatePollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9FEFB5A2436942E00A9ED5F /* CreatePollView.swift */; };
+		D9FEFB5D2436AE0800A9ED5F /* CreatePollStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D9FEFB5C2436AE0800A9ED5F /* CreatePollStoryboard.storyboard */; };
+		D9FEFB5F2436BB1900A9ED5F /* VoteCreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9FEFB5E2436BB1900A9ED5F /* VoteCreateViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,12 +53,12 @@
 		D91C939022F25AE8005113D9 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D91FD0DB22FBF0A8009A9305 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		D93C11A222F9E9DA00CDD7E3 /* NewMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageViewController.swift; sourceTree = "<group>"; };
+		D93C16942436C4F5001EBB49 /* FormTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FormTableViewController.swift; path = "/Users/sasha/Desktop/iOS learning projects/GroupChoice/GroupChoice/Application/CreatePoll Screen/FormTableViewController.swift"; sourceTree = "<absolute>"; };
 		D948169B22F15D9800B8311E /* GroupChoice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GroupChoice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D94816AA22F15D9A00B8311E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D94A7726233BA54C00A5831C /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		D950723924300B3600D4E0CD /* MapPinsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPinsProtocol.swift; sourceTree = "<group>"; };
 		D950723D2430143300D4E0CD /* BaseViewControllerWithLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewControllerWithLocation.swift; sourceTree = "<group>"; };
-		D9617A1522F4FCAC0031F0B6 /* CreatePollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePollViewController.swift; sourceTree = "<group>"; };
 		D9617A1822F5190E0031F0B6 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		D9617A1A22F519AE0031F0B6 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		D96FA468230B279F003E9214 /* PlaceDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailViewController.swift; sourceTree = "<group>"; };
@@ -73,9 +76,12 @@
 		D9AB6A2522F25233001101D1 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		D9CE424322F9B88E007ADE07 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D9EB973F2305B81B00D5E8CB /* PlacesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesCell.swift; sourceTree = "<group>"; };
-		D9EB97412305C7C400D5E8CB /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		D9EB97412305C7C400D5E8CB /* NearbyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyView.swift; sourceTree = "<group>"; };
 		D9EB97432305D30D00D5E8CB /* AssetsCatalog.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AssetsCatalog.xcassets; sourceTree = "<group>"; };
 		D9F442632309BABE004F9834 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		D9FEFB5A2436942E00A9ED5F /* CreatePollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePollView.swift; sourceTree = "<group>"; };
+		D9FEFB5C2436AE0800A9ED5F /* CreatePollStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CreatePollStoryboard.storyboard; sourceTree = "<group>"; };
+		D9FEFB5E2436BB1900A9ED5F /* VoteCreateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteCreateViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,11 +126,10 @@
 		D91C938822F25494005113D9 /* Nearby Screen */ = {
 			isa = PBXGroup;
 			children = (
-				D91C938B22F254C1005113D9 /* Map Screen */,
 				D9AB6A1F22F24D0F001101D1 /* NearbyPlacesViewController.swift */,
 				D96FA468230B279F003E9214 /* PlaceDetailViewController.swift */,
 				D9EB973F2305B81B00D5E8CB /* PlacesCell.swift */,
-				D9EB97412305C7C400D5E8CB /* SearchView.swift */,
+				D9EB97412305C7C400D5E8CB /* NearbyView.swift */,
 				D96FA46A230B27B6003E9214 /* PlaceDetailView.swift */,
 				D97D9F2423354CBA007A0C48 /* CustomMapAnnotation.swift */,
 			);
@@ -185,10 +190,20 @@
 				D9617A1722F5173A0031F0B6 /* Sign Up Screen */,
 				D91C938D22F2574A005113D9 /* Main */,
 				D91C938922F254A2005113D9 /* Messages Screen */,
+				D91C938B22F254C1005113D9 /* Map Screen */,
 				D91C938822F25494005113D9 /* Nearby Screen */,
 				D91C938722F2548A005113D9 /* Login Screen */,
 			);
 			path = Application;
+			sourceTree = "<group>";
+		};
+		D93571AD243039F10097E3ED /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				D97EA3C722F3A2D300E71FEF /* Extensions */,
+				D950723824300B1B00D4E0CD /* Protocols */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 		D948169222F15D9800B8311E = {
@@ -212,11 +227,10 @@
 		D948169D22F15D9800B8311E /* GroupChoice */ = {
 			isa = PBXGroup;
 			children = (
+				D93571AD243039F10097E3ED /* Utilities */,
 				D91C938622F2546F005113D9 /* Model */,
 				D93571AC243038E10097E3ED /* Application */,
-				D950723824300B1B00D4E0CD /* Protocols */,
 				D91FD0DA22FBF098009A9305 /* Network */,
-				D97EA3C722F3A2D300E71FEF /* Extensions */,
 				D9AB6A2722F25402001101D1 /* Assets */,
 				D94816AA22F15D9A00B8311E /* Info.plist */,
 				D9CE424322F9B88E007ADE07 /* GoogleService-Info.plist */,
@@ -237,7 +251,10 @@
 		D9617A1422F4FC910031F0B6 /* CreatePoll Screen */ = {
 			isa = PBXGroup;
 			children = (
-				D9617A1522F4FCAC0031F0B6 /* CreatePollViewController.swift */,
+				D93C16942436C4F5001EBB49 /* FormTableViewController.swift */,
+				D9FEFB5C2436AE0800A9ED5F /* CreatePollStoryboard.storyboard */,
+				D9FEFB5A2436942E00A9ED5F /* CreatePollView.swift */,
+				D9FEFB5E2436BB1900A9ED5F /* VoteCreateViewController.swift */,
 			);
 			path = "CreatePoll Screen";
 			sourceTree = "<group>";
@@ -337,6 +354,7 @@
 			files = (
 				D9EB97442305D30D00D5E8CB /* AssetsCatalog.xcassets in Resources */,
 				D9CE424422F9B88E007ADE07 /* GoogleService-Info.plist in Resources */,
+				D9FEFB5D2436AE0800A9ED5F /* CreatePollStoryboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -390,6 +408,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D9617A1922F5190E0031F0B6 /* SignUpViewController.swift in Sources */,
+				D93C16952436C4F5001EBB49 /* FormTableViewController.swift in Sources */,
+				D9FEFB5B2436942E00A9ED5F /* CreatePollView.swift in Sources */,
 				D9F442642309BABE004F9834 /* Constants.swift in Sources */,
 				D97EA3C922F3A2EA00E71FEF /* UITextField+Extension.swift in Sources */,
 				D97D53242326FE7100B4FD51 /* MapSearchView.swift in Sources */,
@@ -407,9 +427,9 @@
 				D93C11A322F9E9DA00CDD7E3 /* NewMessageViewController.swift in Sources */,
 				D9AB6A2222F24D6C001101D1 /* AllMessagesViewController.swift in Sources */,
 				D90E56D0233E699900FC5852 /* ChatLogViewController.swift in Sources */,
-				D9617A1622F4FCAC0031F0B6 /* CreatePollViewController.swift in Sources */,
+				D9FEFB5F2436BB1900A9ED5F /* VoteCreateViewController.swift in Sources */,
 				D91C938F22F2579C005113D9 /* TabBarViewController.swift in Sources */,
-				D9EB97422305C7C400D5E8CB /* SearchView.swift in Sources */,
+				D9EB97422305C7C400D5E8CB /* NearbyView.swift in Sources */,
 				D9EB97402305B81B00D5E8CB /* PlacesCell.swift in Sources */,
 				D950723A24300B3600D4E0CD /* MapPinsProtocol.swift in Sources */,
 				D98D41A82306FB3F00489C58 /* Place.swift in Sources */,

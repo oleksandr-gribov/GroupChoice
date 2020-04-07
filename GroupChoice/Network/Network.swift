@@ -20,7 +20,6 @@ struct Network {
                 return
             }
             guard let data = data else { return }
-            
             do {
                 let obj = try JSONDecoder().decode(T.self, from: data)
                 completion(obj)

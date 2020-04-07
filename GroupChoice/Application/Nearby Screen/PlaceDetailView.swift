@@ -24,8 +24,9 @@ class PlaceDetailView: UIView {
     }
     
     func setupView() {
-        
-        let subviews = [imageView, nameLabel, addressLabel, descriptionTypes,openNow, locationPin, starPin, ratingLabel, distanceLabel, mapView]
+        horizontalStack.addArrangedSubview(descriptionTypes)
+        horizontalStack.addArrangedSubview(openNow)
+        let subviews = [imageView, nameLabel, addressLabel, horizontalStack, locationPin, starPin, ratingLabel, distanceLabel, mapView]
         
         subviews.forEach { [weak self] in
             addSubview($0)
@@ -35,7 +36,7 @@ class PlaceDetailView: UIView {
             make.top.equalToSuperview()
             make.left.equalToSuperview()
             make.width.equalToSuperview()
-            make.height.equalTo(250)
+            make.height.equalToSuperview().multipliedBy(0.4)
             
         }
         
@@ -45,20 +46,17 @@ class PlaceDetailView: UIView {
             make.width.equalToSuperview().multipliedBy(0.5)
         }
         
-        descriptionTypes.snp.makeConstraints { (make) in
+        horizontalStack.snp.makeConstraints { (make) in
             make.top.equalTo(nameLabel.snp_bottom).offset(8)
             make.left.equalToSuperview().inset(20)
-            
-        }
-        openNow.snp.makeConstraints { (make) in
-            make.top.equalTo(descriptionTypes.snp_bottom).offset(7)
-            make.left.equalToSuperview().inset(20)
+            make.right.equalTo(imageView).inset(20)
             
         }
         addressLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(openNow.snp.bottom).offset(25)
+            make.top.equalTo(mapView.snp.top).inset(-25)
             make.left.equalToSuperview().inset(20)
             make.width.equalToSuperview().multipliedBy(0.8)
+            make.height.equalTo(20)
             
         }
         
@@ -109,10 +107,10 @@ class PlaceDetailView: UIView {
         let lbl = UILabel()
         lbl.text = "Coffee, Bar, Cool place"
         lbl.font = lbl.font.withSize(16)
-        lbl.textColor = .gray
+        lbl.textColor = .black
         lbl.adjustsFontSizeToFitWidth = false
-        lbl.lineBreakMode = .byWordWrapping
-        lbl.numberOfLines = 0
+       // lbl.lineBreakMode = .byWordWrapping
+        lbl.numberOfLines = 1
         
         return lbl
     }()
@@ -121,7 +119,7 @@ class PlaceDetailView: UIView {
         let lbl = UILabel()
         lbl.font = lbl.font.withSize(16)
         lbl.textColor = .green
-        
+        lbl.textAlignment = .right
         
         return lbl
     }()
@@ -164,6 +162,15 @@ class PlaceDetailView: UIView {
         let mv = MKMapView()
         
         return mv
+    }()
+    
+    let horizontalStack: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.distribution = .fill
+        stack.spacing = 10
+        
+        return stack
     }()
     
 }

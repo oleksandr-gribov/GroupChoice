@@ -24,7 +24,7 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
 
         searchViewController.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "map_grey"), selectedImage: #imageLiteral(resourceName: "map_blue"))
         
-        let createPollViewController =  CreatePollViewController()
+        let createPollViewController =  VoteCreateViewController()
         createPollViewController.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "FAB"), selectedImage: #imageLiteral(resourceName: "FAB"))
         
         let mapViewController = UINavigationController(rootViewController: MapViewController())
@@ -40,10 +40,20 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
    
     }
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-        if viewController.isKind(of: CreatePollViewController.self)  {
-            let createViewController = CreatePollViewController()
-            createViewController.modalPresentationStyle = .overFullScreen
-            self.present(createViewController, animated: true, completion: nil)
+        if viewController.isKind(of: VoteCreateViewController.self)  {
+           // let createViewController = CreatePollViewController()
+            let storyboard = UIStoryboard(name: "CreatePollStoryboard", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "createPoll")
+
+            let navigationController = UINavigationController(rootViewController: vc)
+
+            self.present(navigationController, animated: true, completion: nil)
+            
+            
+//           let storyboard = UIStoryboard(name: "CreatePollStoryboard", bundle: nil)
+//
+//            let vc = storyboard.instantiateViewController(withIdentifier: "createPoll")
+//            self.present(vc, animated: true, completion: nil)
 
             return false
         }

@@ -18,6 +18,7 @@ protocol PlaceMapPins {
 
 extension PlaceMapPins {
     func placePins() {
+        self.mapView.removeAnnotations(mapView.annotations)
         for place in placesNearby {
             let placePin = CustomMapAnnotation()
             let indexOfPlace = placesNearby.firstIndex(of: place)

@@ -51,11 +51,21 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         Auth.auth().signIn(withEmail: email, password: password) { (user, err) in
             if let err = err {
                 print (err.localizedDescription)
-            } else {
+                DispatchQueue.main.async {
+//                    self.loginView.emailTextField.layer.borderColor = UIColor.red.cgColor
+//                    self.loginView.emailTextField.layer.borderWidth = 2.0
+//                        self.loginView.passwordTextField.layer.borderColor = UIColor.red.cgColor
+//                    self.loginView.passwordTextField.layer.borderWidth = 2.0
+                    self.loginView.incorrectLogin.text = "Incorrect email or password"
+
+                }
+                            } else {
                 if let user = user {
                     self.userDefaults.set(true, forKey: "UserIsLoggedIn")
                     print("User \(user.user.uid) signed in " )
-                    self.present(TabBarViewController(), animated: true, completion: nil)
+                    let tabBarViewController = TabBarViewController()
+                    tabBarViewController.modalPresentationStyle = .fullScreen
+                    self.present(tabBarViewController, animated: true, completion: nil)
                 }
             }
         }
@@ -76,6 +86,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             loginView.passwordTextField.becomeFirstResponder()
         } else  {
             textField.resignFirstResponder()
+            loginButtonPressed()
         }
         return true
     }
