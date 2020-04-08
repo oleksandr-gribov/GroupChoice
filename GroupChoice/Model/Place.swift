@@ -55,7 +55,7 @@ struct Photo: Codable {
     }
 }
 struct OpenHours: Codable {
-    var openNow: Bool
+    var openNow: Bool?  
     
     enum CodingKeys: String, CodingKey {
         case openNow = "open_now"

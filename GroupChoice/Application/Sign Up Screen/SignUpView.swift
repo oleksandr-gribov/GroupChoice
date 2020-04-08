@@ -26,19 +26,19 @@ class SignUpView: UIView {
         backgroundImageView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
-        let stackView = mainStackView()
+        let mainStack = mainStackView()
         
-        addSubview(stackView)
-        stackView.snp.makeConstraints { (make) in
+        addSubview(mainStack)
+        mainStack.snp.makeConstraints { (make) in
             make.center.equalToSuperview()
-            make.height.equalToSuperview().multipliedBy(0.38)
+            make.height.equalTo(250)
             make.width.equalToSuperview().multipliedBy(0.7)
             
         }
         addSubview(signUpButton)
         signUpButton.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.top.equalTo(stackView.snp.bottom).offset(20)
+            make.top.equalTo(mainStack.snp.bottom).offset(50)
             make.height.equalToSuperview().multipliedBy(0.07)
             make.width.equalToSuperview().multipliedBy(0.4)
         }
@@ -47,7 +47,7 @@ class SignUpView: UIView {
     
     let backgroundImageView: UIImageView =  {
         let iv = UIImageView()
-        iv.image = UIImage(named: "architectural-design-architecture-birds-eye-view-1722183")
+        iv.image = UIImage(named: "login_post")
         iv.contentMode = .scaleAspectFill
         
         return iv

@@ -32,12 +32,12 @@ class LoginView: UIView {
         backgroundImageView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
-        let stackView = mainStackView()
+        let mainStack = mainStackView()
         
-        addSubview(stackView)
-        stackView.snp.makeConstraints { (make) in
+        addSubview(mainStack)
+        mainStack.snp.makeConstraints { (make) in
             make.center.equalToSuperview()
-            make.height.equalToSuperview().multipliedBy(0.3)
+            make.height.equalTo(200)
             make.width.equalToSuperview().multipliedBy(0.7)
             
         }
@@ -45,7 +45,7 @@ class LoginView: UIView {
         loginButton.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
             //make.leading.equalToSuperview().offset(50)
-            make.top.equalTo(stackView.snp.bottom).offset(20)
+            make.top.equalTo(mainStack.snp.bottom).offset(20)
             make.height.equalToSuperview().multipliedBy(0.07)
             make.width.equalToSuperview().multipliedBy(0.4)
         }
@@ -62,7 +62,8 @@ class LoginView: UIView {
     
     let backgroundImageView: UIImageView =  {
         let iv = UIImageView()
-        iv.image = UIImage(named: "architectural-design-architecture-birds-eye-view-1722183")
+        iv.image = UIImage(named: "login_post")
+        //iv.image = UIImage(named: "architectural-design-architecture-birds-eye-view-1722183")
         iv.contentMode = .scaleAspectFill
         
         return iv

@@ -24,7 +24,7 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
 
         searchViewController.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "map_grey"), selectedImage: #imageLiteral(resourceName: "map_blue"))
         
-        let createPollViewController =  VoteCreateViewController()
+        let createPollViewController =  FormTableViewController()
         createPollViewController.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "FAB"), selectedImage: #imageLiteral(resourceName: "FAB"))
         
         let mapViewController = UINavigationController(rootViewController: MapViewController())
@@ -40,7 +40,7 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
    
     }
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-        if viewController.isKind(of: VoteCreateViewController.self)  {
+        if viewController.isKind(of: FormTableViewController.self)  {
            // let createViewController = CreatePollViewController()
             let storyboard = UIStoryboard(name: "CreatePollStoryboard", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "createPoll")

@@ -33,14 +33,15 @@
 		D9AB6A2222F24D6C001101D1 /* AllMessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AB6A2122F24D6C001101D1 /* AllMessagesViewController.swift */; };
 		D9AB6A2422F24D9F001101D1 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AB6A2322F24D9F001101D1 /* MapViewController.swift */; };
 		D9AB6A2622F25233001101D1 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AB6A2522F25233001101D1 /* SettingsViewController.swift */; };
+		D9B42BA0243D3D6100E3B186 /* SearchPlacesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B42B9F243D3D6100E3B186 /* SearchPlacesCollectionViewCell.swift */; };
+		D9B42BA2243D54C700E3B186 /* AddPlacesToVoteTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B42BA1243D54C700E3B186 /* AddPlacesToVoteTableViewController.swift */; };
+		D9B42BA5243D6B0C00E3B186 /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B42BA4243D6B0C00E3B186 /* SearchTableViewCell.swift */; };
 		D9CE424422F9B88E007ADE07 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D9CE424322F9B88E007ADE07 /* GoogleService-Info.plist */; };
 		D9EB97402305B81B00D5E8CB /* PlacesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EB973F2305B81B00D5E8CB /* PlacesCell.swift */; };
 		D9EB97422305C7C400D5E8CB /* NearbyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EB97412305C7C400D5E8CB /* NearbyView.swift */; };
 		D9EB97442305D30D00D5E8CB /* AssetsCatalog.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9EB97432305D30D00D5E8CB /* AssetsCatalog.xcassets */; };
 		D9F442642309BABE004F9834 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F442632309BABE004F9834 /* Constants.swift */; };
-		D9FEFB5B2436942E00A9ED5F /* CreatePollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9FEFB5A2436942E00A9ED5F /* CreatePollView.swift */; };
 		D9FEFB5D2436AE0800A9ED5F /* CreatePollStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D9FEFB5C2436AE0800A9ED5F /* CreatePollStoryboard.storyboard */; };
-		D9FEFB5F2436BB1900A9ED5F /* VoteCreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9FEFB5E2436BB1900A9ED5F /* VoteCreateViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,14 +75,15 @@
 		D9AB6A2122F24D6C001101D1 /* AllMessagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllMessagesViewController.swift; sourceTree = "<group>"; };
 		D9AB6A2322F24D9F001101D1 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		D9AB6A2522F25233001101D1 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		D9B42B9F243D3D6100E3B186 /* SearchPlacesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPlacesCollectionViewCell.swift; sourceTree = "<group>"; };
+		D9B42BA1243D54C700E3B186 /* AddPlacesToVoteTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlacesToVoteTableViewController.swift; sourceTree = "<group>"; };
+		D9B42BA4243D6B0C00E3B186 /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		D9CE424322F9B88E007ADE07 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D9EB973F2305B81B00D5E8CB /* PlacesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesCell.swift; sourceTree = "<group>"; };
 		D9EB97412305C7C400D5E8CB /* NearbyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyView.swift; sourceTree = "<group>"; };
 		D9EB97432305D30D00D5E8CB /* AssetsCatalog.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AssetsCatalog.xcassets; sourceTree = "<group>"; };
 		D9F442632309BABE004F9834 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		D9FEFB5A2436942E00A9ED5F /* CreatePollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePollView.swift; sourceTree = "<group>"; };
 		D9FEFB5C2436AE0800A9ED5F /* CreatePollStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CreatePollStoryboard.storyboard; sourceTree = "<group>"; };
-		D9FEFB5E2436BB1900A9ED5F /* VoteCreateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteCreateViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,14 +187,14 @@
 		D93571AC243038E10097E3ED /* Application */ = {
 			isa = PBXGroup;
 			children = (
-				D91C938A22F254AE005113D9 /* Settings Screen */,
 				D9617A1422F4FC910031F0B6 /* CreatePoll Screen */,
-				D9617A1722F5173A0031F0B6 /* Sign Up Screen */,
-				D91C938D22F2574A005113D9 /* Main */,
-				D91C938922F254A2005113D9 /* Messages Screen */,
-				D91C938B22F254C1005113D9 /* Map Screen */,
-				D91C938822F25494005113D9 /* Nearby Screen */,
 				D91C938722F2548A005113D9 /* Login Screen */,
+				D91C938822F25494005113D9 /* Nearby Screen */,
+				D91C938D22F2574A005113D9 /* Main */,
+				D91C938B22F254C1005113D9 /* Map Screen */,
+				D91C938922F254A2005113D9 /* Messages Screen */,
+				D91C938A22F254AE005113D9 /* Settings Screen */,
+				D9617A1722F5173A0031F0B6 /* Sign Up Screen */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -251,10 +253,10 @@
 		D9617A1422F4FC910031F0B6 /* CreatePoll Screen */ = {
 			isa = PBXGroup;
 			children = (
+				D9B42BA3243D6AEF00E3B186 /* Custom Cells */,
 				D93C16942436C4F5001EBB49 /* FormTableViewController.swift */,
 				D9FEFB5C2436AE0800A9ED5F /* CreatePollStoryboard.storyboard */,
-				D9FEFB5A2436942E00A9ED5F /* CreatePollView.swift */,
-				D9FEFB5E2436BB1900A9ED5F /* VoteCreateViewController.swift */,
+				D9B42BA1243D54C700E3B186 /* AddPlacesToVoteTableViewController.swift */,
 			);
 			path = "CreatePoll Screen";
 			sourceTree = "<group>";
@@ -282,6 +284,15 @@
 				D9EB97432305D30D00D5E8CB /* AssetsCatalog.xcassets */,
 			);
 			path = Assets;
+			sourceTree = "<group>";
+		};
+		D9B42BA3243D6AEF00E3B186 /* Custom Cells */ = {
+			isa = PBXGroup;
+			children = (
+				D9B42B9F243D3D6100E3B186 /* SearchPlacesCollectionViewCell.swift */,
+				D9B42BA4243D6B0C00E3B186 /* SearchTableViewCell.swift */,
+			);
+			path = "Custom Cells";
 			sourceTree = "<group>";
 		};
 		E387B9480A78555C711B3DA9 /* Frameworks */ = {
@@ -409,7 +420,6 @@
 			files = (
 				D9617A1922F5190E0031F0B6 /* SignUpViewController.swift in Sources */,
 				D93C16952436C4F5001EBB49 /* FormTableViewController.swift in Sources */,
-				D9FEFB5B2436942E00A9ED5F /* CreatePollView.swift in Sources */,
 				D9F442642309BABE004F9834 /* Constants.swift in Sources */,
 				D97EA3C922F3A2EA00E71FEF /* UITextField+Extension.swift in Sources */,
 				D97D53242326FE7100B4FD51 /* MapSearchView.swift in Sources */,
@@ -426,16 +436,18 @@
 				D90E56D2233E79AE00FC5852 /* ChatLogView.swift in Sources */,
 				D93C11A322F9E9DA00CDD7E3 /* NewMessageViewController.swift in Sources */,
 				D9AB6A2222F24D6C001101D1 /* AllMessagesViewController.swift in Sources */,
+				D9B42BA0243D3D6100E3B186 /* SearchPlacesCollectionViewCell.swift in Sources */,
 				D90E56D0233E699900FC5852 /* ChatLogViewController.swift in Sources */,
-				D9FEFB5F2436BB1900A9ED5F /* VoteCreateViewController.swift in Sources */,
 				D91C938F22F2579C005113D9 /* TabBarViewController.swift in Sources */,
 				D9EB97422305C7C400D5E8CB /* NearbyView.swift in Sources */,
+				D9B42BA2243D54C700E3B186 /* AddPlacesToVoteTableViewController.swift in Sources */,
 				D9EB97402305B81B00D5E8CB /* PlacesCell.swift in Sources */,
 				D950723A24300B3600D4E0CD /* MapPinsProtocol.swift in Sources */,
 				D98D41A82306FB3F00489C58 /* Place.swift in Sources */,
 				D94A7727233BA54C00A5831C /* User.swift in Sources */,
 				D96FA469230B279F003E9214 /* PlaceDetailViewController.swift in Sources */,
 				D91FD0DC22FBF0A8009A9305 /* Network.swift in Sources */,
+				D9B42BA5243D6B0C00E3B186 /* SearchTableViewCell.swift in Sources */,
 				D9AB6A2622F25233001101D1 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

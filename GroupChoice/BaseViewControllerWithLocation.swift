@@ -16,7 +16,13 @@ class BaseViewControllerWithLocation: UIViewController,CLLocationManagerDelegate
     
     var mapView: MKMapView!
     var locationManager = CLLocationManager()
-    var currentLocation: CLLocationCoordinate2D?
+    
+    var currentLocation: CLLocationCoordinate2D? {
+        didSet {
+            print("\nlocation set\n")
+            NearbyPlacesViewController.userLocation = self.currentLocation
+        }
+    }
     let regionInMeters: Double = 1000
     var placesNearby = [Place]()
     

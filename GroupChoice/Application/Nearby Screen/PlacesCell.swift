@@ -110,7 +110,7 @@ class PlacesCell: UICollectionViewCell {
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         iv.layer.cornerRadius = 5
-        
+   
         return iv
     }()
     

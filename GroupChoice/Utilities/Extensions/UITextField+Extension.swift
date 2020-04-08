@@ -20,7 +20,7 @@ extension UITextField {
         self.attributedPlaceholder = placeholder
         self.backgroundColor = UIColor(red: 216/255, green: 216/255, blue: 216/255, alpha: 0.15)
         self.tintColor = .white
-        self.font = UIFont(name: "Avenir Next", size: 22)
+        self.font = UIFont(name: "Avenir Next", size: 18)
         self.textColor = .white
         self.layer.cornerRadius = 10
         self.autocorrectionType = .no

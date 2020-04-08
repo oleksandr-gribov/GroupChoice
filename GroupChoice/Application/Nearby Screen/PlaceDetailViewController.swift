@@ -22,7 +22,14 @@ class PlaceDetailViewController: UIViewController, MKMapViewDelegate {
         
         setupView()
         setupNavBar()
+        let gestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(swipeRight))
+        gestureRecognizer.direction = .right
         
+        self.detailView.addGestureRecognizer(gestureRecognizer)
+    }
+    @objc func swipeRight() {
+        _ = navigationController?.popViewController(animated: true)
+
     }
     func setupNavBar() {
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
@@ -30,12 +37,8 @@ class PlaceDetailViewController: UIViewController, MKMapViewDelegate {
         self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController?.navigationBar.tintColor = .white
     }
-    
-    
-    
+ 
     func setupView() {
-        
-        
         detailView = PlaceDetailView()
         view.addSubview(detailView)
         //self.view.frame = self.view.bounds

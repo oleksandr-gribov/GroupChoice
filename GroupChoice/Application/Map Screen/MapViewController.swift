@@ -57,6 +57,16 @@ class MapViewController: BaseViewControllerWithLocation, UITableViewDelegate, UI
         let customViewTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(customViewTapped))
         self.mapSearchView.customView.addGestureRecognizer(customViewTapGestureRecognizer)
         
+        let customSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(customViewSwiped))
+        customSwipeGestureRecognizer.direction = .down
+        self.mapSearchView.customView.addGestureRecognizer(customSwipeGestureRecognizer)
+        
+    }
+    
+    @objc func customViewSwiped() {
+        self.mapSearchView.customView.isHidden = true
+        let selectedAnnotations = self.mapSearchView.mapView.selectedAnnotations
+        self.mapSearchView.mapView.deselectAnnotation(selectedAnnotations[0], animated: true)
     }
     
     @objc func customViewTapped() {
@@ -65,24 +75,28 @@ class MapViewController: BaseViewControllerWithLocation, UITableViewDelegate, UI
         self.navigationController?.pushViewController(detailViewController, animated: true)
     }
     @objc func cancelSearch() {
+        //
         if self.tableView.isHidden && self.mapSearchView.optionsLabel.text == "" {
             self.tabBarController?.selectedIndex = 0
         }
+        // cancel search but remain in the map view
         else if self.tableView.isHidden && self.mapSearchView.optionsLabel.text != "" {
             self.tableView.isHidden = true
             self.optionsTextField.resignFirstResponder()
             self.optionsTextField.text?.removeAll()
-            self.navigationItem.rightBarButtonItem?.isEnabled = false
+            //self.navigationItem.rightBarButtonItem?.isEnabled = false
             
         }
         else if self.mapSearchView.optionsLabel.text != "" {
             self.tableView.isHidden = true
             self.optionsTextField.text = "  Restaurants, bars, movies, etc"
+            self.mapView.removeAnnotations(mapView.annotations)
         }
         else {
             self.tableView.isHidden = true
         }
         self.mapSearchView.customView.isHidden = true
+        self.mapView.deselectAnnotation(mapView.selectedAnnotations[0], animated: true)
         
     }
     @objc func performSearch() {
@@ -136,6 +150,7 @@ class MapViewController: BaseViewControllerWithLocation, UITableViewDelegate, UI
             let alert = UIAlertController(title: "No results found", message: "Sorry, there are no results in the specified location", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
+            self.mapView.removeAnnotations(self.mapView.annotations)
         }
     }
     
@@ -152,6 +167,8 @@ class MapViewController: BaseViewControllerWithLocation, UITableViewDelegate, UI
         if let annotation = view.annotation as? CustomMapAnnotation {
             let indexPath = IndexPath(row: annotation.index!, section: 0)
             self.mapSearchView.customView.isHidden = false
+          
+            
             self.currentPlace = self.placesNearby[indexPath.row]
             DispatchQueue.main.async {
                 if let currentPlace = self.currentPlace {

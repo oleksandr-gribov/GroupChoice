@@ -15,12 +15,15 @@ class NearbyPlacesViewController: BaseViewControllerWithLocation, UICollectionVi
     
     var searchView: NearbyView!
     let placesCellId = "placesCellId"
+    public static var userLocation: CLLocationCoordinate2D?
 
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white 
-        
+        view.backgroundColor = .white
+        //NearbyPlacesViewController.userLocation = self.currentLocation
+        print("user location in NearbyVC is \(self.currentLocation)")
+        //print("currentlocation is \(self.currentLocation)")
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         collectionView.register(PlacesCell.self, forCellWithReuseIdentifier: placesCellId)
@@ -30,16 +33,23 @@ class NearbyPlacesViewController: BaseViewControllerWithLocation, UICollectionVi
         mapView = searchView.mapView
         mapView.delegate = self 
         setupView()
-        print ("num of places in viewdidload \(placesNearby.count)")
+        
 
     }
   
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        checkLocationServices()
+        if placesNearby.isEmpty {
+            checkLocationServices()
+            
+        }
     }
     override func viewDidAppear(_ animated: Bool) {
-        fetchPlaces(endpoint: nil, keyword: nil)
+        if placesNearby.isEmpty {
+            fetchPlaces(endpoint: nil, keyword: nil)
+            NearbyPlacesViewController.userLocation = self.currentLocation
+            
+        }
     }
  
     override func updateCollectionComponents() {
