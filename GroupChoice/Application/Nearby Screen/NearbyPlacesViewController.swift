@@ -21,9 +21,7 @@ class NearbyPlacesViewController: BaseViewControllerWithLocation, UICollectionVi
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        //NearbyPlacesViewController.userLocation = self.currentLocation
-        print("user location in NearbyVC is \(self.currentLocation)")
-        //print("currentlocation is \(self.currentLocation)")
+
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         collectionView.register(PlacesCell.self, forCellWithReuseIdentifier: placesCellId)

@@ -7,7 +7,22 @@
 
 import UIKit
 
-class FormTableViewController: UITableViewController, UITextFieldDelegate {
+class FormTableViewController: UITableViewController, UITextFieldDelegate, SearchCompleteDelegate {
+    
+    weak var delegate:SearchCompleteDelegate?
+    
+    func onDoneButtonPressed(_ placesAdded: [Place]) {
+        self.placesAdded = placesAdded
+        
+        print("Delegate places added are now ")
+        
+        for item in placesAdded {
+            print(item.name)
+        }
+        self.tableView.reloadData()
+        self.placesCollectionView.reloadData()
+    }
+    
     private var voteDatePickerVisible = false
     private var eventDatePickerVisible = false
     private var endAtTimeOfEvent = true
@@ -77,6 +92,8 @@ class FormTableViewController: UITableViewController, UITextFieldDelegate {
         
         
         
+        
+        
         placesCollectionView.register(SearchPlacesCollectionViewCell.self, forCellWithReuseIdentifier: "addPlacesCell")
         self.tableView.tableFooterView = UIView(frame: .zero)
         self.eventNameTF.delegate = self
@@ -101,7 +118,9 @@ class FormTableViewController: UITableViewController, UITextFieldDelegate {
             voteEndDateLabel.text = dateFormatter.string(from: voteDatePicker!.date)
         }
         
+        
     }
+    
     
     let createVote: UIButton = {
         let btn = UIButton()
@@ -288,7 +307,7 @@ extension FormTableViewController: UICollectionViewDelegate, UICollectionViewDat
         if placesAdded.count == 0 {
             return 1
         }
-        return placesAdded.count
+        return placesAdded.count + 1
 
     }
     
@@ -297,10 +316,10 @@ extension FormTableViewController: UICollectionViewDelegate, UICollectionViewDat
         if indexPath.row == 0 {
             cell.nameLabel.text = "Add places"
             cell.imageView.image = UIImage(named: "add_more")
-
         }else {
-            cell.nameLabel.text = "Some long named restaurant"
-            cell.imageView.image = UIImage(named: "login_post")
+            let place = placesAdded[indexPath.row-1]
+            cell.setupData(place)
+            
         }
 
         return cell
@@ -314,6 +333,7 @@ extension FormTableViewController: UICollectionViewDelegate, UICollectionViewDat
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row == 0 {
             let vc = AddPlacesToVoteTableViewController() as! AddPlacesToVoteTableViewController
+            vc.searchCompleteDelegate = self
             vc.placesAdded = self.placesAdded
             self.navigationController?.pushViewController(vc, animated: true)
         }

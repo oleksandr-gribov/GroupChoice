@@ -8,39 +8,72 @@
 
 import UIKit
 
-class AddPlacesToVoteTableViewController: UITableViewController, UISearchBarDelegate {
+class AddPlacesToVoteTableViewController: UITableViewController, UISearchBarDelegate, UISearchResultsUpdating, UISearchControllerDelegate, SearchTableViewCellDelegate {
     
-    var placesAdded : [Place]?
+    weak var searchCompleteDelegate:SearchCompleteDelegate!
+    
+    func searchTableViewCell(_ buttonChecked: Bool, place: Place) {
+        print("delegate method triggered and status is \(buttonChecked)")
+        if buttonChecked && !placesAdded.contains(place){
+            placesAdded.append(place)
+        } else {
+            if placesAdded.contains(place) {
+                placesAdded.remove(at: findPlace(place)!)
+            }
+        }
+    }
+    func findPlace(_ place: Place) -> Int? {
+        var index = 0
+        for addedPlace in placesAdded {
+            if addedPlace.id != place.id {
+                index += 1
+            } else {
+                return index
+            }
+        }
+        return nil
+    }
+    
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        print("searching")
+        var keywordString = searchController.searchBar.text
+        keywordString = keywordString!.trimmingCharacters(in: .whitespacesAndNewlines)
+        fetchPlaces(endpoint: .general, keyword: keywordString)
+        tableView.reloadData()
+    }
+    
+    
+    var placesAdded : [Place] = []
     var placesFound : [Place] = []
     var searchLocation = NearbyPlacesViewController.userLocation
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        var search = UISearchController(searchResultsController: nil)
-        self.navigationItem.searchController = search
-        self.navigationItem.hidesSearchBarWhenScrolling = false 
+        
+        
+        var searchController = UISearchController(searchResultsController: nil)
+        searchController.searchResultsUpdater = self
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.delegate = self
+        
+        
+        self.navigationItem.searchController = searchController
+        //self.navigationItem.hidesSearchBarWhenScrolling = false
         
         tableView.register(SearchTableViewCell.self, forCellReuseIdentifier: "addPlacesCell")
         
-        let searchbar = search.searchBar
-        searchbar.barStyle = .blackTranslucent
-        searchbar.delegate = self
+        let searchbar = searchController.searchBar
+        searchController.searchBar.tintColor = .white
+        searchbar.placeholder = "e.g. Coffee, Pizza, Gym"
+        searchbar.searchTextField.textColor = .white
         
-        
-        searchbar.isTranslucent = false
-        searchbar.barTintColor = .white
-        searchbar.tintColor = .white
         
         tableView.separatorInset = UIEdgeInsets(top: 2, left: 5, bottom: 2, right: 5)
-        
-        let textFieldInsideSearchBar = searchbar.value(forKey: "searchField") as? UITextField
-        
-        textFieldInsideSearchBar?.textColor = .white
-        
-        
-        
+
         self.navigationItem.title = "Search"
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addItems))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dloneButtonPressed))
         
         //self.navigationItem. = UISearchBar(frame: CGRect(x: 20, y: 10, width: 150, height: 100))
         // Uncomment the following line to preserve selection between presentations
@@ -50,33 +83,14 @@ class AddPlacesToVoteTableViewController: UITableViewController, UISearchBarDele
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
-    // MARK: - Table view data source
-    @objc func addItems() {
-        print("Add items pressed")
-    }
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 20
-    }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 1
-    }
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let v = UIView()
-        v.backgroundColor = .clear
+    @objc func dloneButtonPressed() {
         
-        return v
+        searchCompleteDelegate.onDoneButtonPressed(placesAdded)
+        _ = navigationController?.popViewController(animated: true)
+        
     }
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 20
-    }
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        let keywordString = searchBar.searchTextField.text
-        fetchPlaces(endpoint: .general, keyword: keywordString)
-        tableView.reloadData()
-    }
+
     
     
     func fetchPlaces(endpoint: GooglePlacesAPI.Endpoint?, keyword:String?) {
@@ -111,19 +125,40 @@ class AddPlacesToVoteTableViewController: UITableViewController, UISearchBarDele
             }
         }
     }
+    
+    // MARK: - Table View Methods
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return placesFound.count
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete implementation, return the number of rows
+        return 1
+    }
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let v = UIView()
+        v.backgroundColor = .clear
+        
+        return v
+    }
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 20
+    }
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 120
     }
-    
-    
+   
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "addPlacesCell", for: indexPath) as! SearchTableViewCell
-//        if let place = placesFound[indexPath.row] {
-//            cell.textLabel?.text = place.name
-//        }
-     
+        let place = placesFound[indexPath.section]
+        cell.setUpCellData(place)
+        if placesAdded.contains(place) {
+            cell.buttonChecked = true
+            cell.addButton.setImage(UIImage(named: "blue_check"), for: .normal)
+        }
+        cell.place = place
+        cell.delegate = self
         
-    
         return cell
     }
     
@@ -174,4 +209,8 @@ class AddPlacesToVoteTableViewController: UITableViewController, UISearchBarDele
     }
     */
 
+}
+
+protocol SearchCompleteDelegate: AnyObject {
+    func onDoneButtonPressed(_ placesAdded: [Place])
 }

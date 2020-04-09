@@ -19,7 +19,6 @@ class BaseViewControllerWithLocation: UIViewController,CLLocationManagerDelegate
     
     var currentLocation: CLLocationCoordinate2D? {
         didSet {
-            print("\nlocation set\n")
             NearbyPlacesViewController.userLocation = self.currentLocation
         }
     }
