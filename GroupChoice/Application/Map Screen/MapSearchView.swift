@@ -14,19 +14,19 @@ class MapSearchView: UIView {
     override init(frame: CGRect) {
         super.init(frame:frame)
         
-        addSubview(topSquare)
-        topSquare.addSubview(optionsLabel)
+        //addSubview(topSquare)
+        //topSquare.addSubview(optionsLabel)
         addSubview(tableView)
         addSubview(mapView)
         addSubview(customView)
-        bringSubviewToFront(topSquare)
+//        bringSubviewToFront(topSquare)
         
-        topSquare.snp.makeConstraints { (make) in
-            make.left.equalToSuperview()
-            make.right.equalToSuperview()
-            make.top.equalToSuperview()
-            make.height.equalToSuperview().multipliedBy(0.2)
-        }
+//        topSquare.snp.makeConstraints { (make) in
+//            make.left.equalToSuperview()
+//            make.right.equalToSuperview()
+//            make.top.equalToSuperview()
+//            make.height.equalTo(100)
+//        }
         customView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
             make.height.equalToSuperview().multipliedBy(0.4)
@@ -67,21 +67,20 @@ class MapSearchView: UIView {
         }
         
         
-        optionsLabel.snp.makeConstraints { (make) in
-            make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview().multipliedBy(1.5)
-            make.width.equalToSuperview().multipliedBy(0.95)
-            make.height.equalToSuperview().multipliedBy(0.5)
-        }
+//        optionsLabel.snp.makeConstraints { (make) in
+//            make.centerX.equalToSuperview()
+//            make.centerY.equalToSuperview().multipliedBy(1.5)
+//            make.width.equalToSuperview().multipliedBy(0.95)
+//            make.height.equalToSuperview().multipliedBy(0.5)
+//        }
        
         tableView.snp.makeConstraints { (make) in
-            make.top.equalTo(topSquare.snp.bottom)
+            make.top.equalToSuperview()
             make.right.equalToSuperview()
             make.left.equalToSuperview()
             make.bottom.equalToSuperview()
         }
         
-        bringSubviewToFront(topSquare)
         bringSubviewToFront(tableView)
     }
     

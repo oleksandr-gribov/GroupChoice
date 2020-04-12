@@ -40,6 +40,7 @@
 		D9EB97402305B81B00D5E8CB /* PlacesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EB973F2305B81B00D5E8CB /* PlacesCell.swift */; };
 		D9EB97422305C7C400D5E8CB /* NearbyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EB97412305C7C400D5E8CB /* NearbyView.swift */; };
 		D9EB97442305D30D00D5E8CB /* AssetsCatalog.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9EB97432305D30D00D5E8CB /* AssetsCatalog.xcassets */; };
+		D9EC84D12443B7FF00BB05D6 /* Vote.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EC84D02443B7FF00BB05D6 /* Vote.swift */; };
 		D9F442642309BABE004F9834 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F442632309BABE004F9834 /* Constants.swift */; };
 		D9FEFB5D2436AE0800A9ED5F /* CreatePollStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D9FEFB5C2436AE0800A9ED5F /* CreatePollStoryboard.storyboard */; };
 /* End PBXBuildFile section */
@@ -82,6 +83,7 @@
 		D9EB973F2305B81B00D5E8CB /* PlacesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesCell.swift; sourceTree = "<group>"; };
 		D9EB97412305C7C400D5E8CB /* NearbyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyView.swift; sourceTree = "<group>"; };
 		D9EB97432305D30D00D5E8CB /* AssetsCatalog.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AssetsCatalog.xcassets; sourceTree = "<group>"; };
+		D9EC84D02443B7FF00BB05D6 /* Vote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vote.swift; sourceTree = "<group>"; };
 		D9F442632309BABE004F9834 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		D9FEFB5C2436AE0800A9ED5F /* CreatePollStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CreatePollStoryboard.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -112,6 +114,7 @@
 			children = (
 				D98D41A72306FB3F00489C58 /* Place.swift */,
 				D94A7726233BA54C00A5831C /* User.swift */,
+				D9EC84D02443B7FF00BB05D6 /* Vote.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -421,6 +424,7 @@
 				D9617A1922F5190E0031F0B6 /* SignUpViewController.swift in Sources */,
 				D93C16952436C4F5001EBB49 /* FormTableViewController.swift in Sources */,
 				D9F442642309BABE004F9834 /* Constants.swift in Sources */,
+				D9EC84D12443B7FF00BB05D6 /* Vote.swift in Sources */,
 				D97EA3C922F3A2EA00E71FEF /* UITextField+Extension.swift in Sources */,
 				D97D53242326FE7100B4FD51 /* MapSearchView.swift in Sources */,
 				D91C939122F25AE8005113D9 /* AppDelegate.swift in Sources */,

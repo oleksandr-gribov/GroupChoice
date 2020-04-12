@@ -10,8 +10,11 @@ import UIKit
 import MapKit
 import SnapKit
 
-class MapViewController: BaseViewControllerWithLocation, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
-    
+class MapViewController: BaseViewControllerWithLocation, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate,UISearchResultsUpdating, UISearchControllerDelegate {
+    func updateSearchResults(for searchController: UISearchController) {
+        
+    }
+
     var mainView: UIView!
     var currentPlace: Place?
     var mapSearchView: MapSearchView!
@@ -23,24 +26,38 @@ class MapViewController: BaseViewControllerWithLocation, UITableViewDelegate, UI
     let options = ["restaurant":GooglePlacesAPI.Endpoint.restaurant, "cafe":GooglePlacesAPI.Endpoint.cafe, "bar":GooglePlacesAPI.Endpoint.bar, "gym":GooglePlacesAPI.Endpoint.gym, "night club": GooglePlacesAPI.Endpoint.nightClub, "museum":GooglePlacesAPI.Endpoint.museum, "amusement park": GooglePlacesAPI.Endpoint.amusementPark, "art gallery": GooglePlacesAPI.Endpoint.artGallery, "park": GooglePlacesAPI.Endpoint.park, "bowling alley": GooglePlacesAPI.Endpoint.bowlingAlley]
     
     // MARK: - View Life Cycle
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.navigationBar.isTranslucent = true
+        UINavigationBar.appearance().barTintColor = .red
+        navigationController?.navigationBar.setBackgroundImage(UIImage(named: "top blur"), for: .default)
+        if self.placesNearby.isEmpty {
+            checkLocationServices()
+        }
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.view.backgroundColor = .green
         setupView()
-        let cancelBarButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelSearch))
-        cancelBarButton.tintColor = .white
-        let searchButton = UIBarButtonItem(title: "Search", style: .plain, target: self, action: #selector(performSearch))
-        searchButton.tintColor = .white
+        view.sendSubviewToBack(mapSearchView)
         
-        self.navigationItem.leftBarButtonItem = cancelBarButton
-        self.navigationItem.rightBarButtonItem = cancelBarButton
-        self.navigationController?.navigationBar.barTintColor = UIColor(displayP3Red: 150/255, green: 211/255, blue: 255/255, alpha: 1.0)
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        self.navigationController?.navigationBar.isTranslucent = true
+        setupSearch()
+                
+        //self.navigationController?.navigationBar.backgroundColor = .purple
         
-        var leftNavBarButton = UIBarButtonItem(customView:optionsTextField)
-        self.navigationItem.leftBarButtonItem = leftNavBarButton
+       
+        self.navigationItem.title = "Search"
         
+        let d = navigationController?.navigationBar.frame.size.height
+        print("height of nav controller is \(d)")
+        self.mapSearchView.topSquare.snp.updateConstraints { (make) in
+            make.height.equalTo(d!)
+        }
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: optionsCellID)
@@ -60,6 +77,45 @@ class MapViewController: BaseViewControllerWithLocation, UITableViewDelegate, UI
         let customSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(customViewSwiped))
         customSwipeGestureRecognizer.direction = .down
         self.mapSearchView.customView.addGestureRecognizer(customSwipeGestureRecognizer)
+        
+    }
+    private func setupView() {
+         mapSearchView = MapSearchView()
+         view.addSubview(mapSearchView)
+        self.mapView = mapSearchView.mapView
+
+         self.mapView.frame = self.view.bounds
+
+         mapSearchView.snp.makeConstraints { (make) in
+             make.left.equalToSuperview()
+             make.right.equalToSuperview()
+            make.top.equalToSuperview()
+             make.bottom.equalToSuperview().inset((self.tabBarController?.tabBar.frame.size.height)!)
+         }
+         optionsTextField = mapSearchView.optionsLabel
+         tableView = mapSearchView.tableView
+
+         mapView.isUserInteractionEnabled = true
+     }
+    func setupSearch() {
+          let searchController = UISearchController(searchResultsController: nil)
+              self.navigationItem.searchController = searchController
+              
+              
+              searchController.searchResultsUpdater = self
+              searchController.hidesNavigationBarDuringPresentation = false
+              searchController.searchBar.barTintColor = .white
+              
+              searchController.dimsBackgroundDuringPresentation = false
+              searchController.delegate = self
+              
+              let searchbar = searchController.searchBar
+              searchController.searchBar.tintColor = .white
+              searchbar.placeholder = "e.g. Coffee, Pizza, Gym"
+              searchbar.searchTextField.textColor = .white
+              
+              searchbar.becomeFirstResponder()
+            
         
     }
     
@@ -104,13 +160,7 @@ class MapViewController: BaseViewControllerWithLocation, UITableViewDelegate, UI
         self.navigationItem.rightBarButtonItem?.isEnabled = true
     }
     
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        if self.placesNearby.isEmpty {
-            checkLocationServices()
-        }
-    }
+   
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         searchByQuery()
@@ -124,24 +174,7 @@ class MapViewController: BaseViewControllerWithLocation, UITableViewDelegate, UI
         fetchPlaces(endpoint: .general, keyword: queryText)
     }
     
-    private func setupView() {
-        mapSearchView = MapSearchView()
-        view.addSubview(mapSearchView)
-        mapView = mapSearchView.mapView
-        
-        self.mapView.frame = self.view.bounds
-        
-        mapSearchView.snp.makeConstraints { (make) in
-            make.left.equalToSuperview()
-            make.right.equalToSuperview()
-            make.top.equalTo(topLayoutGuide.snp.top)
-            make.bottom.equalToSuperview().inset((self.tabBarController?.tabBar.frame.size.height)!)
-        }
-        optionsTextField = mapSearchView.optionsLabel
-        tableView = mapSearchView.tableView
-        
-        mapView.isUserInteractionEnabled = true
-    }
+ 
     
     
     

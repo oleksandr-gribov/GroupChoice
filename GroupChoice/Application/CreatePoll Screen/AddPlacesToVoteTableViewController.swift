@@ -11,88 +11,49 @@ import UIKit
 class AddPlacesToVoteTableViewController: UITableViewController, UISearchBarDelegate, UISearchResultsUpdating, UISearchControllerDelegate, SearchTableViewCellDelegate {
     
     weak var searchCompleteDelegate:SearchCompleteDelegate!
-    
-    func searchTableViewCell(_ buttonChecked: Bool, place: Place) {
-        print("delegate method triggered and status is \(buttonChecked)")
-        if buttonChecked && !placesAdded.contains(place){
-            placesAdded.append(place)
-        } else {
-            if placesAdded.contains(place) {
-                placesAdded.remove(at: findPlace(place)!)
-            }
-        }
-    }
-    func findPlace(_ place: Place) -> Int? {
-        var index = 0
-        for addedPlace in placesAdded {
-            if addedPlace.id != place.id {
-                index += 1
-            } else {
-                return index
-            }
-        }
-        return nil
-    }
-    
-    
-    func updateSearchResults(for searchController: UISearchController) {
-        print("searching")
-        var keywordString = searchController.searchBar.text
-        keywordString = keywordString!.trimmingCharacters(in: .whitespacesAndNewlines)
-        fetchPlaces(endpoint: .general, keyword: keywordString)
-        tableView.reloadData()
-    }
-    
-    
+
     var placesAdded : [Place] = []
     var placesFound : [Place] = []
     var searchLocation = NearbyPlacesViewController.userLocation
     
+    // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.register(SearchTableViewCell.self, forCellReuseIdentifier: "addPlacesCell")
+        setupSearch()
         
         
-        var searchController = UISearchController(searchResultsController: nil)
+        fetchPlaces(endpoint: .general, keyword: "")
+        tableView.reloadData()
+        
+
+        self.navigationItem.title = "Search"
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dloneButtonPressed))
+        
+    }
+    func setupSearch() {
+        let searchController = UISearchController(searchResultsController: nil)
+        self.navigationItem.searchController = searchController
+        
+        
         searchController.searchResultsUpdater = self
         searchController.hidesNavigationBarDuringPresentation = false
+        searchController.searchBar.barTintColor = .white
+        
         searchController.dimsBackgroundDuringPresentation = false
         searchController.delegate = self
-        
-        
-        self.navigationItem.searchController = searchController
-        //self.navigationItem.hidesSearchBarWhenScrolling = false
-        
-        tableView.register(SearchTableViewCell.self, forCellReuseIdentifier: "addPlacesCell")
         
         let searchbar = searchController.searchBar
         searchController.searchBar.tintColor = .white
         searchbar.placeholder = "e.g. Coffee, Pizza, Gym"
         searchbar.searchTextField.textColor = .white
         
-        
-        tableView.separatorInset = UIEdgeInsets(top: 2, left: 5, bottom: 2, right: 5)
-
-        self.navigationItem.title = "Search"
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dloneButtonPressed))
-        
-        //self.navigationItem. = UISearchBar(frame: CGRect(x: 20, y: 10, width: 150, height: 100))
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
-    }
-    
-    
-    @objc func dloneButtonPressed() {
-        
-        searchCompleteDelegate.onDoneButtonPressed(placesAdded)
-        _ = navigationController?.popViewController(animated: true)
+        searchbar.becomeFirstResponder()
+      
         
     }
 
-    
-    
+    // MARK: - Search
     func fetchPlaces(endpoint: GooglePlacesAPI.Endpoint?, keyword:String?) {
         self.placesFound.removeAll()
         print("search location is \(searchLocation)")
@@ -120,11 +81,40 @@ class AddPlacesToVoteTableViewController: UITableViewController, UISearchBarDele
                         self.tableView.reloadData()
                     }
                 }
-            } else {
-                
             }
         }
     }
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        print("searching")
+        var keywordString = searchController.searchBar.text
+        keywordString = keywordString!.trimmingCharacters(in: .whitespacesAndNewlines)
+        if keywordString != "" {
+            fetchPlaces(endpoint: .general, keyword: keywordString)
+            tableView.isHidden = false
+            
+            tableView.reloadData()
+            
+        }
+    }
+    // MARK: - Helper functions
+    func findPlaceIndex(_ place: Place) -> Int? {
+        var index = 0
+        for addedPlace in placesAdded {
+            if addedPlace.id != place.id {
+                index += 1
+            } else {
+                return index
+            }
+        }
+        return nil
+    }
+    
+    @objc func dloneButtonPressed() {
+           searchCompleteDelegate.onDoneButtonPressed(placesAdded)
+           _ = navigationController?.popViewController(animated: true)
+       }
+    
     
     // MARK: - Table View Methods
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -162,54 +152,29 @@ class AddPlacesToVoteTableViewController: UITableViewController, UISearchBarDele
         return cell
     }
     
-    
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let place = placesFound[indexPath.section]
+        let vc = PlaceDetailViewController()
+        vc.place = place
+        vc.navigationItem.largeTitleDisplayMode = .never
+        self.navigationController?.pushViewController(vc, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
 
     }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    //MARK: - SeacrhComplete protocol functions
+    func searchTableViewCell(_ buttonChecked: Bool, place: Place) {
+           if buttonChecked && !placesAdded.contains(place){
+               placesAdded.append(place)
+           } else {
+               if placesAdded.contains(place) {
+                   placesAdded.remove(at: findPlaceIndex(place)!)
+               }
+           }
+       }
 }
+
+
+// MARK: - SearchComplete Protocol
 
 protocol SearchCompleteDelegate: AnyObject {
     func onDoneButtonPressed(_ placesAdded: [Place])

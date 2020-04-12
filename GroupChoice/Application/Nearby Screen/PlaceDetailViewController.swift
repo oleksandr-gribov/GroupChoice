@@ -19,7 +19,6 @@ class PlaceDetailViewController: UIViewController, MKMapViewDelegate {
         super.viewDidLoad()
         view.backgroundColor = .white
         
-        
         setupView()
         setupNavBar()
         let gestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(swipeRight))
@@ -45,7 +44,12 @@ class PlaceDetailViewController: UIViewController, MKMapViewDelegate {
         detailView.snp.makeConstraints { (make) in
             make.top.equalToSuperview()
             make.left.equalToSuperview()
-            make.bottom.equalToSuperview().inset((self.tabBarController?.tabBar.frame.size.height)!)
+            if tabBarController != nil {
+                make.bottom.equalToSuperview().inset((self.tabBarController?.tabBar.frame.size.height)!)
+            } else {
+                make.bottom.equalToSuperview()
+            }
+            
             make.right.equalToSuperview()
             
         }
