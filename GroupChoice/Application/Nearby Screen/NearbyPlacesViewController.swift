@@ -11,7 +11,7 @@ import SnapKit
 import MapKit
 import CoreLocation
 
-class NearbyPlacesViewController: BaseViewControllerWithLocation, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource{
+class NearbyPlacesViewController: BaseViewControllerWithLocation, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
     var searchView: NearbyView!
     let placesCellId = "placesCellId"
@@ -31,7 +31,6 @@ class NearbyPlacesViewController: BaseViewControllerWithLocation, UICollectionVi
         mapView = searchView.mapView
         mapView.delegate = self 
         setupView()
-        
 
     }
   
@@ -73,22 +72,21 @@ class NearbyPlacesViewController: BaseViewControllerWithLocation, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: placesCellId, for: indexPath) as! PlacesCell
-        if placesNearby.count > 0 {
-            let place = placesNearby[indexPath.row]
-            
-            cell.setupCellData(place: place)
+    // swiftlint:disable force_cast
+       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: placesCellId, for: indexPath) as! PlacesCell
+            if !placesNearby.isEmpty {
+                let place = placesNearby[indexPath.row]
+                
+                cell.setupCellData(place: place)
 
-            let userLocation = CLLocation(latitude: currentLocation!.latitude, longitude: currentLocation!.longitude)
-            
-            let placeLocation = CLLocation(latitude: CLLocationDegrees(place.geometry.location.latitude), longitude: CLLocationDegrees(place.geometry.location.longitude))
-            
-            let distanceTo = userLocation.distance(from: placeLocation)
-            let distanceStr = NSString(format: "%.f", distanceTo)
-            cell.distanceLabel.text = "\(distanceStr) m"
-            
+                let userLocation = CLLocation(latitude: currentLocation!.latitude, longitude: currentLocation!.longitude)
+                
+                let placeLocation = CLLocation(latitude: CLLocationDegrees(place.geometry.location.latitude), longitude: CLLocationDegrees(place.geometry.location.longitude))
+                
+                let distanceTo = userLocation.distance(from: placeLocation)
+                let distanceStr = NSString(format: "%.f", distanceTo)
+                cell.distanceLabel.text = "\(distanceStr) m"
         }
-        
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -98,7 +96,7 @@ class NearbyPlacesViewController: BaseViewControllerWithLocation, UICollectionVi
         return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print ("index path of the collection view cell selected: \(indexPath)")
+        print("index path of the collection view cell selected: \(indexPath)")
         let place = placesNearby[indexPath.row]
         let detailVC = PlaceDetailViewController()
         detailVC.place = place
@@ -110,7 +108,7 @@ class NearbyPlacesViewController: BaseViewControllerWithLocation, UICollectionVi
     private func setupView() {
         view.backgroundColor = .white
         view.addSubview(collectionView)
-        let tabBarHeight = self.tabBarController?.tabBar.frame.height;
+        let tabBarHeight = self.tabBarController?.tabBar.frame.height
         collectionView.backgroundColor = .clear
         collectionView.snp.makeConstraints { (make) in
             make.left.equalToSuperview()
@@ -119,9 +117,7 @@ class NearbyPlacesViewController: BaseViewControllerWithLocation, UICollectionVi
             make.right.equalToSuperview()
             make.height.equalTo(250)
         }
-        let mapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(mapTapped))
-        mapGestureRecognizer.numberOfTapsRequired = 2
-        searchView.mapView.addGestureRecognizer(mapGestureRecognizer)
+       
         
         view.addSubview(searchView)
         searchView.snp.makeConstraints { (make) in
@@ -133,15 +129,9 @@ class NearbyPlacesViewController: BaseViewControllerWithLocation, UICollectionVi
         view.bringSubviewToFront(collectionView)
     }
     
-    @objc func mapTapped() {
-        let tbvc = self.tabBarController as! TabBarViewController
-        tbvc.location = "london"
-        navigationController?.tabBarController?.selectedIndex = 3
-       
-    }
     fileprivate func setupNavBar() {
         self.navigationController?.navigationBar.prefersLargeTitles = true
-        let textAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white, NSAttributedString.Key.font: UIFont(name: "AvenirNext-DemiBold", size: 33)]
+        let textAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont(name: "AvenirNext-DemiBold", size: 33)]
         self.navigationController?.navigationBar.largeTitleTextAttributes = textAttributes
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
@@ -149,7 +139,6 @@ class NearbyPlacesViewController: BaseViewControllerWithLocation, UICollectionVi
         self.navigationItem.title = "Discover"
         
     }
-    
     
     // MARK: - MapKit methods
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
@@ -163,10 +152,6 @@ class NearbyPlacesViewController: BaseViewControllerWithLocation, UICollectionVi
     override func recenterMap(location: CLLocation) {
         super.recenterMap(location: location)
         self.fetchPlaces(endpoint: nil, keyword: nil)
-        print ("number of places fetched in the child VC \(self.placesNearby.count)")
+        print("number of places fetched in the child VC \(self.placesNearby.count)")
     }
 }
-
-
-
-

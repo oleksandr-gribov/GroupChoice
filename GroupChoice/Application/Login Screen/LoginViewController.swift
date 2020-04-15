@@ -50,7 +50,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         Auth.auth().signIn(withEmail: email, password: password) { (user, err) in
             if let err = err {
-                print (err.localizedDescription)
+                print(err.localizedDescription)
                 DispatchQueue.main.async {
 //                    self.loginView.emailTextField.layer.borderColor = UIColor.red.cgColor
 //                    self.loginView.emailTextField.layer.borderWidth = 2.0
@@ -84,7 +84,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         if textField == loginView.emailTextField {
             textField.resignFirstResponder()
             loginView.passwordTextField.becomeFirstResponder()
-        } else  {
+        } else {
             textField.resignFirstResponder()
             loginButtonPressed()
         }

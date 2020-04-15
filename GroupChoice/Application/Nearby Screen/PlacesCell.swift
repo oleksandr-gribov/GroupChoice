@@ -9,7 +9,6 @@
 import UIKit
 import SnapKit
 
-
 class PlacesCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -46,7 +45,7 @@ class PlacesCell: UICollectionViewCell {
                   if let rating = place.rating {
                     self.ratingLabel.text = String(rating)
                   }
-                  if let photos = place.photos  {
+                  if let photos = place.photos {
                       let reference = photos[0].reference
                       guard let url = GooglePlacesAPI.imageURL(reference: reference) else {
                           return
@@ -105,7 +104,7 @@ class PlacesCell: UICollectionViewCell {
         }
     }
     
-    let imageView : CustomImageView = {
+    let imageView: CustomImageView = {
         let iv = CustomImageView()
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
@@ -150,7 +149,7 @@ class PlacesCell: UICollectionViewCell {
         return iv
     }()
     
-    let ratingLabel : UILabel = {
+    let ratingLabel: UILabel = {
         let lbl = UILabel()
         lbl.text = "4.5"
         lbl.font = lbl.font.withSize(9)
@@ -158,7 +157,7 @@ class PlacesCell: UICollectionViewCell {
         return lbl
     }()
     
-    let distanceLabel : UILabel = {
+    let distanceLabel: UILabel = {
         let lbl = UILabel()
         lbl.text = "500m"
         lbl.font = lbl.font.withSize(9)
@@ -171,9 +170,9 @@ let imageCache = NSCache<NSString, UIImage>()
 
 class CustomImageView: UIImageView {
     var activityIndicator = UIActivityIndicatorView(style: .gray)
-    var imageUrl : String?
+    var imageUrl: String?
     
-    func fetchImage(url: URL)  {
+    func fetchImage(url: URL) {
         let urlString = url.absoluteString
         imageUrl = urlString
         activityIndicator.frame = CGRect(x: 0, y: 0, width: 46, height: 46)
@@ -191,7 +190,7 @@ class CustomImageView: UIImageView {
             return
         }
         let task = URLSession.shared.dataTask(with: url, completionHandler: {
-            (data, err, response) in
+            (data, _, _) in
             if let data = data {
                 let imageData = UIImage(data: data)
                 DispatchQueue.main.async {

@@ -9,14 +9,13 @@
 import Foundation
 import CoreLocation
 
-
 // Enums for different end points
 // func to construct the url
 
 // restaurant, cafe, bar, gym, night club, museum, amusement park, art gallery, park, bowling alley
 struct GooglePlacesAPI {
     
-    static let apiKey = PlacesAPIKey
+    static let apiKey = placesAPIKey
     static let basePath = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
     enum Endpoint: String {
         case restaurant
@@ -33,7 +32,7 @@ struct GooglePlacesAPI {
 
     }
     
-    static func makeUrl(endpoint: Endpoint, radius: Float=500, coordinate: CLLocationCoordinate2D, keyword: String?) -> URL?  {
+    static func makeUrl(endpoint: Endpoint, radius: Float=500, coordinate: CLLocationCoordinate2D, keyword: String?) -> URL? {
         
         var urlString = "\(basePath)location=\(coordinate.latitude),\(coordinate.longitude)&type=\(endpoint.rawValue)&radius=\(radius)&key=\(apiKey)"
         
@@ -46,7 +45,7 @@ struct GooglePlacesAPI {
         return url
     }
     
-    static func genericURL(coordinate: CLLocationCoordinate2D) -> URL?  {
+    static func genericURL(coordinate: CLLocationCoordinate2D) -> URL? {
         let urlString = "\(basePath)location=\(coordinate.latitude),\(coordinate.longitude)&radius=500&key=\(apiKey)"
         
         let url = URL(string: urlString)
@@ -63,7 +62,3 @@ struct GooglePlacesAPI {
         return url
     }
 }
-
-
-
-

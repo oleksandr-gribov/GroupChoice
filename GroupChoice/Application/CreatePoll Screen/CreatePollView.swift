@@ -125,5 +125,4 @@ class CreatePollView: UIView {
            return stack
        }()
     
-    
 }

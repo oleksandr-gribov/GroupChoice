@@ -8,15 +8,16 @@
 
 import UIKit
 
-
 extension UITextField {
     
-    func setuploginTextField ( placeHolderText: String, keyboardType: UIKeyboardType){
+    func setuploginTextField ( placeHolderText: String, keyboardType: UIKeyboardType) {
         
         self.keyboardType = keyboardType
         let placeholder = NSAttributedString(attributedString: NSAttributedString(string: placeHolderText,
                                                                                        attributes: [
-                                                                                        NSAttributedString.Key.font: UIFont(name: "Avenir Next", size: 22)!,.foregroundColor: UIColor(white: 1.0, alpha: 0.6)]))
+                                                                                        NSAttributedString.Key.font: UIFont(name:
+                                                                                            "Avenir Next", size: 22)!, .foregroundColor:
+                                                                                                UIColor(white: 1.0, alpha: 0.6)]))
         self.attributedPlaceholder = placeholder
         self.backgroundColor = UIColor(red: 216/255, green: 216/255, blue: 216/255, alpha: 0.15)
         self.tintColor = .white

@@ -15,11 +15,24 @@ class AllMessagesViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        //view.backgroundColor = .red
+        view.backgroundColor = .red
         self.navigationItem.title = "Chats"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(newMessage))
         tableView.register(NewMessageCell.self, forCellReuseIdentifier: cellID)
+        
+        UINavigationBar.appearance().tintColor = .white
+        // background color
+        UINavigationBar.appearance().barTintColor = .purple
+        // required to disable blur effect & allow barTintColor to work
+        UINavigationBar.appearance().isTranslucent = false
+        
         self.tabBarController?.tabBar.isHidden = false
+        self.navigationController?.navigationBar.barTintColor = .red
+        self.navigationController?.navigationBar.tintColor = .red
+        self.navigationController?.navigationBar.barStyle = .black
+         self.navigationController?.navigationBar.isTranslucent = false
+//        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     @objc func newMessage() {
@@ -28,7 +41,6 @@ class AllMessagesViewController: UITableViewController {
         
         present(UINavigationController(rootViewController: newMessageVC), animated: true, completion: nil)
     }
-
     
     // MARK: - TableView methods
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -45,14 +57,14 @@ class AllMessagesViewController: UITableViewController {
     func showViewController (user: User) {
         let chatlogVC = ChatLogViewController()
         chatlogVC.user = user
-        chatlogVC.hidesBottomBarWhenPushed = true 
+        chatlogVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(chatlogVC, animated: true)
         
     }
 
 }
 
-class NewMessageCell : UITableViewCell {
+class NewMessageCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
     }
@@ -61,4 +73,3 @@ class NewMessageCell : UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 }
-

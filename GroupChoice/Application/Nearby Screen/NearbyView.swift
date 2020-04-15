@@ -9,7 +9,6 @@
 import UIKit
 import MapKit
 
-
 class NearbyView: UIView {
     
     override init(frame: CGRect) {
@@ -27,14 +26,13 @@ class NearbyView: UIView {
         return iv
     }()
     
-    let nearbyLabel : UILabel = {
+    let nearbyLabel: UILabel = {
         let lbl = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height: 10))
         lbl.text = "Great Places Nearby"
         lbl.textColor = .black
         
         return lbl
     }()
-    
     
     let bottomBlur: UIImageView = {
         let iv = UIImageView()
@@ -48,7 +46,6 @@ class NearbyView: UIView {
         
         return mp
     }()
-    
     
     func setup() {
         addSubview(topblur)

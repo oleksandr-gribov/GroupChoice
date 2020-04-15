@@ -19,7 +19,7 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
         messagesViewController.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "message_grey"), selectedImage: #imageLiteral(resourceName: "message_blue"))
         
         let searchViewController = UINavigationController(rootViewController: NearbyPlacesViewController())
-        let textAttributes = [NSAttributedString.Key.foregroundColor : UIColor.red, NSAttributedString.Key.font: UIFont(name: "Avenir Next", size: 25)]
+        let textAttributes = [NSAttributedString.Key.foregroundColor: UIColor.red, NSAttributedString.Key.font: UIFont(name: "Avenir Next", size: 25)]
         self.navigationController?.navigationBar.titleTextAttributes = textAttributes
 
         searchViewController.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "map_grey"), selectedImage: #imageLiteral(resourceName: "map_blue"))
@@ -33,14 +33,14 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
         let settingsViewController = UINavigationController(rootViewController: SettingsViewController())
         settingsViewController.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "Account_grey"), selectedImage: #imageLiteral(resourceName: "account_blue"))
         
-        let viewControllerList = [searchViewController,messagesViewController, createPollViewController, mapViewController, settingsViewController]
+        let viewControllerList = [searchViewController, messagesViewController, createPollViewController, mapViewController, settingsViewController]
         
         viewControllers = viewControllerList
         tabBar.barTintColor = .white
    
     }
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-        if viewController.isKind(of: FormTableViewController.self)  {
+        if viewController.isKind(of: FormTableViewController.self) {
            // let createViewController = CreatePollViewController()
             let storyboard = UIStoryboard(name: "CreatePollStoryboard", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "createPoll")
@@ -48,7 +48,6 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
             let navigationController = UINavigationController(rootViewController: vc)
 
             self.present(navigationController, animated: true, completion: nil)
-            
             
 //           let storyboard = UIStoryboard(name: "CreatePollStoryboard", bundle: nil)
 //
@@ -59,6 +58,5 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
         }
         return true
     }
-    
 
 }

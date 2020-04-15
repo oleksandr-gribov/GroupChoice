@@ -2,9 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/sasha/Desktop/iOS learning projects/GroupChoice/GroupChoice/Application/CreatePoll Screen/FormTableViewController.swift">
-   </FileRef>
-   <FileRef
       location = "group:GroupChoice.xcodeproj">
    </FileRef>
    <FileRef

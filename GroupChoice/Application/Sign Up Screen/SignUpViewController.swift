@@ -28,7 +28,6 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         tapGestureRecognizer.numberOfTapsRequired = 1
         view.addGestureRecognizer(tapGestureRecognizer)
         
-        
         signUpView.signUpButton.addTarget(self, action: #selector(signUpButtonClicked), for: .touchUpInside)
         
         // Do any additional setup after loading the view.
@@ -41,20 +40,20 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         
         Auth.auth().createUser(withEmail: email, password: password) { user, err in
             if let err = err {
-                print (err.localizedDescription)
+                print(err.localizedDescription)
                 return
             } else {
                 if let user = user {
                     self.userDefaults.set(false, forKey: "UserIsLoggedIn")
-                    print ("created user : \(user.user.uid)")
+                    print("created user : \(user.user.uid)")
                     self.navigationController?.popViewController(animated: true)
                     
                     self.ref = Database.database().reference(fromURL: "https://groupchoice-18b05.firebaseio.com/")
                     let userRef = self.ref.child("users").child(user.user.uid)
-                    let values = ["username": username, "email":email]
-                    userRef.updateChildValues(values, withCompletionBlock: { (error, ref) in
+                    let values = ["username": username, "email": email]
+                    userRef.updateChildValues(values, withCompletionBlock: { (error, _) in
                         if error != nil {
-                            print (error?.localizedDescription)
+                            print(error?.localizedDescription)
                             return
                         } else {
                             print("Saved user into the Firebase db")
@@ -84,7 +83,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         self.navigationController?.navigationBar.isTranslucent = true
         self.navigationItem.title = "Sign Up"
         self.navigationController?.navigationBar.tintColor = UIColor.white
-        let textAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
+        let textAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         self.navigationController?.navigationBar.titleTextAttributes = textAttributes
         
     }

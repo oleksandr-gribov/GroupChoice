@@ -27,7 +27,6 @@ class NewMessageViewController: UITableViewController {
         self.tableView.rowHeight = 65
         ref = Database.database().reference()
         fetchUsersFromDB()
-        
 
     }
     
@@ -35,9 +34,9 @@ class NewMessageViewController: UITableViewController {
         self.dismiss(animated: true, completion: nil)
     }
     func fetchUsersFromDB() {
-        ref.child("users").observe(DataEventType.childAdded, with: { (DataSnapshot) in
+        ref.child("users").observe(DataEventType.childAdded, with: { (dataSnapshot) in
             //print (DataSnapshot)
-            if let usersDictionary = DataSnapshot.value as? [String: AnyObject] {
+            if let usersDictionary = dataSnapshot.value as? [String: AnyObject] {
                 
                 let user = User()
                 user.username = usersDictionary["username"] as? String
@@ -47,10 +46,9 @@ class NewMessageViewController: UITableViewController {
                     self.tableView.reloadData()
                 }
             } else {
-                print ("couldnt construct userDict")
+                print("couldnt construct userDict")
             }
         })
-        
         
     }
 
@@ -59,16 +57,19 @@ class NewMessageViewController: UITableViewController {
         // #warning Incomplete implementation, return the number of rows
         return userList.count
     }
-
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: userCellID, for: indexPath) as! UserCell
-        // Configure the cell...
-        let user = userList[indexPath.row]
-        cell.textLabel?.text = user.username
-        cell.detailTextLabel?.text = user.email
+        var cell:UITableViewCell?  = tableView.dequeueReusableCell(withIdentifier: "addPlacesCell")
+        
+        if let cell = tableView.dequeueReusableCell(withIdentifier: userCellID, for: indexPath) as? UserCell {
+            // Configure the cell...
+                   let user = userList[indexPath.row]
+                   cell.textLabel?.text = user.username
+                   cell.detailTextLabel?.text = user.email
 
-        return cell
+        }
+       
+        return cell!
     }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let user = userList[indexPath.row]

@@ -10,10 +10,10 @@ import UIKit
 
 class AddPlacesToVoteTableViewController: UITableViewController, UISearchBarDelegate, UISearchResultsUpdating, UISearchControllerDelegate, SearchTableViewCellDelegate {
     
-    weak var searchCompleteDelegate:SearchCompleteDelegate!
+    weak var searchCompleteDelegate: SearchCompleteDelegate!
 
-    var placesAdded : [Place] = []
-    var placesFound : [Place] = []
+    var placesAdded: [Place] = []
+    var placesFound: [Place] = []
     var searchLocation = NearbyPlacesViewController.userLocation
     
     // MARK: - View Life Cycle
@@ -22,10 +22,8 @@ class AddPlacesToVoteTableViewController: UITableViewController, UISearchBarDele
         tableView.register(SearchTableViewCell.self, forCellReuseIdentifier: "addPlacesCell")
         setupSearch()
         
-        
         fetchPlaces(endpoint: .general, keyword: "")
         tableView.reloadData()
-        
 
         self.navigationItem.title = "Search"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dloneButtonPressed))
@@ -34,7 +32,6 @@ class AddPlacesToVoteTableViewController: UITableViewController, UISearchBarDele
     func setupSearch() {
         let searchController = UISearchController(searchResultsController: nil)
         self.navigationItem.searchController = searchController
-        
         
         searchController.searchResultsUpdater = self
         searchController.hidesNavigationBarDuringPresentation = false
@@ -49,16 +46,15 @@ class AddPlacesToVoteTableViewController: UITableViewController, UISearchBarDele
         searchbar.searchTextField.textColor = .white
         
         searchbar.becomeFirstResponder()
-      
         
     }
 
     // MARK: - Search
-    func fetchPlaces(endpoint: GooglePlacesAPI.Endpoint?, keyword:String?) {
+    func fetchPlaces(endpoint: GooglePlacesAPI.Endpoint?, keyword: String?) {
         self.placesFound.removeAll()
         print("search location is \(searchLocation)")
         guard let currentLocation = searchLocation else {
-            print ("no location in fetch places")
+            print("no location in fetch places")
             return
         }
         guard let url = GooglePlacesAPI.makeUrl(endpoint: endpoint ?? GooglePlacesAPI.Endpoint.general, radius: 500, coordinate: currentLocation, keyword: keyword ?? nil) else {
@@ -68,34 +64,29 @@ class AddPlacesToVoteTableViewController: UITableViewController, UISearchBarDele
         
         print(url)
         Network.fetchGenericData(url: url) { (response: Response) in
-            if response.results.count != 0 {
+            if !response.results.isEmpty {
                 for place in response.results {
                     if !(self.placesFound.contains(place)) {
                         self.placesFound.append(place)
                     }
                 }
-                DispatchQueue.main.async {
-                    print ("number of places fetched in fetchPlaces is \(self.placesFound.count)")
                     DispatchQueue.main.async {
-                        print ("number of places fetched in fetchPlaces is \(self.placesFound.count)")
+                        print("number of places fetched in fetchPlaces is \(self.placesFound.count)")
                         self.tableView.reloadData()
                     }
                 }
-            }
         }
     }
     
     func updateSearchResults(for searchController: UISearchController) {
-        print("searching")
         var keywordString = searchController.searchBar.text
         keywordString = keywordString!.trimmingCharacters(in: .whitespacesAndNewlines)
-        if keywordString != "" {
-            fetchPlaces(endpoint: .general, keyword: keywordString)
-            tableView.isHidden = false
+        print("keyword is: \(keywordString)")
+        fetchPlaces(endpoint: .general, keyword: keywordString)
+        tableView.isHidden = false
             
-            tableView.reloadData()
+        tableView.reloadData()
             
-        }
     }
     // MARK: - Helper functions
     func findPlaceIndex(_ place: Place) -> Int? {
@@ -115,7 +106,6 @@ class AddPlacesToVoteTableViewController: UITableViewController, UISearchBarDele
            _ = navigationController?.popViewController(animated: true)
        }
     
-    
     // MARK: - Table View Methods
     override func numberOfSections(in tableView: UITableView) -> Int {
         return placesFound.count
@@ -126,10 +116,10 @@ class AddPlacesToVoteTableViewController: UITableViewController, UISearchBarDele
         return 1
     }
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let v = UIView()
-        v.backgroundColor = .clear
+        let view = UIView()
+        view.backgroundColor = .clear
         
-        return v
+        return view
     }
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 20
@@ -137,7 +127,8 @@ class AddPlacesToVoteTableViewController: UITableViewController, UISearchBarDele
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 120
     }
-   
+    
+// swiftlint:disable force_cast
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "addPlacesCell", for: indexPath) as! SearchTableViewCell
         let place = placesFound[indexPath.section]
@@ -161,9 +152,9 @@ class AddPlacesToVoteTableViewController: UITableViewController, UISearchBarDele
         tableView.deselectRow(at: indexPath, animated: true)
 
     }
-    //MARK: - SeacrhComplete protocol functions
+    // MARK: - SeacrhComplete protocol functions
     func searchTableViewCell(_ buttonChecked: Bool, place: Place) {
-           if buttonChecked && !placesAdded.contains(place){
+           if buttonChecked && !placesAdded.contains(place) {
                placesAdded.append(place)
            } else {
                if placesAdded.contains(place) {
@@ -172,7 +163,6 @@ class AddPlacesToVoteTableViewController: UITableViewController, UISearchBarDele
            }
        }
 }
-
 
 // MARK: - SearchComplete Protocol
 

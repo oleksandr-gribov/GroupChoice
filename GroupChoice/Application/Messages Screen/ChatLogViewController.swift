@@ -7,9 +7,8 @@
 //
 
 import UIKit
-import MessageKit
 
-class ChatLogViewController: MessagesViewController {
+class ChatLogViewController: UIViewController {
     
     var user: User! {
         didSet {
@@ -20,10 +19,12 @@ class ChatLogViewController: MessagesViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .white
+        self.navigationController?.navigationBar.barTintColor = .red
+        self.navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.prefersLargeTitles = true 
         
         // need to set up view to have the input text field and the table view
         
     }
 
 }
-

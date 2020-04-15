@@ -9,14 +9,13 @@ import UIKit
 
 class FormTableViewController: UITableViewController, UITextFieldDelegate, SearchCompleteDelegate {
     
-    weak var delegate:SearchCompleteDelegate?
+    weak var delegate: SearchCompleteDelegate?
     
     private var voteDatePickerVisible = false
     private var eventDatePickerVisible = false
     private var endAtTimeOfEvent = true
     let dateFormatter = DateFormatter()
     @IBOutlet weak var eventNameTF: UITextField!
-    
     
     @IBOutlet weak var eventDateLabel: UILabel!
     @IBOutlet weak var voteEndDateLabel: UILabel!
@@ -26,11 +25,12 @@ class FormTableViewController: UITableViewController, UITextFieldDelegate, Searc
     var placesAdded: [Place] = []
     var createVoteButtonEnabled = false
     
-    
     let createVote: UIButton = {
         let btn = UIButton()
         btn.backgroundColor = UIColor(displayP3Red: 221/255, green: 106/255, blue: 104/255, alpha: 1.0)
-        btn.setAttributedTitle(NSAttributedString(string: "Create Vote", attributes: [NSAttributedString.Key.font : UIFont(name: "Avenir Next", size: 22), NSAttributedString.Key.foregroundColor: UIColor.white]), for: .normal)
+        btn.setAttributedTitle(NSAttributedString(
+            string: "Create Vote",
+            attributes: [NSAttributedString.Key.font: UIFont(name: "Avenir Next", size: 22), NSAttributedString.Key.foregroundColor: UIColor.white]), for: .normal)
         btn.layer.cornerRadius = 10
         btn.alpha = 0.5
         return btn
@@ -45,7 +45,6 @@ class FormTableViewController: UITableViewController, UITextFieldDelegate, Searc
         return lbl
     }()
     
-    
     // MARK: - View Life Cycle
     
     override func viewWillAppear(_ animated: Bool) {
@@ -59,7 +58,6 @@ class FormTableViewController: UITableViewController, UITextFieldDelegate, Searc
         
         setupCollectionView()
         setupNavBar()
-        
         
         self.tableView.tableFooterView = UIView(frame: .zero)
         self.eventNameTF.delegate = self
@@ -82,16 +80,16 @@ class FormTableViewController: UITableViewController, UITextFieldDelegate, Searc
             let voteName = eventNameTF.text
             let eventDate = eventDatePicker.date
             let voteEndingDate = voteDatePicker.date
-            let newVote = Vote(title: voteName!, dateOfEvent: eventDate, endingDate: voteEndingDate)
-            newVote.choices = placesAdded
+            let newVote = Vote(title: voteName!, dateOfEvent: eventDate, endingDate: voteEndingDate, options: placesAdded)
+            self.dismiss(animated: true, completion: nil)
         }
         
-        self.dismiss(animated: true, completion: nil)
+        
     }
     
     func setupNavBar() {
-        let largeTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white, NSAttributedString.Key.font: UIFont(name: "AvenirNext-DemiBold", size: 33)]
-        let textAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white, NSAttributedString.Key.font: UIFont(name: "AvenirNext-DemiBold", size: 20)]
+        let largeTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont(name: "AvenirNext-DemiBold", size: 33)]
+        let textAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont(name: "AvenirNext-DemiBold", size: 20)]
         
         self.navigationController?.navigationBar.largeTitleTextAttributes = largeTextAttributes
         self.navigationController?.navigationBar.titleTextAttributes = textAttributes
@@ -111,10 +109,8 @@ class FormTableViewController: UITableViewController, UITextFieldDelegate, Searc
         layout.minimumLineSpacing = 16
         layout.scrollDirection = .horizontal
         
-        
         placesCollectionView.register(SearchPlacesCollectionViewCell.self, forCellWithReuseIdentifier: "addPlacesCell")
     }
-    
     
     func setUpDatePickers() {
         self.voteDatePicker = UIDatePicker()
@@ -130,7 +126,6 @@ class FormTableViewController: UITableViewController, UITextFieldDelegate, Searc
         self.eventDatePicker.translatesAutoresizingMaskIntoConstraints = false
         
     }
-    
     
     // MARK: - Date Picker methods
     
@@ -168,10 +163,10 @@ class FormTableViewController: UITableViewController, UITextFieldDelegate, Searc
         self.tableView.endUpdates()
     }
     
-    //  MARK: - Text Field Methods
+    // MARK: - Text Field Methods
     
     @objc func toggleCreateButtonState() {
-        if (placesAdded.count != 0) && eventNameTF.text != "" {
+        if (!placesAdded.isEmpty) && !eventNameTF.text!.isEmpty {
             helperLabel.isHidden = true
             createVoteButtonEnabled = true
             createVote.alpha = 1.0
@@ -192,14 +187,13 @@ class FormTableViewController: UITableViewController, UITextFieldDelegate, Searc
         if eventNameTF.isFirstResponder {
             eventNameTF.resignFirstResponder()
         }
-        if  ( indexPath.section == 1 && indexPath.row == 1 ) {
+        if   indexPath.section == 1 && indexPath.row == 1 {
             if voteDatePickerVisible {
                 hideDatePicker(voteDatePicker)
             } else {
                 showDatePicker(voteDatePicker)
             }
-        }
-        else if (indexPath.section == 0 && indexPath.row == 1) {
+        } else if indexPath.section == 0 && indexPath.row == 1 {
             if eventDatePickerVisible {
                 hideDatePicker(eventDatePicker)
             } else {
@@ -209,19 +203,15 @@ class FormTableViewController: UITableViewController, UITextFieldDelegate, Searc
         tableView.deselectRow(at: indexPath, animated: true)
     }
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if (indexPath.section == 0 && indexPath.row == 2) {
+        if indexPath.section == 0 && indexPath.row == 2 {
             return eventDatePickerVisible ? 180 : 0
-        }
-        else if ( indexPath.section == 1 && indexPath.row == 2) {
+        } else if  indexPath.section == 1 && indexPath.row == 2 {
             return voteDatePickerVisible ? 180 : 0
-        }
-        else if indexPath.section == 1 && indexPath.row == 1 {
+        } else if indexPath.section == 1 && indexPath.row == 1 {
             return endAtTimeOfEvent ? 0 : 50
-        }
-        else if indexPath.section == 2 && indexPath.row == 0 {
+        } else if indexPath.section == 2 && indexPath.row == 0 {
             return 150
-        }
-        else if indexPath.section == 2 && indexPath.row == 1 {
+        } else if indexPath.section == 2 && indexPath.row == 1 {
             return 200
         }
         return 60
@@ -254,8 +244,7 @@ class FormTableViewController: UITableViewController, UITextFieldDelegate, Searc
                 make.width.equalToSuperview()
                 make.height.equalToSuperview()
             }
-        }
-        else if indexPath.section == 2 && indexPath.row == 1 {
+        } else if indexPath.section == 2 && indexPath.row == 1 {
             cell.addSubview(createVote)
             cell.addSubview(helperLabel)
             helperLabel.isHidden = true
@@ -271,7 +260,6 @@ class FormTableViewController: UITableViewController, UITextFieldDelegate, Searc
                 make.bottom.equalTo(createVote.snp.top).offset(-15)
             }
         }
-        
         
         cell.textLabel!.font = UIFont(name: "AvenirNext-Bold", size: 17)
         
@@ -302,7 +290,7 @@ class FormTableViewController: UITableViewController, UITextFieldDelegate, Searc
         cv.backgroundColor = .white
         return cv
     }()
-    //MARK: - Helper methods
+    // MARK: - Helper methods
     func onDoneButtonPressed(_ placesAdded: [Place]) {
         self.placesAdded = placesAdded
         
@@ -339,7 +327,7 @@ class FormTableViewController: UITableViewController, UITextFieldDelegate, Searc
 
 extension FormTableViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if placesAdded.count == 0 {
+        if placesAdded.isEmpty {
             return 1
         }
         return placesAdded.count + 1
@@ -347,17 +335,18 @@ extension FormTableViewController: UICollectionViewDelegate, UICollectionViewDat
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "addPlacesCell", for: indexPath) as! SearchPlacesCollectionViewCell
-        if indexPath.row == 0 {
-            cell.nameLabel.text = "Add places"
-            cell.imageView.image = UIImage(named: "add_more")
-        }else {
-            let place = placesAdded[indexPath.row-1]
-            cell.setupData(place)
-            
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "addPlacesCell", for: indexPath) as? SearchPlacesCollectionViewCell {
+            if indexPath.row == 0 {
+                cell.nameLabel.text = "Add places"
+                cell.imageView.image = UIImage(named: "add_more")
+            } else {
+                let place = placesAdded[indexPath.row-1]
+                cell.setupData(place)
+            }
+            return cell
+        } else {
+            return  UICollectionViewCell()
         }
-        
-        return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 100, height: 150)
@@ -367,13 +356,11 @@ extension FormTableViewController: UICollectionViewDelegate, UICollectionViewDat
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row == 0 {
-            let vc = AddPlacesToVoteTableViewController() as! AddPlacesToVoteTableViewController
-            vc.searchCompleteDelegate = self
-            vc.placesAdded = self.placesAdded
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
+            if let vc = AddPlacesToVoteTableViewController() as? AddPlacesToVoteTableViewController {
+                vc.searchCompleteDelegate = self
+                    vc.placesAdded = self.placesAdded
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
+            }
     }
-    
-    
-    
 }

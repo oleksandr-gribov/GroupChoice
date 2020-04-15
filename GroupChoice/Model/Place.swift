@@ -9,8 +9,7 @@
 import Foundation
 import UIKit
 
-
-struct Place: Codable {
+struct Place: Codable, Hashable {
     var id: String
     var name: String
     var rating: Double?
@@ -19,7 +18,7 @@ struct Place: Codable {
     var photos: [Photo]?
     var types: [String]
     var photo: UIImage?
-    var geometry : Geometry
+    var geometry: Geometry
     var hours: OpenHours?
     
     enum CodingKeys: String, CodingKey {
@@ -30,6 +29,9 @@ struct Place: Codable {
         case id = "place_id"
     }
     
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
     
 }
 struct Geometry: Codable {
@@ -62,10 +64,9 @@ struct OpenHours: Codable {
     }
 }
 // Wrapper struct to match the API JSON structure
-struct Response : Codable {
+struct Response: Codable {
     var results: [Place]
 }
-
 
 extension Place: Equatable {
     static func == (lhs: Place, rhs: Place) -> Bool {
@@ -75,5 +76,3 @@ extension Place: Equatable {
         return false
         }
     }  
-
-

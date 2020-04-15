@@ -64,26 +64,24 @@ PODS:
   - GoogleUtilities/UserDefaults (6.2.3):
     - GoogleUtilities/Logger
   - GTMSessionFetcher/Core (1.2.2)
-  - InputBarAccessoryView (4.2.2)
   - leveldb-library (1.20)
-  - MessageKit (3.0.0):
-    - InputBarAccessoryView (~> 4.2.2)
   - nanopb (0.3.901):
     - nanopb/decode (= 0.3.901)
     - nanopb/encode (= 0.3.901)
   - nanopb/decode (0.3.901)
   - nanopb/encode (0.3.901)
   - SnapKit (4.0.1)
+  - SwiftLint (0.39.2)
 
 DEPENDENCIES:
   - Firebase/Analytics
   - Firebase/Auth
   - Firebase/Database
-  - MessageKit
   - SnapKit (~> 4.0.0)
+  - SwiftLint
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
@@ -94,11 +92,11 @@ SPEC REPOS:
     - GoogleAppMeasurement
     - GoogleUtilities
     - GTMSessionFetcher
-    - InputBarAccessoryView
     - leveldb-library
-    - MessageKit
     - nanopb
     - SnapKit
+  trunk:
+    - SwiftLint
 
 SPEC CHECKSUMS:
   Firebase: dedc9e48ea3f3649ad5f6b982f8a0c73508a14b5
@@ -111,12 +109,11 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: 183bd916af7f80deb67c01888368f1108d641832
   GoogleUtilities: d2b0e277a95962e09bb27f5cd42f5f0b6a506c7d
   GTMSessionFetcher: 61bb0f61a4cb560030f1222021178008a5727a23
-  InputBarAccessoryView: 2b937602598e2fab3149f37f51dd7ad795653812
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
-  MessageKit: e892a9ca49ebe6d82684d3a93ad84021fa23e2c6
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
+  SwiftLint: 22ccbbe3b8008684be5955693bab135e0ed6a447
 
-PODFILE CHECKSUM: 1f6c062c2524e26207f7a71977b256a265aad474
+PODFILE CHECKSUM: 7f6403c13d7f96958fc5e093dbe0bb8812fcfe1e
 
-COCOAPODS: 1.7.5
+COCOAPODS: 1.9.1

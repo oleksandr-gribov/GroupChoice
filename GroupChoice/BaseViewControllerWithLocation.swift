@@ -10,9 +10,7 @@ import UIKit
 import MapKit
 import CoreLocation
 
-
-class BaseViewControllerWithLocation: UIViewController,CLLocationManagerDelegate,MKMapViewDelegate, PlaceMapPins {
-    
+class BaseViewControllerWithLocation: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, PlaceMapPins {
     
     var mapView: MKMapView!
     var locationManager = CLLocationManager()
@@ -40,12 +38,14 @@ class BaseViewControllerWithLocation: UIViewController,CLLocationManagerDelegate
             checkLocationAuthorization()
         } else {
             // show alert to user to turn it on
-            let alert = UIAlertController(title: "Location disabled", message: "Location access is restricted. Please enable GPS in the Settings app under Privacy, Location Services.", preferredStyle: UIAlertController.Style.alert)
-            alert.addAction(UIAlertAction(title: "Go to Settings now", style: UIAlertAction.Style.default, handler: { (alert: UIAlertAction!) in
+            let alert = UIAlertController(title: "Location disabled",
+                                          message: "Location access is restricted. Please enable GPS in the Settings app under Privacy, Location Services.",
+                                          preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "Go to Settings now", style: UIAlertAction.Style.default, handler: { (_: UIAlertAction!) in
                 print("")
-                UIApplication.shared.openURL(NSURL(string:UIApplication.openSettingsURLString)! as URL)
+                UIApplication.shared.openURL(NSURL(string: UIApplication.openSettingsURLString)! as URL)
             }))
-            self.present(alert,animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
         }
     }
     func setupLocationManager() {
@@ -60,15 +60,12 @@ class BaseViewControllerWithLocation: UIViewController,CLLocationManagerDelegate
             locationManager.startUpdatingLocation()
             centerViewOnUserLocation()
             fetchPlaces(endpoint: nil, keyword: nil)
-            break
         case .denied:
             let alert = UIAlertController(title: "Location disabled", message: "We need your location to show nearby places", preferredStyle: UIAlertController.Style.alert)
-            alert.addAction(UIAlertAction(title: "Enable Location Services", style: UIAlertAction.Style.default, handler: { (alert: UIAlertAction!) in
+            alert.addAction(UIAlertAction(title: "Enable Location Services", style: UIAlertAction.Style.default, handler: { (_: UIAlertAction!) in
                 print("")
-                UIApplication.shared.openURL(NSURL(string:UIApplication.openSettingsURLString)! as URL)
+                UIApplication.shared.openURL(NSURL(string: UIApplication.openSettingsURLString)! as URL)
             }))
-            
-            break
         case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
             
@@ -89,10 +86,10 @@ class BaseViewControllerWithLocation: UIViewController,CLLocationManagerDelegate
               }
           }
     // MARK: - Fetching Data
-    func fetchPlaces(endpoint: GooglePlacesAPI.Endpoint?, keyword:String?) {
+    func fetchPlaces(endpoint: GooglePlacesAPI.Endpoint?, keyword: String?) {
         self.placesNearby.removeAll()
         guard let currentLocation = currentLocation else {
-            print ("no location in fetch places")
+            print("no location in fetch places")
             return
         }
         guard let url = GooglePlacesAPI.makeUrl(endpoint: endpoint ?? GooglePlacesAPI.Endpoint.general, radius: 500, coordinate: currentLocation, keyword: keyword ?? nil) else {
@@ -101,27 +98,34 @@ class BaseViewControllerWithLocation: UIViewController,CLLocationManagerDelegate
         }
         
         print(url)
+        let myGroup = DispatchGroup()
+        
         Network.fetchGenericData(url: url) { (response: Response) in
-            if response.results.count != 0 {
-            for place in response.results {
-                if !(self.placesNearby.contains(place)) {
-                    self.placesNearby.append(place)
+            myGroup.enter()
+            if !response.results.isEmpty {
+                for place in response.results {
+                    if !(self.placesNearby.contains(place)) {
+                        self.placesNearby.append(place)
+                    }
                 }
-            }
-            DispatchQueue.main.async {
-                print ("number of places fetched in fetchPlaces is \(self.placesNearby.count)")
+                
                 DispatchQueue.main.async {
-                    print ("number of places fetched in fetchPlaces is \(self.placesNearby.count)")
+                    print("number of places fetched in fetchPlaces is \(self.placesNearby.count)")
                     self.placePins()
                     self.updateCollectionComponents()
                 }
             }
-            } else {
-                self.displayAlert()
+            myGroup.leave()
+            myGroup.notify(queue: .main) {
+                if self.placesNearby.isEmpty {
+                    DispatchQueue.main.async {
+                        print("Finished all requests.")
+                        self.displayAlert()
+                    }
+                }
             }
-              }
+        }
     }
-    
     
     func updateCollectionComponents() {
         
@@ -129,8 +133,6 @@ class BaseViewControllerWithLocation: UIViewController,CLLocationManagerDelegate
     func displayAlert() {
         
     }
-    
-    
 
 // MARK: - Location Manager Methods
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
@@ -139,17 +141,17 @@ class BaseViewControllerWithLocation: UIViewController,CLLocationManagerDelegate
         }
         if status == .denied {
             let alert = UIAlertController(title: "Location disabled", message: "We need your location to show you nearby places", preferredStyle: UIAlertController.Style.alert)
-            alert.addAction(UIAlertAction(title: "Enable Location Services", style: UIAlertAction.Style.default, handler: { (alert: UIAlertAction!) in
+            alert.addAction(UIAlertAction(title: "Enable Location Services", style: UIAlertAction.Style.default, handler: { (_: UIAlertAction!) in
                 print("")
-                UIApplication.shared.openURL(NSURL(string:UIApplication.openSettingsURLString)! as URL)
+                UIApplication.shared.openURL(NSURL(string: UIApplication.openSettingsURLString)! as URL)
             }))
-            self.present(alert,animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
         }
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else {
-            print ("no new location in didupdatalocations")
+            print("no new location in didupdatalocations")
             return }
         if currentLocation == nil {
             currentLocation = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
@@ -186,6 +188,5 @@ class BaseViewControllerWithLocation: UIViewController,CLLocationManagerDelegate
         
         }
     }
-
    
 }

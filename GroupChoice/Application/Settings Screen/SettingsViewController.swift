@@ -26,8 +26,7 @@ class SettingsViewController: UIViewController {
             loginViewController.modalPresentationStyle = .fullScreen
             self.present(loginViewController, animated: true, completion: nil)
         } catch let err {
-            print (err)
+            print(err)
         }
     }
 }
-

@@ -10,7 +10,6 @@ import Foundation
 import MapKit
 
 protocol LocationManagerHelperProtocol {
-    var locationManager : CLLocationManager { get }
+    var locationManager: CLLocationManager { get }
     var currentUserLocation: CLLocationCoordinate2D { get }
 }
-

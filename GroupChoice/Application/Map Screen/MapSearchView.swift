@@ -12,7 +12,7 @@ import MapKit
 class MapSearchView: UIView {
     
     override init(frame: CGRect) {
-        super.init(frame:frame)
+        super.init(frame: frame)
         
         //addSubview(topSquare)
         //topSquare.addSubview(optionsLabel)
@@ -42,11 +42,10 @@ class MapSearchView: UIView {
         imageView.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(15)
             make.centerX.equalToSuperview()
-            make.width.equalToSuperview().multipliedBy(0.9  )
+            make.width.equalToSuperview().multipliedBy(0.9)
             make.height.equalToSuperview().multipliedBy(0.5)
             
         }
-        
         
         nameLabel.snp.makeConstraints { (make) in
             make.top.equalTo(imageView.snp.bottom).offset(10)
@@ -65,7 +64,6 @@ class MapSearchView: UIView {
             make.width.equalToSuperview().multipliedBy(0.8)
             
         }
-        
         
 //        optionsLabel.snp.makeConstraints { (make) in
 //            make.centerX.equalToSuperview()
@@ -143,9 +141,8 @@ class MapSearchView: UIView {
         customView.layer.shadowOpacity = 0.25
         return customView
     }()
-
     
-    let imageView : CustomImageView = {
+    let imageView: CustomImageView = {
         let iv = CustomImageView()
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
@@ -181,10 +178,7 @@ class MapSearchView: UIView {
            lbl.font = lbl.font.withSize(16)
            lbl.textColor = .green
            
-           
            return lbl
        }()
   
 }
-
-

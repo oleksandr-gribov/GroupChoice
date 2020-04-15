@@ -15,7 +15,6 @@ class SignUpView: UIView {
         super.init(frame: frame)
         setup()
         
-        
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been initialized ")
@@ -70,7 +69,7 @@ class SignUpView: UIView {
         tf.isSecureTextEntry = true
         return tf
     }()
-    let confirmPasswordField : UITextField = {
+    let confirmPasswordField: UITextField = {
         let tf = UITextField()
         tf.setuploginTextField(placeHolderText: "Confirm Password", keyboardType: .default)
         tf.isSecureTextEntry = true
@@ -80,12 +79,12 @@ class SignUpView: UIView {
     let signUpButton: UIButton = {
         let btn = UIButton()
         btn.backgroundColor = UIColor(red: 150/255, green: 211/255, blue: 255/255, alpha: 1)
-        btn.setAttributedTitle(NSAttributedString(string: "Sign Up", attributes: [NSAttributedString.Key.font : UIFont(name: "Avenir Next", size: 22), NSAttributedString.Key.foregroundColor: UIColor.white]), for: .normal)
+        btn.setAttributedTitle(NSAttributedString(string: "Sign Up",
+                                                  attributes: [NSAttributedString.Key.font: UIFont(name: "Avenir Next", size: 22),
+                                                               NSAttributedString.Key.foregroundColor: UIColor.white]), for: .normal)
         btn.layer.cornerRadius = 10
         return btn
     }()
-    
-    
     
     func mainStackView () -> UIStackView {
         let stv = UIStackView( arrangedSubviews: [nameTextField, emailTextField, passwordTextField, confirmPasswordField])
@@ -95,4 +94,3 @@ class SignUpView: UIView {
         return stv
     }
 }
-

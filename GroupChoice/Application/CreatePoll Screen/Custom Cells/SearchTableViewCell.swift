@@ -11,13 +11,14 @@ import UIKit
 class SearchTableViewCell: UITableViewCell {
     
     var buttonChecked = false
-    weak var delegate : SearchTableViewCellDelegate?
-    var place : Place?
+    weak var delegate: SearchTableViewCellDelegate?
+    var place: Place?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
+    
     override func prepareForReuse() {
         self.myImageView.image = nil
         self.addButton.setImage(UIImage(named: "grey_check"), for: .normal)
@@ -37,51 +38,51 @@ class SearchTableViewCell: UITableViewCell {
     @objc func addButtonClicked() {
         buttonChecked = !buttonChecked
         if buttonChecked {
-            addButton.setImage(UIImage(named: "blue_check"),for: .normal)
+            addButton.setImage(UIImage(named: "blue_check"), for: .normal)
         } else {
-            addButton.setImage(UIImage(named: "grey_check"),for: .normal)
+            addButton.setImage(UIImage(named: "grey_check"), for: .normal)
         }
         self.delegate?.searchTableViewCell(buttonChecked, place: place!)
     }
     
     func setUpCellData(_ place: Place) {
         self.nameLabel.text = place.name
-                      if let addressText = place.address {
-                          self.addressLabel.text = addressText
-                      } else {
-                        self.addressLabel.text = "Address not available"
-                      }
-                      if let rating = place.rating {
-                        self.ratingLabel.text = String(rating)
-                      }
-        self.descriptionTypes.text = typesDescription(place)
-                      if let photos = place.photos  {
-                          let reference = photos[0].reference
-                          guard let url = GooglePlacesAPI.imageURL(reference: reference) else {
-                              return
-                          }
-                          self.myImageView.fetchImage(url: url)
-                      } else {
-                          self.myImageView.image = #imageLiteral(resourceName: "no_image")
-                      }
-       
+        if let addressText = place.address {
+            self.addressLabel.text = addressText
+        } else {
+            self.addressLabel.text = "Address not available"
         }
+        if let rating = place.rating {
+            self.ratingLabel.text = String(rating)
+        }
+        self.descriptionTypes.text = typesDescription(place)
+        if let photos = place.photos {
+            let reference = photos[0].reference
+            guard let url = GooglePlacesAPI.imageURL(reference: reference) else {
+                return
+            }
+            self.myImageView.fetchImage(url: url)
+        } else {
+            self.myImageView.image = #imageLiteral(resourceName: "no_image")
+        }
+    }
+    
     func typesDescription(_ place: Place) -> String {
         let types = place.types
         var index = types.count
-        if index == 0  {
+        if index == 0 {
             return "Point of Interest"
         } else {
             var typesString = ""
-            for i in 0..<types.count {
-                if types[i] == "point_of_interest" {
-                    index = i
+            for num in 0..<types.count {
+                if types[num] == "point_of_interest" {
+                    index = num
                 }
             }
-            for i in 0..<index {
-                let curr = types[i]
+            for num in 0..<index {
+                let curr = types[num]
                 let formatted = curr.replacingOccurrences(of: "_", with: " ")
-                if i == index - 1 {
+                if num == index - 1 {
                     typesString += formatted.capitalized
                 } else {
                     typesString += "\(formatted.capitalized), "
@@ -151,21 +152,18 @@ class SearchTableViewCell: UITableViewCell {
         }
     }
     
-    
-    let myImageView : CustomImageView = {
+    let myImageView: CustomImageView = {
         let iv = CustomImageView()
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         iv.layer.cornerRadius = 5
-        //iv.backgroundColor = .red
-        
+
         return iv
     }()
     
     let nameLabel: UILabel = {
         let lbl = UILabel()
         lbl.text = "Name of place"
-        //lbl.backgroundColor = .blue
         lbl.font = UIFont(name: "AvenirNext-Medium", size: 18)
         
         return lbl
@@ -178,7 +176,6 @@ class SearchTableViewCell: UITableViewCell {
         lbl.textColor = .black
         lbl.adjustsFontSizeToFitWidth = false
         lbl.lineBreakMode = .byWordWrapping
-
         
         return lbl
     }()
@@ -210,11 +207,10 @@ class SearchTableViewCell: UITableViewCell {
         iv.image = #imageLiteral(resourceName: "Path")
         iv.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
         
-        
         return iv
     }()
     
-    let ratingLabel : UILabel = {
+    let ratingLabel: UILabel = {
         let lbl = UILabel()
         lbl.text = "4.5"
         lbl.font = lbl.font.withSize(15)
@@ -222,7 +218,7 @@ class SearchTableViewCell: UITableViewCell {
         return lbl
     }()
     
-    let distanceLabel : UILabel = {
+    let distanceLabel: UILabel = {
         let lbl = UILabel()
         lbl.text = "500m"
         lbl.font = lbl.font.withSize(9)
@@ -233,7 +229,7 @@ class SearchTableViewCell: UITableViewCell {
     let addButton: UIButton = {
         let btn = UIButton()
         
-        btn.setImage(UIImage(named: "grey_check"),for: .normal)
+        btn.setImage(UIImage(named: "grey_check"), for: .normal)
         btn.imageView?.image = UIImage(named: "grey_check")
         btn.isEnabled = true
         

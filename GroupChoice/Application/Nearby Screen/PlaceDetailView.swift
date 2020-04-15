@@ -67,12 +67,9 @@ class PlaceDetailView: UIView {
             make.right.equalToSuperview().offset(-20)
         }
         
-        
-        
     }
-  
    
-    let imageView : CustomImageView = {
+    let imageView: CustomImageView = {
         let iv = CustomImageView()
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
@@ -142,7 +139,7 @@ class PlaceDetailView: UIView {
         return iv
     }()
     
-    let ratingLabel : UILabel = {
+    let ratingLabel: UILabel = {
         let lbl = UILabel()
         lbl.text = "4.5"
         lbl.font = lbl.font.withSize(9)
@@ -150,7 +147,7 @@ class PlaceDetailView: UIView {
         return lbl
     }()
     
-    let distanceLabel : UILabel = {
+    let distanceLabel: UILabel = {
         let lbl = UILabel()
         lbl.text = "500m"
         lbl.font = lbl.font.withSize(9)

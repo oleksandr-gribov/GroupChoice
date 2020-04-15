@@ -11,7 +11,7 @@ import MapKit
 
 protocol PlaceMapPins {
     var mapView: MKMapView! { get }
-    var placesNearby : [Place] { get }
+    var placesNearby: [Place] { get }
     
     func placePins()
 }

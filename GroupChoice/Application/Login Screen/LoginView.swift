@@ -94,7 +94,9 @@ class LoginView: UIView {
     let loginButton: UIButton = {
         let btn = UIButton()
         btn.backgroundColor = UIColor(red: 150/255, green: 211/255, blue: 255/255, alpha: 1)
-        btn.setAttributedTitle(NSAttributedString(string: "Log In", attributes: [NSAttributedString.Key.font : UIFont(name: "Avenir Next", size: 22), NSAttributedString.Key.foregroundColor: UIColor.white]), for: .normal)
+        btn.setAttributedTitle(NSAttributedString(
+            string: "Log In",
+            attributes: [NSAttributedString.Key.font: UIFont(name: "Avenir Next", size: 22), NSAttributedString.Key.foregroundColor: UIColor.white]), for: .normal)
         btn.layer.cornerRadius = 10
         return btn
     }()
@@ -110,7 +112,9 @@ class LoginView: UIView {
     let signUpButton: UIButton = {
         let btn = UIButton()
         btn.backgroundColor = UIColor.clear
-        btn.setAttributedTitle(NSAttributedString(string: "Sign Up", attributes: [NSAttributedString.Key.font : UIFont(name: "Avenir Next", size: 22), NSAttributedString.Key.foregroundColor: UIColor(red: 150/255, green: 211/255, blue: 255/255, alpha: 1)]), for: .normal)
+        btn.setAttributedTitle(NSAttributedString(string: "Sign Up",
+                                                  attributes: [NSAttributedString.Key.font: UIFont(name: "Avenir Next", size: 22),
+                                                               NSAttributedString.Key.foregroundColor: UIColor(red: 150/255, green: 211/255, blue: 255/255, alpha: 1)]), for: .normal)
         return btn
     }()
     
@@ -120,10 +124,8 @@ class LoginView: UIView {
         stv.distribution = .fillEqually
         stv.spacing = 10
         
-        
         return stv
     }
-    
     
     func smallerStackView() -> UIStackView {
         let stv = UIStackView(arrangedSubviews: [noAccountTextLabel, signUpButton])

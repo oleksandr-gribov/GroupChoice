@@ -9,11 +9,10 @@
 import Foundation
 import UIKit
 
-
 struct Network {
     
-    static func fetchGenericData<T: Codable>(url: URL, completion: @escaping (T) -> () ) {
-        URLSession.shared.dataTask(with: url) { (data, response, err) in
+    static func fetchGenericData<T: Codable>(url: URL, completion: @escaping (T) -> Void ) {
+        URLSession.shared.dataTask(with: url) { (data, _, err) in
             
             if let err = err {
                 print(err.localizedDescription)
@@ -24,11 +23,8 @@ struct Network {
                 let obj = try JSONDecoder().decode(T.self, from: data)
                 completion(obj)
             } catch let jsonError {
-                print ("Failed to decode json: ", jsonError)
+                print("Failed to decode json: ", jsonError)
             }
             }.resume()
     }
 }
-
-
-

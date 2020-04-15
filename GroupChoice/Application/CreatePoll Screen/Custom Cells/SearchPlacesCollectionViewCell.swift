@@ -25,7 +25,7 @@ class SearchPlacesCollectionViewCell: UICollectionViewCell {
     }
     func setupData(_ place: Place) {
         self.nameLabel.text = place.name
-        if let photos = place.photos  {
+        if let photos = place.photos {
             let reference = photos[0].reference
             guard let url = GooglePlacesAPI.imageURL(reference: reference) else {
                 return
@@ -56,7 +56,7 @@ class SearchPlacesCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    let imageView : CustomImageView = {
+    let imageView: CustomImageView = {
         let iv = CustomImageView()
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true

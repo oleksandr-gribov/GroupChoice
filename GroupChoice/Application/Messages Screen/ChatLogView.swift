@@ -25,16 +25,15 @@ class ChatLogView: UIView {
         addSubview(messagesTableView)
         addSubview(sendButton)
         
-        
     }
     
-    let inputTF : UITextField = {
+    let inputTF: UITextField = {
         let tf = UITextField()
         
         return tf
     }()
     
-    let messagesTableView : UITableView = {
+    let messagesTableView: UITableView = {
         let tv = UITableView()
         
         return tv
