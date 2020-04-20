@@ -60,20 +60,20 @@ class BaseViewControllerWithLocation: UIViewController, CLLocationManagerDelegat
             locationManager.startUpdatingLocation()
             centerViewOnUserLocation()
             fetchPlaces(endpoint: nil, keyword: nil)
-        case .denied:
+        case .denied, .restricted:
             let alert = UIAlertController(title: "Location disabled", message: "We need your location to show nearby places", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "Enable Location Services", style: UIAlertAction.Style.default, handler: { (_: UIAlertAction!) in
                 print("")
                 UIApplication.shared.openURL(NSURL(string: UIApplication.openSettingsURLString)! as URL)
             }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
-            
-        case .restricted:
-            // Show an alert letting them know
-            break
+            print("location manager not determined ")
         case .authorizedAlways:
             break
+
         }
     }
     func centerViewOnUserLocation() {

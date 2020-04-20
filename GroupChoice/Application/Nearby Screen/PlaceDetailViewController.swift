@@ -50,6 +50,7 @@ class PlaceDetailViewController: UIViewController, MKMapViewDelegate {
         self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController?.navigationBar.tintColor = .white
         self.navigationController?.navigationBar.backgroundColor = .clear
+
         self.navigationController?.navigationBar.barTintColor = .clear
     }
     

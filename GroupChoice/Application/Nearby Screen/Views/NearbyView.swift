@@ -47,10 +47,23 @@ class NearbyView: UIView {
         return mp
     }()
     
+    let redoSearchAreaButton: UIButton = {
+        let btn = UIButton()
+        btn.titleLabel?.text = "Redo search area"
+        btn.backgroundColor = .white
+        btn.titleLabel?.textColor = .black
+        btn.setAttributedTitle(NSAttributedString(
+        string: "Redo search in this area",
+        attributes: [NSAttributedString.Key.font: UIFont(name: "KohinoorTelugu-Regular", size: 15), NSAttributedString.Key.foregroundColor: UIColor.black]), for: .normal)
+        btn.layer.cornerRadius = 5
+        return btn
+    }()
+    
     func setup() {
         addSubview(topblur)
         addSubview(bottomBlur)
         addSubview(mapView)
+        addSubview(redoSearchAreaButton)
        // addSubview(nearbyLabel)
         topblur.snp.makeConstraints { (make) in
             make.leading.equalToSuperview()
@@ -70,14 +83,16 @@ class NearbyView: UIView {
             make.width.equalToSuperview()
             make.bottom.equalToSuperview().inset(225)
         }
-//        nearbyLabel.snp.makeConstraints { (make) in
-//            make.bottom.equalToSuperview().offset(-280)
-//            make.left.equalToSuperview().inset(20)
-//            make.width.equalTo(200)
-//            make.height.equalTo(20)
-//        }
+        redoSearchAreaButton.snp.makeConstraints { (make) in
+            make.centerX.equalToSuperview()
+            make.width.equalTo(200)
+            make.height.equalTo(20)
+            make.top.equalTo(topblur.snp.bottom).offset(1000)
+        }
+
         bringSubviewToFront(topblur)
         bringSubviewToFront(bottomBlur)
+        bringSubviewToFront(redoSearchAreaButton)
        
     }
 }

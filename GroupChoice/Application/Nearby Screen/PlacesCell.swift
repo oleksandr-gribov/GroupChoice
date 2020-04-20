@@ -35,7 +35,19 @@ class PlacesCell: UICollectionViewCell {
         
         imageView.image = nil
     }
+    func updateUIComponents () {
+        self.addressLabel.textColor = .gray
+        self.addressLabel.backgroundColor = .clear
+        self.nameLabel.textColor = .black
+        self.nameLabel.backgroundColor = .clear
+        self.distanceLabel.textColor = .black
+        self.distanceLabel.backgroundColor = .clear
+        self.ratingLabel.textColor = .black
+        self.ratingLabel.backgroundColor = .clear
+    }
     func setupCellData(place: Place) {
+        self.locationPin.isHidden = false
+        self.starPin.isHidden = false
         self.nameLabel.text = place.name
                   if let addressText = place.address {
                       self.addressLabel.text = addressText
@@ -54,6 +66,7 @@ class PlacesCell: UICollectionViewCell {
                   } else {
                       self.imageView.image = #imageLiteral(resourceName: "no_image")
                   }
+        updateUIComponents()
     }
     
     func setupViews() {
@@ -74,13 +87,13 @@ class PlacesCell: UICollectionViewCell {
         nameLabel.snp.makeConstraints { (make) in
             make.top.equalTo(imageView.snp.bottom).offset(10)
             make.left.equalToSuperview().offset(10)
-            make.width.equalToSuperview().multipliedBy(0.8)
+            make.right.equalTo(imageView.snp.right)
         }
         
         addressLabel.snp.makeConstraints { (make) in
             make.top.equalTo(nameLabel.snp.bottom).offset(3)
             make.left.equalTo(locationPin.snp.right).offset(5)
-            make.width.equalToSuperview().multipliedBy(0.7)
+            make.right.equalTo(imageView.snp.right)
         }
         ratingLabel.snp.makeConstraints { (make) in
             make.left.equalTo(starPin.snp.right).offset(5)
@@ -109,6 +122,7 @@ class PlacesCell: UICollectionViewCell {
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         iv.layer.cornerRadius = 5
+        iv.backgroundColor = UIColor(displayP3Red: 197/255, green: 190/255, blue: 206/255, alpha: 0.3)
    
         return iv
     }()
@@ -116,18 +130,21 @@ class PlacesCell: UICollectionViewCell {
     let nameLabel: UILabel = {
         let lbl = UILabel()
         lbl.text = "Name of place"
+        lbl.textColor = UIColor(displayP3Red: 197/255, green: 190/255, blue: 206/255, alpha: 0)
+        lbl.backgroundColor = UIColor(displayP3Red: 197/255, green: 190/255, blue: 206/255, alpha: 0.3)
         
         return lbl
     }()
     
     let addressLabel: UILabel = {
         let lbl = UILabel()
-        lbl.text = "12 Smith Ave"
         lbl.font = lbl.font.withSize(12)
-        lbl.textColor = .gray
+        lbl.text = "12 Smith Ave"
+        lbl.textColor = UIColor(displayP3Red: 197/255, green: 190/255, blue: 206/255, alpha: 0)
         lbl.adjustsFontSizeToFitWidth = false
         lbl.numberOfLines = 2
-        
+        lbl.backgroundColor = UIColor(displayP3Red: 197/255, green: 190/255, blue: 206/255, alpha: 0.3)
+    
         return lbl
     }()
     
@@ -136,6 +153,7 @@ class PlacesCell: UICollectionViewCell {
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         iv.image = #imageLiteral(resourceName: "Location pin")
+        iv.isHidden = true
         
         return iv
     }()
@@ -145,14 +163,17 @@ class PlacesCell: UICollectionViewCell {
         iv.contentMode = .scaleAspectFit
         iv.clipsToBounds = true
         iv.image = #imageLiteral(resourceName: "Path")
+        iv.isHidden = true
         
         return iv
     }()
     
     let ratingLabel: UILabel = {
         let lbl = UILabel()
-        lbl.text = "4.5"
         lbl.font = lbl.font.withSize(9)
+        lbl.text = "5.0"
+        lbl.textColor = UIColor(displayP3Red: 197/255, green: 190/255, blue: 206/255, alpha: 0)
+        lbl.backgroundColor = UIColor(displayP3Red: 197/255, green: 190/255, blue: 206/255, alpha: 0.3)
         
         return lbl
     }()
@@ -160,8 +181,9 @@ class PlacesCell: UICollectionViewCell {
     let distanceLabel: UILabel = {
         let lbl = UILabel()
         lbl.text = "500m"
+        lbl.textColor = UIColor(displayP3Red: 197/255, green: 190/255, blue: 206/255, alpha: 0)
         lbl.font = lbl.font.withSize(9)
-        
+        lbl.backgroundColor = UIColor(displayP3Red: 197/255, green: 190/255, blue: 206/255, alpha: 0.3)
         return lbl
     }()
 }

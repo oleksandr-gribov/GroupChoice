@@ -12,9 +12,10 @@ import SnapKit
 
 class MapViewController: BaseViewControllerWithLocation, UITextFieldDelegate, UISearchResultsUpdating, UISearchControllerDelegate,
                     UISearchBarDelegate {
-    var mainView: UIView!
+    //var mainView: UIView!
     var currentPlace: Place?
     var mapSearchView: MapSearchView!
+    var customView: CustomView!
     var tableView: UITableView!
     let optionsCellID = "optionsCell"
     var optionsTextField: UITextField!
@@ -81,25 +82,37 @@ class MapViewController: BaseViewControllerWithLocation, UITextFieldDelegate, UI
         }
     }
     func setupView() {
-          let mapSearchView = MapSearchView()
-          view.addSubview(mapSearchView)
-          self.mapView = mapSearchView.mapView
-          self.mapSearchView = mapSearchView
-
-          self.mapView.frame = self.view.bounds
-          tableView = mapSearchView.tableView
-          
-          let navBarHeight = UIApplication.shared.statusBarFrame.size.height +
-          (navigationController?.navigationBar.frame.height ?? 0.0)
-
-          mapView.isUserInteractionEnabled = true
-          mapSearchView.snp.makeConstraints { (make) in
-              make.left.equalToSuperview()
-              make.right.equalToSuperview()
-              make.bottom.equalToSuperview().inset((self.tabBarController?.tabBar.frame.size.height)!)
-              make.top.equalToSuperview().inset(navBarHeight)
-          }
-      }
+        let mapSearchView = MapSearchView()
+        view.addSubview(mapSearchView)
+        let customView = CustomView()
+        self.customView = customView
+        view.addSubview(customView)
+        
+        self.mapView = mapSearchView.mapView
+        self.mapSearchView = mapSearchView
+        
+        self.mapView.frame = self.view.bounds
+        tableView = mapSearchView.tableView
+        
+        let navBarHeight = UIApplication.shared.statusBarFrame.size.height +
+            (navigationController?.navigationBar.frame.height ?? 0.0)
+        
+        mapView.isUserInteractionEnabled = true
+        mapSearchView.snp.makeConstraints { (make) in
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
+            make.bottom.equalToSuperview().inset((self.tabBarController?.tabBar.frame.size.height)!)
+            make.top.equalToSuperview().inset(navBarHeight)
+        }
+        
+        customView.snp.makeConstraints { (make) in
+            make.centerX.equalToSuperview()
+            make.height.equalToSuperview().multipliedBy(0.4)
+            make.width.equalToSuperview().multipliedBy(0.85)
+            make.bottom.equalTo(mapSearchView.snp.bottom).offset(900)
+        }
+        view.bringSubviewToFront(customView)
+    }
     func setupSearchBar() {
            searchController = UISearchController(searchResultsController: nil)
            self.navigationItem.searchController = searchController
@@ -113,7 +126,6 @@ class MapViewController: BaseViewControllerWithLocation, UITextFieldDelegate, UI
            
            searchbar = searchController.searchBar
            searchController.searchBar.tintColor = .white
-           //searchbar.placeholder = "e.g. Coffee, Pizza, Gym"
            searchbar.searchTextField.textColor = .white
            searchbar.showsCancelButton = true
            
@@ -125,15 +137,15 @@ class MapViewController: BaseViewControllerWithLocation, UITextFieldDelegate, UI
     
     func setupCustomViewGestures() {
         let customViewTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(customViewTapped))
-        self.mapSearchView?.customView.addGestureRecognizer(customViewTapGestureRecognizer)
+        self.customView.addGestureRecognizer(customViewTapGestureRecognizer)
         
         let customSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(customViewSwiped))
         customSwipeGestureRecognizer.direction = .down
-        self.mapSearchView?.customView.addGestureRecognizer(customSwipeGestureRecognizer)
+        self.customView.addGestureRecognizer(customSwipeGestureRecognizer)
     }
     
     @objc func customViewSwiped() {
-        self.mapSearchView.customView.isHidden = true
+        animateCustomView(toShow: false)
         let selectedAnnotations = self.mapSearchView.mapView.selectedAnnotations
         if !selectedAnnotations.isEmpty {
             self.mapSearchView.mapView.deselectAnnotation(selectedAnnotations[0], animated: true)
@@ -174,7 +186,14 @@ class MapViewController: BaseViewControllerWithLocation, UITextFieldDelegate, UI
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        print("cancel button clicked")
+        if searchBar.searchTextField.text!.isEmpty && !tableView.isHidden {
+            tableView.isHidden = true
+            
+        }
+        if !mapView.selectedAnnotations.isEmpty {
+            animateCustomView(toShow: false)
+            mapView.deselectAnnotation(mapView.selectedAnnotations[0], animated: true)
+        }
     }
   
     // MARK: - Helper methods
@@ -190,10 +209,19 @@ class MapViewController: BaseViewControllerWithLocation, UITextFieldDelegate, UI
          self.tableView.isHidden = false
      }
     
-    @objc func labelTapped() {
-          tableView.isHidden = false
-          self.navigationItem.rightBarButtonItem?.isEnabled = true
-      }
+    func animateCustomView(toShow show: Bool) {
+        UIView.animate(withDuration: 0.5) {
+            self.customView.snp.updateConstraints { (make) in
+                if show {
+                    make.bottom.equalTo(self.mapSearchView.snp.bottom).inset(20)
+                } else {
+                    make.bottom.equalTo(self.mapSearchView.snp.bottom).offset(800)
+                }
+                
+            }
+            self.view.layoutIfNeeded()
+        }
+    }
     
     // MARK: - MapView Methods
     
@@ -203,21 +231,21 @@ class MapViewController: BaseViewControllerWithLocation, UITextFieldDelegate, UI
             }
             if let annotation = view.annotation as? CustomMapAnnotation {
                 let indexPath = IndexPath(row: annotation.index!, section: 0)
-                self.mapSearchView?.customView.isHidden = false
+                animateCustomView(toShow: true)
                 
                 self.currentPlace = self.placesNearby[indexPath.row]
                 DispatchQueue.main.async {
                     if let currentPlace = self.currentPlace {
-                        self.mapSearchView.nameLabel.text = currentPlace.name
-                        self.mapSearchView.addressLabel.text = currentPlace.address
+                        self.customView.nameLabel.text = currentPlace.name
+                        self.customView.addressLabel.text = currentPlace.address
                         if let photos = currentPlace.photos {
                             let reference = photos[0].reference
                             guard let url = GooglePlacesAPI.imageURL(reference: reference) else {
                                 return
                             }
-                            self.mapSearchView.imageView.fetchImage(url: url)
+                            self.customView.imageView.fetchImage(url: url)
                         } else {
-                            self.mapSearchView.imageView.image = #imageLiteral(resourceName: "no_image")
+                            self.customView.imageView.image = #imageLiteral(resourceName: "no_image")
                         }
                     }
                 }

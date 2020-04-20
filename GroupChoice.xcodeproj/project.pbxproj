@@ -13,6 +13,7 @@
 		D91C938F22F2579C005113D9 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91C938E22F2579C005113D9 /* TabBarViewController.swift */; };
 		D91C939122F25AE8005113D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91C939022F25AE8005113D9 /* AppDelegate.swift */; };
 		D91FD0DC22FBF0A8009A9305 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91FD0DB22FBF0A8009A9305 /* Network.swift */; };
+		D9248769244DCDBC008AD836 /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9248768244DCDBC008AD836 /* CustomView.swift */; };
 		D93C11A322F9E9DA00CDD7E3 /* NewMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93C11A222F9E9DA00CDD7E3 /* NewMessageViewController.swift */; };
 		D93C16952436C4F5001EBB49 /* FormTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93C16942436C4F5001EBB49 /* FormTableViewController.swift */; };
 		D94A7727233BA54C00A5831C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94A7726233BA54C00A5831C /* User.swift */; };
@@ -54,6 +55,7 @@
 		D91C938E22F2579C005113D9 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		D91C939022F25AE8005113D9 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D91FD0DB22FBF0A8009A9305 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		D9248768244DCDBC008AD836 /* CustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomView.swift; sourceTree = "<group>"; };
 		D93C11A222F9E9DA00CDD7E3 /* NewMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageViewController.swift; sourceTree = "<group>"; };
 		D93C16942436C4F5001EBB49 /* FormTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FormTableViewController.swift; path = "/Users/sasha/Desktop/iOS learning projects/GroupChoice/GroupChoice/Application/CreatePoll Screen/FormTableViewController.swift"; sourceTree = "<absolute>"; };
 		D948169B22F15D9800B8311E /* GroupChoice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GroupChoice.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -131,11 +133,10 @@
 		D91C938822F25494005113D9 /* Nearby Screen */ = {
 			isa = PBXGroup;
 			children = (
+				D924876A244DECE3008AD836 /* Views */,
 				D9AB6A1F22F24D0F001101D1 /* NearbyPlacesViewController.swift */,
 				D96FA468230B279F003E9214 /* PlaceDetailViewController.swift */,
 				D9EB973F2305B81B00D5E8CB /* PlacesCell.swift */,
-				D9EB97412305C7C400D5E8CB /* NearbyView.swift */,
-				D96FA46A230B27B6003E9214 /* PlaceDetailView.swift */,
 				D97D9F2423354CBA007A0C48 /* CustomMapAnnotation.swift */,
 			);
 			path = "Nearby Screen";
@@ -163,8 +164,8 @@
 		D91C938B22F254C1005113D9 /* Map Screen */ = {
 			isa = PBXGroup;
 			children = (
+				D9248767244DCD94008AD836 /* Views */,
 				D9AB6A2322F24D9F001101D1 /* MapViewController.swift */,
-				D97D53232326FE7100B4FD51 /* MapSearchView.swift */,
 			);
 			path = "Map Screen";
 			sourceTree = "<group>";
@@ -185,6 +186,24 @@
 				D98D41A92306FC4100489C58 /* GooglePlacesAPI.swift */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		D9248767244DCD94008AD836 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D97D53232326FE7100B4FD51 /* MapSearchView.swift */,
+				D9248768244DCDBC008AD836 /* CustomView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		D924876A244DECE3008AD836 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D9EB97412305C7C400D5E8CB /* NearbyView.swift */,
+				D96FA46A230B27B6003E9214 /* PlaceDetailView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		D93571AC243038E10097E3ED /* Application */ = {
@@ -445,6 +464,7 @@
 				D9EC84D12443B7FF00BB05D6 /* Vote.swift in Sources */,
 				D97EA3C922F3A2EA00E71FEF /* UITextField+Extension.swift in Sources */,
 				D97D53242326FE7100B4FD51 /* MapSearchView.swift in Sources */,
+				D9248769244DCDBC008AD836 /* CustomView.swift in Sources */,
 				D91C939122F25AE8005113D9 /* AppDelegate.swift in Sources */,
 				D96FA46B230B27B6003E9214 /* PlaceDetailView.swift in Sources */,
 				D950723E2430143300D4E0CD /* BaseViewControllerWithLocation.swift in Sources */,
