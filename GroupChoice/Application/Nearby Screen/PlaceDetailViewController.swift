@@ -14,6 +14,8 @@ class PlaceDetailViewController: UIViewController, MKMapViewDelegate {
     var place: Place!
     var placeCoordinate: CLLocationCoordinate2D!
     var userLocation: CLLocationCoordinate2D!
+    
+    // MARK: - View life Cycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavBar()
@@ -26,12 +28,10 @@ class PlaceDetailViewController: UIViewController, MKMapViewDelegate {
         let gestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(swipeRight))
         gestureRecognizer.direction = .right
         
+        
         self.detailView.addGestureRecognizer(gestureRecognizer)
     }
-    @objc func swipeRight() {
-        _ = navigationController?.popViewController(animated: true)
-        
-    }
+    
     override func willMove(toParent parent: UIViewController?) {
         if let vcs =  self.navigationController?.viewControllers {
             let previousVC = vcs[vcs.count - 2]
@@ -40,18 +40,51 @@ class PlaceDetailViewController: UIViewController, MKMapViewDelegate {
                 self.navigationController?.navigationBar.barTintColor = UIColor(displayP3Red: 221/255, green: 106/255, blue: 104/255, alpha: 1.0)
                 self.navigationController?.navigationBar.isTranslucent = false
             }
+            else if previousVC.isKind(of: NearbyPlacesViewController.self) {
+                self.navigationController?.navigationBar.barStyle = .black
+                self.navigationController?.navigationBar.isTranslucent = true
+            }
         }
- 
     }
+
+    
+    // MARK: - Setup Methods
     func setupNavBar() {
         
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.isTranslucent = true
-        self.navigationController?.navigationBar.tintColor = .white
-        self.navigationController?.navigationBar.backgroundColor = .clear
-
-        self.navigationController?.navigationBar.barTintColor = .clear
+        if #available(iOS 13.0, *) {
+            let appearance = UINavigationBarAppearance()
+            //appearance.backgroundColor = UIColor(displayP3Red: 150/255, green: 211/255, blue: 255/255, alpha: 1.0)
+            appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+            appearance.configureWithTransparentBackground()
+//            appearance.backgroundColor = .clear
+//            appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+            appearance.shadowImage = UIImage()
+            
+            let button = UIBarButtonItemAppearance(style: .plain)
+            
+            button.normal.titleTextAttributes = [.foregroundColor: UIColor.white]
+            appearance.buttonAppearance = button
+            
+            appearance.shadowColor = .clear
+            
+            navigationItem.standardAppearance = appearance
+            navigationItem.scrollEdgeAppearance = appearance
+        } else {
+            // Fallback on earlier versions
+           // self.navigationController?.navigationBar.barTintColor = UIColor(displayP3Red: 150/255, green: 211/255, blue: 255/255, alpha: 1.0)
+            self.navigationController?.navigationBar.shadowImage = UIImage()
+            self.navigationController?.navigationBar.tintColor = .white
+            self.navigationController?.navigationBar.barStyle = .black
+        }
+//
+//        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+//        self.navigationController?.navigationBar.shadowImage = UIImage()
+//        self.navigationController?.navigationBar.isTranslucent = true
+//        self.navigationController?.navigationBar.tintColor = .white
+//        self.navigationController?.navigationBar.backgroundColor = .clear
+//
+//        self.navigationController?.navigationBar.barTintColor = .clear
+        
     }
     
     func setupView() {
@@ -102,10 +135,8 @@ class PlaceDetailViewController: UIViewController, MKMapViewDelegate {
         
         centerMapOnLocation()
     }
-    @objc func testingClicked() {
-        print("Button clicked")
-    }
-    
+   
+    // MARK: - Helper methods
     func typesDescription() -> String {
         let types = place.types
         var index = types.count
@@ -130,6 +161,18 @@ class PlaceDetailViewController: UIViewController, MKMapViewDelegate {
             return typesString
         }
     }
+    
+    @objc func testingClicked() {
+           print("Button clicked")
+       }
+    
+    
+    @objc func swipeRight() {
+        _ = navigationController?.popViewController(animated: true)
+        
+    }
+    
+    // MARK: - Map and Location methods
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard annotation is MKPointAnnotation else {
             return nil

@@ -50,14 +50,16 @@ class FormTableViewController: UITableViewController, UITextFieldDelegate, Searc
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setUpDatePickers()
-        
+        setupNavBar()
+        self.navigationItem.title = "Create Vote"
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         setupCollectionView()
-        setupNavBar()
+        
         
         self.tableView.tableFooterView = UIView(frame: .zero)
         self.eventNameTF.delegate = self
@@ -71,6 +73,12 @@ class FormTableViewController: UITableViewController, UITextFieldDelegate, Searc
         self.eventNameTF.addTarget(self, action: #selector(toggleCreateButtonState), for: .editingChanged)
         self.createVote.addTarget(self, action: #selector(createVoteButtonTapped), for: .touchUpInside)
         
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .done, target: self, action: #selector(cancelButtonTapped))
+        navigationItem.leftBarButtonItem?.tintColor = .white
+        
+    }
+    @objc func cancelButtonTapped() {
+        self.dismiss(animated: true, completion: nil)
     }
     @objc func createVoteButtonTapped() {
         // if not enough info to create a vote display a message
@@ -88,16 +96,50 @@ class FormTableViewController: UITableViewController, UITextFieldDelegate, Searc
     }
     
     func setupNavBar() {
-        let largeTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont(name: "AvenirNext-DemiBold", size: 33)]
-        let textAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont(name: "AvenirNext-DemiBold", size: 20)]
-        
-        self.navigationController?.navigationBar.largeTitleTextAttributes = largeTextAttributes
-        self.navigationController?.navigationBar.titleTextAttributes = textAttributes
-        self.navigationController?.navigationBar.backgroundColor = UIColor(displayP3Red: 221/255, green: 106/255, blue: 104/255, alpha: 1.0)
+       
         self.navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationBar.barTintColor = UIColor(displayP3Red: 221/255, green: 106/255, blue: 104/255, alpha: 1.0)
-        navigationController?.navigationBar.tintColor = .white
-    }
+         let largeTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont(name: "AvenirNext-DemiBold", size: 33)]
+                let textAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont(name: "AvenirNext-DemiBold", size: 20)]
+         self.navigationController?.navigationBar.largeTitleTextAttributes = largeTextAttributes
+                self.navigationController?.navigationBar.titleTextAttributes = textAttributes
+                self.navigationController?.navigationBar.backgroundColor = UIColor(displayP3Red: 221/255, green: 106/255, blue: 104/255, alpha: 1.0)
+                self.navigationController?.navigationBar.prefersLargeTitles = true
+                navigationController?.navigationBar.barTintColor = UIColor(displayP3Red: 221/255, green: 106/255, blue: 104/255, alpha: 1.0)
+                navigationController?.navigationBar.tintColor = .white
+            
+        
+        
+//        if #available(iOS 13.0, *) {
+//            let appearance = UINavigationBarAppearance()
+//            appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+//            appearance.largeTitleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "AvenirNext-DemiBold", size: 15), NSAttributedString.Key.foregroundColor: UIColor.white]
+//
+//            appearance.backgroundColor = UIColor(displayP3Red: 221/255, green: 106/255, blue: 104/255, alpha: 1.0)
+//            appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+////            appearance.shadowImage = UIImage()
+////            appearance.shadowColor = .clear
+//
+//            appearance.configureWithOpaqueBackground()
+//
+//            self.navigationController?.navigationItem.standardAppearance = appearance
+//
+//        } else {
+//            let textAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont(name: "AvenirNext-DemiBold", size: 33)]
+//            self.navigationController?.navigationBar.largeTitleTextAttributes = textAttributes
+////            self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+////            self.navigationController?.navigationBar.shadowImage = UIImage()
+//            self.navigationController?.navigationBar.isTranslucent = false
+//
+        }
+//        let largeTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont(name: "AvenirNext-DemiBold", size: 33)]
+//        let textAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont(name: "AvenirNext-DemiBold", size: 20)]
+//
+//        self.navigationController?.navigationBar.largeTitleTextAttributes = largeTextAttributes
+//        self.navigationController?.navigationBar.titleTextAttributes = textAttributes
+//        self.navigationController?.navigationBar.backgroundColor = UIColor(displayP3Red: 221/255, green: 106/255, blue: 104/255, alpha: 1.0)
+//        self.navigationController?.navigationBar.prefersLargeTitles = true
+//        navigationController?.navigationBar.barTintColor = UIColor(displayP3Red: 221/255, green: 106/255, blue: 104/255, alpha: 1.0)
+//        navigationController?.navigationBar.tintColor = .white
     func setupCollectionView() {
         self.placesCollectionView.delegate = self
         self.placesCollectionView.dataSource = self

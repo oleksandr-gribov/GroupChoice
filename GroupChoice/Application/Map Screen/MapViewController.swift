@@ -36,11 +36,12 @@ class MapViewController: BaseViewControllerWithLocation, UITextFieldDelegate, UI
         if self.placesNearby.isEmpty {
             checkLocationServices()
         }
+        setupNavBar()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupNavBar()
+      
         setupView()
         setupSearchBar()
         setupTableView()
@@ -64,7 +65,10 @@ class MapViewController: BaseViewControllerWithLocation, UITextFieldDelegate, UI
         
     
     func setupNavBar() {
-        self.navigationController?.automaticallyAdjustsScrollViewInsets = false
+        //self.navigationController?.automaticallyAdjustsScrollViewInsets = false
+        self.navigationItem.title = "Search"
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Search", style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem?.tintColor = .white
         if #available(iOS 13.0, *) {
             let appearance = UINavigationBarAppearance()
             appearance.backgroundColor = UIColor(displayP3Red: 150/255, green: 211/255, blue: 255/255, alpha: 1.0)
@@ -74,7 +78,6 @@ class MapViewController: BaseViewControllerWithLocation, UITextFieldDelegate, UI
         } else {
             // Fallback on earlier versions
             self.navigationController?.navigationBar.barTintColor = UIColor(displayP3Red: 150/255, green: 211/255, blue: 255/255, alpha: 1.0)
-            //self.navigationController?.navigationBar.backgroundColor = UIColor(displayP3Red: 150/255, green: 211/255, blue: 255/255, alpha: 1.0)
             self.navigationController?.navigationBar.shadowImage = UIImage()
             self.navigationController?.navigationBar.tintColor = .white
             self.navigationController?.navigationBar.isTranslucent = false
@@ -108,7 +111,7 @@ class MapViewController: BaseViewControllerWithLocation, UITextFieldDelegate, UI
         customView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
             make.height.equalToSuperview().multipliedBy(0.4)
-            make.width.equalToSuperview().multipliedBy(0.85)
+            make.width.equalToSuperview().multipliedBy(0.8)
             make.bottom.equalTo(mapSearchView.snp.bottom).offset(900)
         }
         view.bringSubviewToFront(customView)
@@ -194,6 +197,7 @@ class MapViewController: BaseViewControllerWithLocation, UITextFieldDelegate, UI
             animateCustomView(toShow: false)
             mapView.deselectAnnotation(mapView.selectedAnnotations[0], animated: true)
         }
+        animateCustomView(toShow: false)
     }
   
     // MARK: - Helper methods

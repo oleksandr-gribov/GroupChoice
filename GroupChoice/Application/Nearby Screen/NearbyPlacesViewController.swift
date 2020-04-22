@@ -32,6 +32,9 @@ class NearbyPlacesViewController: BaseViewControllerWithLocation, UICollectionVi
         mapView.delegate = self 
         setupView()
         
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Discover", style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem?.tintColor = .white
+        
         searchView.redoSearchAreaButton.addTarget(self, action: #selector(redoSearchReginButtonTapped), for: .touchUpInside)
 
     }
@@ -98,13 +101,30 @@ class NearbyPlacesViewController: BaseViewControllerWithLocation, UICollectionVi
     }
     
     fileprivate func setupNavBar() {
-        self.navigationController?.navigationBar.prefersLargeTitles = true
-        let textAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont(name: "AvenirNext-DemiBold", size: 33)]
-        self.navigationController?.navigationBar.largeTitleTextAttributes = textAttributes
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.isTranslucent = true
+        
+        
         self.navigationItem.title = "Discover"
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        if #available(iOS 13.0, *) {
+            let appearance = UINavigationBarAppearance()
+            appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+            appearance.largeTitleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "AvenirNext-DemiBold", size: 33), NSAttributedString.Key.foregroundColor: UIColor.white]
+            appearance.configureWithTransparentBackground()
+            appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+            appearance.shadowImage = UIImage()
+            appearance.shadowColor = .clear
+            
+            navigationItem.standardAppearance = appearance
+            navigationItem.scrollEdgeAppearance = appearance
+        } else {
+            let textAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont(name: "AvenirNext-DemiBold", size: 33)]
+            self.navigationController?.navigationBar.largeTitleTextAttributes = textAttributes
+            self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+            self.navigationController?.navigationBar.shadowImage = UIImage()
+            self.navigationController?.navigationBar.isTranslucent = true
+        }
+        
         
     }
     func animateRedoSearchButton() {
