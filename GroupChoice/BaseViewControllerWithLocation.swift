@@ -59,7 +59,7 @@ class BaseViewControllerWithLocation: UIViewController, CLLocationManagerDelegat
             self.mapView.showsUserLocation = true
             locationManager.startUpdatingLocation()
             centerViewOnUserLocation()
-            fetchPlaces(endpoint: nil, keyword: nil)
+            fetchPlaces(endpoint: nil, keyword: nil, url: nil)
         case .denied, .restricted:
             let alert = UIAlertController(title: "Location disabled", message: "We need your location to show nearby places", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "Enable Location Services", style: UIAlertAction.Style.default, handler: { (_: UIAlertAction!) in
@@ -86,7 +86,7 @@ class BaseViewControllerWithLocation: UIViewController, CLLocationManagerDelegat
               }
           }
     // MARK: - Fetching Data
-    func fetchPlaces(endpoint: GooglePlacesAPI.Endpoint?, keyword: String?) {
+    func fetchPlaces(endpoint: GooglePlacesAPI.Endpoint?, keyword: String?, url: URL?) {
         self.placesNearby.removeAll()
         guard let currentLocation = currentLocation else {
             print("no location in fetch places")

@@ -1,4 +1,4 @@
-framework module Pods_GroupChoice {
+module Pods_GroupChoice {
   umbrella header "Pods-GroupChoice-umbrella.h"
 
   export *

@@ -41,6 +41,9 @@ class MapViewController: BaseViewControllerWithLocation, UITextFieldDelegate, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if #available(iOS 13.0, *) {
+          overrideUserInterfaceStyle = .light
+        }
       
         setupView()
         setupSearchBar()
@@ -60,6 +63,7 @@ class MapViewController: BaseViewControllerWithLocation, UITextFieldDelegate, UI
         searchbar.delegate = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: optionsCellID)
         tableView.tableFooterView = UIView()
+        tableView.keyboardDismissMode = .onDrag
         //tableView.isScrollEnabled = false
     }
         
@@ -176,7 +180,7 @@ class MapViewController: BaseViewControllerWithLocation, UITextFieldDelegate, UI
         tableView.isHidden = true
         optionsTextField.resignFirstResponder()
         let queryText = optionsTextField.text?.trimmingCharacters(in: .whitespaces)
-        fetchPlaces(endpoint: .general, keyword: queryText)
+        fetchPlaces(endpoint: .general, keyword: queryText, url: nil)
     }
     
     func updateSearchResults(for searchController: UISearchController) {
@@ -184,7 +188,7 @@ class MapViewController: BaseViewControllerWithLocation, UITextFieldDelegate, UI
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         var keywordString = searchController.searchBar.text
         keywordString = keywordString!.trimmingCharacters(in: .whitespacesAndNewlines)
-        fetchPlaces(endpoint: .general, keyword: keywordString)
+        fetchPlaces(endpoint: .general, keyword: keywordString, url: nil)
         tableView.isHidden = true
     }
     
@@ -284,7 +288,7 @@ extension MapViewController: UITableViewDelegate, UITableViewDataSource {
         guard let endpointSelected = options[optionKey] else {
             return
         }
-        fetchPlaces(endpoint: endpointSelected, keyword: nil)
+        fetchPlaces(endpoint: endpointSelected, keyword: nil, url: nil)
         searchbar.searchTextField.text = ("  \(optionKey.capitalized)")
         tableView.isHidden = true
         searchbar.searchTextField.resignFirstResponder()

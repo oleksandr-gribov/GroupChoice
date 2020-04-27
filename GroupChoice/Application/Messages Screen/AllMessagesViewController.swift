@@ -20,19 +20,7 @@ class AllMessagesViewController: UITableViewController {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(newMessage))
         tableView.register(NewMessageCell.self, forCellReuseIdentifier: cellID)
         
-        UINavigationBar.appearance().tintColor = .white
-        // background color
-        UINavigationBar.appearance().barTintColor = .purple
-        // required to disable blur effect & allow barTintColor to work
-        UINavigationBar.appearance().isTranslucent = false
-        
         self.tabBarController?.tabBar.isHidden = false
-        self.navigationController?.navigationBar.barTintColor = .red
-        self.navigationController?.navigationBar.tintColor = .red
-        self.navigationController?.navigationBar.barStyle = .black
-         self.navigationController?.navigationBar.isTranslucent = false
-//        self.navigationController?.navigationBar.isTranslucent = true
-        self.navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     @objc func newMessage() {

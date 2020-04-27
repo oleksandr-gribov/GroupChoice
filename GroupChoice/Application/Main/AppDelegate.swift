@@ -21,6 +21,10 @@ import Firebase
         
         window = UIWindow(frame: UIScreen.main.bounds)
         
+        if #available(iOS 13.0, *) {
+            window?.overrideUserInterfaceStyle = .light
+        }
+        
         userIsLoggedIn = userDefaults.bool(forKey: "UserIsLoggedIn")
         if userIsLoggedIn == true {
             window?.rootViewController = TabBarViewController()

@@ -145,7 +145,7 @@ class AddPlacesToVoteTableViewController: UITableViewController, UISearchBarDele
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let place = placesFound[indexPath.section]
-        let vc = PlaceDetailViewController()
+        let vc = SearchDetailViewController()
         vc.place = place
         vc.navigationItem.largeTitleDisplayMode = .never
         self.navigationController?.pushViewController(vc, animated: true)
