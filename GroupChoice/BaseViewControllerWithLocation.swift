@@ -59,7 +59,7 @@ class BaseViewControllerWithLocation: UIViewController, CLLocationManagerDelegat
             self.mapView.showsUserLocation = true
             locationManager.startUpdatingLocation()
             centerViewOnUserLocation()
-            fetchPlaces(endpoint: nil, keyword: nil, url: nil)
+            fetchPlaces(endpoint: nil, keyword: nil, suppliedUrl: nil)
         case .denied, .restricted:
             let alert = UIAlertController(title: "Location disabled", message: "We need your location to show nearby places", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "Enable Location Services", style: UIAlertAction.Style.default, handler: { (_: UIAlertAction!) in
@@ -86,21 +86,28 @@ class BaseViewControllerWithLocation: UIViewController, CLLocationManagerDelegat
               }
           }
     // MARK: - Fetching Data
-    func fetchPlaces(endpoint: GooglePlacesAPI.Endpoint?, keyword: String?, url: URL?) {
+    func fetchPlaces(endpoint: GooglePlacesAPI.Endpoint?, keyword: String?, suppliedUrl: URL?) {
         self.placesNearby.removeAll()
         guard let currentLocation = currentLocation else {
             print("no location in fetch places")
             return
         }
-        guard let url = GooglePlacesAPI.makeUrl(endpoint: endpoint ?? GooglePlacesAPI.Endpoint.general, radius: 500, coordinate: currentLocation, keyword: keyword ?? nil) else {
+        var urlToUse : URL
+        
+        guard let genericUrl = GooglePlacesAPI.makeUrl(endpoint: endpoint ?? GooglePlacesAPI.Endpoint.general, radius: 500, coordinate: currentLocation, keyword: keyword ?? nil) else {
             print("couldnt construct url")
             return
         }
+        if suppliedUrl != nil {
+            urlToUse = suppliedUrl!
+        } else {
+            urlToUse = genericUrl
+        }
         
-        print(url)
+        print(urlToUse)
         let myGroup = DispatchGroup()
         
-        Network.fetchGenericData(url: url) { (response: Response) in
+        Network.fetchGenericData(url: urlToUse) { (response: Response) in
             myGroup.enter()
             if !response.results.isEmpty {
                 for place in response.results {

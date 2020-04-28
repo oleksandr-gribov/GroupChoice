@@ -63,8 +63,6 @@ class NearbyPlacesViewController: BaseViewControllerWithLocation, UICollectionVi
     }
     
     @objc func redoSearchReginButtonTapped() {
-        print("redo search button tapped")
-        // TODO: radius is wrong 
         let radius = (currentVisibleRegion.span.latitudeDelta - mapViewRegion.span.latitudeDelta) / 2
         var radiusForUrl : Double?
         if radius > 500 {
@@ -77,7 +75,8 @@ class NearbyPlacesViewController: BaseViewControllerWithLocation, UICollectionVi
             return
         }
         print("URL from new region is: \(url)")
-        fetchPlaces(endpoint: .general, keyword: "", url: nil)
+        fetchPlaces(endpoint: .general, keyword: "", suppliedUrl: url)
+        animateRedoSearchButton(show: false)
     }
   
     override func viewWillAppear(_ animated: Bool) {
@@ -90,9 +89,8 @@ class NearbyPlacesViewController: BaseViewControllerWithLocation, UICollectionVi
     }
     override func viewDidAppear(_ animated: Bool) {
         if placesNearby.isEmpty {
-            fetchPlaces(endpoint: nil, keyword: nil, url: nil)
+            fetchPlaces(endpoint: nil, keyword: nil, suppliedUrl: nil)
             NearbyPlacesViewController.userLocation = self.currentLocation
-
         }
     }
  
@@ -164,12 +162,13 @@ class NearbyPlacesViewController: BaseViewControllerWithLocation, UICollectionVi
         
         
     }
-    func animateRedoSearchButton() {
-        UIView.animate(withDuration: 0.5) {
-            self.searchView.redoSearchAreaButton.alpha = 1.0
-//            self.searchView.redoSearchAreaButton.snp.updateConstraints { (make) in
-//                make.bottom.equalTo(self.searchView.topblur.snp.bottom).multipliedBy(0.8)
-//            }
+    func animateRedoSearchButton( show: Bool) {
+        UIView.animate(withDuration: 0.7) {
+            if show {
+                self.searchView.redoSearchAreaButton.alpha = 1.0
+            } else {
+                self.searchView.redoSearchAreaButton.alpha = 0
+            }
         }
     }
     
@@ -184,7 +183,7 @@ class NearbyPlacesViewController: BaseViewControllerWithLocation, UICollectionVi
     }
     override func recenterMap(location: CLLocation) {
         super.recenterMap(location: location)
-        self.fetchPlaces(endpoint: nil, keyword: nil, url: nil)
+        self.fetchPlaces(endpoint: nil, keyword: nil, suppliedUrl: nil)
     }
     fileprivate func calculateAreaChanged(_ mapView: MKMapView) {
         // check that the region changed substantially by comapring the center points
@@ -199,8 +198,8 @@ class NearbyPlacesViewController: BaseViewControllerWithLocation, UICollectionVi
             / min(newRegion.span.longitudeDelta, mapViewRegion.span.longitudeDelta)
         
         if !placesNearby.isEmpty {
-            if (regionLongDelta > 10000 ||  regionLatDelta > 10000) || centerPointDelta > 1500 {
-                animateRedoSearchButton()
+            if (regionLongDelta > 11000 ||  regionLatDelta > 11000) || centerPointDelta > 1500 {
+                animateRedoSearchButton(show: true)
             }
         }
     }

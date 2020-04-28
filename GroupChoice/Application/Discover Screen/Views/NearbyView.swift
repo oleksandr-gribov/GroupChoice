@@ -87,7 +87,7 @@ class NearbyView: UIView {
         redoSearchAreaButton.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
             make.width.equalTo(200)
-            make.height.equalTo(20)
+            make.height.equalTo(40)
             make.bottom.equalTo(topblur.snp.bottom).multipliedBy(0.6)
         }
 

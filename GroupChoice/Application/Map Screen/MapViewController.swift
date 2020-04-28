@@ -171,24 +171,23 @@ class MapViewController: BaseViewControllerWithLocation, UITextFieldDelegate, UI
     @objc func performSearch() {
         searchByQuery()
         self.navigationItem.rightBarButtonItem?.isEnabled = true
-    }
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        
-    }
-    
+    }    
     func searchByQuery() {
         tableView.isHidden = true
         optionsTextField.resignFirstResponder()
         let queryText = optionsTextField.text?.trimmingCharacters(in: .whitespaces)
-        fetchPlaces(endpoint: .general, keyword: queryText, url: nil)
+        fetchPlaces(endpoint: .general, keyword: queryText, suppliedUrl: nil)
     }
     
     func updateSearchResults(for searchController: UISearchController) {
     }
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        animateCustomView(toShow: false)
+    }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         var keywordString = searchController.searchBar.text
         keywordString = keywordString!.trimmingCharacters(in: .whitespacesAndNewlines)
-        fetchPlaces(endpoint: .general, keyword: keywordString, url: nil)
+        fetchPlaces(endpoint: .general, keyword: keywordString, suppliedUrl: nil)
         tableView.isHidden = true
     }
     
@@ -288,7 +287,7 @@ extension MapViewController: UITableViewDelegate, UITableViewDataSource {
         guard let endpointSelected = options[optionKey] else {
             return
         }
-        fetchPlaces(endpoint: endpointSelected, keyword: nil, url: nil)
+        fetchPlaces(endpoint: endpointSelected, keyword: nil, suppliedUrl: nil)
         searchbar.searchTextField.text = ("  \(optionKey.capitalized)")
         tableView.isHidden = true
         searchbar.searchTextField.resignFirstResponder()

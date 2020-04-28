@@ -13,11 +13,10 @@ class MapSearchView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-
+        backgroundColor = .red
         addSubview(tableView)
         addSubview(mapView)
-       
-       
+     
         tableView.snp.makeConstraints { (make) in
             make.top.equalToSuperview()
             make.right.equalToSuperview()
@@ -26,25 +25,23 @@ class MapSearchView: UIView {
         }
         
         bringSubviewToFront(tableView)
+     
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    let topSquare: UIImageView = {
-        let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "MapRect")
-        iv.isUserInteractionEnabled = true
-        
-        return iv 
-    }()
- 
-
     let tableView: UITableView = {
         let tv = UITableView()
         
         return tv
+    }()
+    
+    let locationSearchBar: UISearchBar = {
+        let scb = UISearchBar()
+        scb.placeholder = "Current Location"
+        return scb
     }()
     let mapView: MKMapView = {
         let mp = MKMapView()
@@ -52,6 +49,4 @@ class MapSearchView: UIView {
         return mp
     }()
     
-  
-  
 }

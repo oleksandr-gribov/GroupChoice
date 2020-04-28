@@ -26,10 +26,16 @@ class PlaceDetailView: UIView {
     func setupView() {
         horizontalStack.addArrangedSubview(descriptionTypes)
         horizontalStack.addArrangedSubview(openNow)
-        let subviews = [imageView, nameLabel, addressLabel, horizontalStack, locationPin, starPin, ratingLabel, distanceLabel, mapView]
+        addSubview(imageView)
+        addSubview(backgroundCard)
+        let subviews = [nameLabel, addressLabel, horizontalStack, locationPin, starPin, ratingLabel, distanceLabel, mapView]
         
         subviews.forEach { [weak self] in
-            addSubview($0)
+            backgroundCard.addSubview($0)
+        }
+        backgroundCard.snp.makeConstraints { (make) in
+            make.left.right.bottom.equalToSuperview()
+            make.top.equalTo(imageView.snp.bottom).inset(20)
         }
         
         imageView.snp.makeConstraints { (make) in
@@ -68,6 +74,14 @@ class PlaceDetailView: UIView {
         }
         
     }
+    let backgroundCard : UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 25
+        view.clipsToBounds = true
+        view.backgroundColor = .white
+        
+        return view
+    }()
    
     let imageView: CustomImageView = {
         let iv = CustomImageView()
@@ -80,7 +94,7 @@ class PlaceDetailView: UIView {
     
     let nameLabel: UILabel = {
         let lbl = UILabel()
-        lbl.text = "Name of place that is very long to check "
+        lbl.text = "Name of place"
         lbl.numberOfLines = 2
         lbl.lineBreakMode = .byWordWrapping
         lbl.font = lbl.font.withSize(25)
