@@ -20,6 +20,7 @@ struct Place: Codable, Hashable {
     var photo: UIImage?
     var geometry: Geometry
     var hours: OpenHours?
+    var numberOfRatings: Int?
     
     enum CodingKeys: String, CodingKey {
         case name, rating, photos, types, geometry
@@ -27,6 +28,7 @@ struct Place: Codable, Hashable {
         case address = "vicinity"
         case hours = "opening_hours"
         case id = "place_id"
+        case numberOfRatings = "user_ratings_total"
     }
     
     func hash(into hasher: inout Hasher) {

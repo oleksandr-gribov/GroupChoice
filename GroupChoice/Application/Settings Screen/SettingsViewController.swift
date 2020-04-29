@@ -11,11 +11,38 @@ import Firebase
 
 class SettingsViewController: UIViewController {
     let userDefaults = UserDefaults.standard
+    var settingsView : SettingsView!
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        view.backgroundColor = .clear
+        setupView()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .purple
+        
         self.navigationItem.title = "Settings"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log out", style: .plain, target: self, action: #selector(logoutPressed))
+    }
+    
+    func setupView() {
+        let mainView = SettingsView()
+        settingsView = mainView
+        self.view.addSubview(settingsView)
+        view.bringSubviewToFront(settingsView)
+        settingsView.snp.makeConstraints { (make) in
+            make.left.right.top.bottom.equalToSuperview()
+        }
+        
+        let gradientLayer = CAGradientLayer()
+              //backgroundColor = .white
+        gradientLayer.frame = self.view.bounds
+        gradientLayer.colors = [UIColor(red: 150/255, green: 211/255, blue: 255/255, alpha: 1.0).cgColor, UIColor.white.cgColor]
+        gradientLayer.locations = [ 0.0, 1.0]
+              
+              
+        self.view.layer.addSublayer(gradientLayer)
     }
     
     @objc func logoutPressed () {

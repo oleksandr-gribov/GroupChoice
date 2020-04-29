@@ -28,7 +28,7 @@ class PlaceDetailView: UIView {
         horizontalStack.addArrangedSubview(openNow)
         addSubview(imageView)
         addSubview(backgroundCard)
-        let subviews = [nameLabel, addressLabel, horizontalStack, locationPin, starPin, ratingLabel, distanceLabel, mapView]
+        let subviews = [nameLabel, addressLabel, horizontalStack, locationPin, starPin, ratingLabel, distanceLabel, mapView, reviewStack, numOfReviews]
         
         subviews.forEach { [weak self] in
             backgroundCard.addSubview($0)
@@ -58,6 +58,20 @@ class PlaceDetailView: UIView {
             make.right.equalTo(imageView).inset(20)
             
         }
+        reviewStack.snp.makeConstraints { (make) in
+    
+            make.left.equalToSuperview().inset(20)
+            make.top.equalTo(horizontalStack.snp.bottom).offset(10)
+            make.width.equalToSuperview().multipliedBy(0.3)
+            make.height.equalTo(20)
+        }
+        numOfReviews.snp.makeConstraints { (make) in
+            make.left.equalTo(reviewStack.snp.right).offset(5)
+            make.top.equalTo(reviewStack.snp.top)
+            make.bottom.equalTo(reviewStack.snp.bottom)
+            make.width.equalTo(120)
+        }
+        bringSubviewToFront(reviewStack)
         addressLabel.snp.makeConstraints { (make) in
             make.top.equalTo(mapView.snp.top).inset(-25)
             make.left.equalToSuperview().inset(20)
@@ -74,6 +88,69 @@ class PlaceDetailView: UIView {
         }
         
     }
+    func setupReviewStack(_ place: Place) {
+        if let rating = place.rating {
+            let wholeRating = rating.rounded(.down)
+            
+            let numWholeStars = Int(wholeRating)
+            var halfStars = 0
+            var emptyStars = 0
+            
+            if wholeRating < 5.0 {
+                let isInteger = floor(rating)
+                if isInteger != rating {
+                    halfStars = 1
+                }
+            }
+            for _ in 1...numWholeStars {
+                let starview = StarView.init(.filled)
+                reviewStack.addArrangedSubview(starview)
+            }
+            if halfStars != 0 {
+                let starview = StarView.init(.half)
+                reviewStack.addArrangedSubview(starview)
+            }
+            if (5 - numWholeStars - halfStars) >= 1 {
+                let starview = StarView.init(.empty)
+                reviewStack.addArrangedSubview(starview)
+                emptyStars += 1
+            }
+            print("Stars to print \(numWholeStars), \(halfStars), \(emptyStars)")
+        }
+        
+    }
+    
+    let reviewStack: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.spacing = 3
+        stack.distribution = .fillEqually
+        return stack
+    }()
+    
+    let numOfReviews: UILabel = {
+        let lbl = UILabel()
+        lbl.textColor = .gray
+        return lbl
+    }()
+    
+    let filledImageView: UIImageView = {
+        let iv = UIImageView()
+        iv.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+        return iv
+    }()
+    
+    let halfImageView: UIImageView = {
+        let iv = UIImageView()
+        iv.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+        return iv
+    }()
+    
+    let emptyImageView: UIImageView = {
+        let iv = UIImageView()
+        iv.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+        return iv
+    }()
     let backgroundCard : UIView = {
         let view = UIView()
         view.layer.cornerRadius = 25

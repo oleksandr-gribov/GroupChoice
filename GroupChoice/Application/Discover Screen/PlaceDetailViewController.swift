@@ -82,10 +82,14 @@ class PlaceDetailViewController: UIViewController, MKMapViewDelegate {
             }
             make.right.equalToSuperview()
         }
-        
+        detailView.setupReviewStack(place)
         detailView.nameLabel.text = place.name
         detailView.addressLabel.text = place.address
         detailView.descriptionTypes.text = typesDescription()
+        if let numReviews = place.numberOfRatings {
+            detailView.numOfReviews.text = "(\(numReviews)) Reviews"
+            
+        }
         if let hours = place.hours {
             if hours.openNow == true {
                 detailView.openNow.text = "Open"

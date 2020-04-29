@@ -15,6 +15,8 @@
 		D91C939122F25AE8005113D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91C939022F25AE8005113D9 /* AppDelegate.swift */; };
 		D91FD0DC22FBF0A8009A9305 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91FD0DB22FBF0A8009A9305 /* Network.swift */; };
 		D9248769244DCDBC008AD836 /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9248768244DCDBC008AD836 /* CustomView.swift */; };
+		D926BF92245992CD0012BEE7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D926BF91245992CD0012BEE7 /* SettingsView.swift */; };
+		D926BF942459C0C90012BEE7 /* StarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D926BF932459C0C90012BEE7 /* StarView.swift */; };
 		D93C11A322F9E9DA00CDD7E3 /* NewMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93C11A222F9E9DA00CDD7E3 /* NewMessageViewController.swift */; };
 		D93C16952436C4F5001EBB49 /* FormTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93C16942436C4F5001EBB49 /* FormTableViewController.swift */; };
 		D94A7727233BA54C00A5831C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94A7726233BA54C00A5831C /* User.swift */; };
@@ -57,6 +59,8 @@
 		D91C939022F25AE8005113D9 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D91FD0DB22FBF0A8009A9305 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		D9248768244DCDBC008AD836 /* CustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomView.swift; sourceTree = "<group>"; };
+		D926BF91245992CD0012BEE7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		D926BF932459C0C90012BEE7 /* StarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarView.swift; sourceTree = "<group>"; };
 		D93C11A222F9E9DA00CDD7E3 /* NewMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageViewController.swift; sourceTree = "<group>"; };
 		D93C16942436C4F5001EBB49 /* FormTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FormTableViewController.swift; path = "/Users/sasha/Desktop/iOS learning projects/GroupChoice/GroupChoice/Application/CreatePoll Screen/FormTableViewController.swift"; sourceTree = "<absolute>"; };
 		D948169B22F15D9800B8311E /* GroupChoice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GroupChoice.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -146,7 +150,6 @@
 				D924876A244DECE3008AD836 /* Views */,
 				D9AB6A1F22F24D0F001101D1 /* NearbyPlacesViewController.swift */,
 				D96FA468230B279F003E9214 /* PlaceDetailViewController.swift */,
-				D9EB973F2305B81B00D5E8CB /* PlacesCell.swift */,
 				D97D9F2423354CBA007A0C48 /* CustomMapAnnotation.swift */,
 			);
 			path = "Discover Screen";
@@ -166,6 +169,7 @@
 		D91C938A22F254AE005113D9 /* Settings Screen */ = {
 			isa = PBXGroup;
 			children = (
+				D926BF90245992BD0012BEE7 /* Views */,
 				D9AB6A2522F25233001101D1 /* SettingsViewController.swift */,
 			);
 			path = "Settings Screen";
@@ -212,6 +216,16 @@
 			children = (
 				D9EB97412305C7C400D5E8CB /* NearbyView.swift */,
 				D96FA46A230B27B6003E9214 /* PlaceDetailView.swift */,
+				D9EB973F2305B81B00D5E8CB /* PlacesCell.swift */,
+				D926BF932459C0C90012BEE7 /* StarView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		D926BF90245992BD0012BEE7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D926BF91245992CD0012BEE7 /* SettingsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -444,6 +458,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D926BF92245992CD0012BEE7 /* SettingsView.swift in Sources */,
 				D9617A1922F5190E0031F0B6 /* SignUpViewController.swift in Sources */,
 				D93C16952436C4F5001EBB49 /* FormTableViewController.swift in Sources */,
 				D9F442642309BABE004F9834 /* Constants.swift in Sources */,
@@ -461,6 +476,7 @@
 				D98D41AA2306FC4100489C58 /* GooglePlacesAPI.swift in Sources */,
 				D97EA3C622F3993200E71FEF /* LoginViewController.swift in Sources */,
 				D97D9F2523354CBA007A0C48 /* CustomMapAnnotation.swift in Sources */,
+				D926BF942459C0C90012BEE7 /* StarView.swift in Sources */,
 				D90E56D2233E79AE00FC5852 /* ChatLogView.swift in Sources */,
 				D90D4EA8245181B300180383 /* SearchDetailViewController.swift in Sources */,
 				D93C11A322F9E9DA00CDD7E3 /* NewMessageViewController.swift in Sources */,

@@ -171,7 +171,7 @@ class PlacesCell: UICollectionViewCell {
     let ratingLabel: UILabel = {
         let lbl = UILabel()
         lbl.font = lbl.font.withSize(9)
-        lbl.text = "5.0"
+        lbl.text = "N/A"
         lbl.textColor = UIColor(displayP3Red: 197/255, green: 190/255, blue: 206/255, alpha: 0)
         lbl.backgroundColor = UIColor(displayP3Red: 197/255, green: 190/255, blue: 206/255, alpha: 0.3)
         
