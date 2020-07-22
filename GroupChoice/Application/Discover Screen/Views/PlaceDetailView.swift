@@ -42,46 +42,44 @@ class PlaceDetailView: UIView {
             make.top.equalToSuperview()
             make.left.equalToSuperview()
             make.width.equalToSuperview()
-            make.height.equalToSuperview().multipliedBy(0.4)
-            
+            make.height.equalToSuperview().multipliedBy(0.45)
         }
         
         nameLabel.snp.makeConstraints { (make) in
             make.top.equalTo(imageView.snp.bottom).offset(10)
             make.left.equalToSuperview().inset(20)
-            make.width.equalToSuperview().multipliedBy(0.5)
+            make.width.equalToSuperview().multipliedBy(0.9)
         }
         
         horizontalStack.snp.makeConstraints { (make) in
             make.top.equalTo(nameLabel.snp_bottom).offset(8)
             make.left.equalToSuperview().inset(20)
             make.right.equalTo(imageView).inset(20)
-            
         }
+        
         reviewStack.snp.makeConstraints { (make) in
-    
             make.left.equalToSuperview().inset(20)
             make.top.equalTo(horizontalStack.snp.bottom).offset(10)
             make.width.equalToSuperview().multipliedBy(0.3)
             make.height.equalTo(20)
         }
+        
         numOfReviews.snp.makeConstraints { (make) in
             make.left.equalTo(reviewStack.snp.right).offset(5)
             make.top.equalTo(reviewStack.snp.top)
             make.bottom.equalTo(reviewStack.snp.bottom)
             make.width.equalTo(120)
         }
-        bringSubviewToFront(reviewStack)
+        
         addressLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(mapView.snp.top).inset(-25)
+            make.top.equalTo(reviewStack.snp.bottom).offset(80)
             make.left.equalToSuperview().inset(20)
             make.width.equalToSuperview().multipliedBy(0.8)
             make.height.equalTo(20)
-            
         }
         
         mapView.snp.makeConstraints { (make) in
-            make.bottom.equalToSuperview().inset(20)
+            make.top.equalTo(addressLabel.snp.bottom).offset(10)
             make.left.equalToSuperview().inset(20)
             make.height.equalTo(200)
             make.right.equalToSuperview().offset(-20)
@@ -89,6 +87,7 @@ class PlaceDetailView: UIView {
         
     }
     func setupReviewStack(_ place: Place) {
+        
         if let rating = place.rating {
             let wholeRating = rating.rounded(.down)
             

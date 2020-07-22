@@ -61,6 +61,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 }
                             } else {
                 if let user = user {
+                    
                     self.userDefaults.set(true, forKey: "UserIsLoggedIn")
                     print("User \(user.user.uid) signed in " )
                     let tabBarViewController = TabBarViewController()

@@ -43,7 +43,11 @@ class AddPlacesToVoteTableViewController: UITableViewController, UISearchBarDele
         let searchbar = searchController.searchBar
         searchController.searchBar.tintColor = .white
         searchbar.placeholder = "e.g. Coffee, Pizza, Gym"
-        searchbar.searchTextField.textColor = .white
+        if #available(iOS 13.0, *) {
+            searchbar.searchTextField.textColor = .white
+        } else {
+            // Fallback on earlier versions
+        }
         
         searchbar.becomeFirstResponder()
         

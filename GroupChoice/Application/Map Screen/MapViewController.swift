@@ -133,13 +133,21 @@ class MapViewController: BaseViewControllerWithLocation, UITextFieldDelegate, UI
            
            searchbar = searchController.searchBar
            searchController.searchBar.tintColor = .white
-           searchbar.searchTextField.textColor = .white
+        if #available(iOS 13.0, *) {
+            searchbar.searchTextField.textColor = .white
+        } else {
+            // Fallback on earlier versions
+        }
            searchbar.showsCancelButton = true
            
            searchbar.becomeFirstResponder()
            searchbar.sizeToFit()
            
-           searchbar.searchTextField.addTarget(self, action: #selector(searchTextFieldActivated), for: .editingDidBegin)
+        if #available(iOS 13.0, *) {
+            searchbar.searchTextField.addTarget(self, action: #selector(searchTextFieldActivated), for: .editingDidBegin)
+        } else {
+            // Fallback on earlier versions
+        }
        }
     
     func setupCustomViewGestures() {
@@ -192,9 +200,13 @@ class MapViewController: BaseViewControllerWithLocation, UITextFieldDelegate, UI
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        if searchBar.searchTextField.text!.isEmpty && !tableView.isHidden {
-            tableView.isHidden = true
-            
+        if #available(iOS 13.0, *) {
+            if searchBar.searchTextField.text!.isEmpty && !tableView.isHidden {
+                tableView.isHidden = true
+                
+            }
+        } else {
+            // Fallback on earlier versions
         }
         if !mapView.selectedAnnotations.isEmpty {
             animateCustomView(toShow: false)
@@ -288,9 +300,17 @@ extension MapViewController: UITableViewDelegate, UITableViewDataSource {
             return
         }
         fetchPlaces(endpoint: endpointSelected, keyword: nil, suppliedUrl: nil)
-        searchbar.searchTextField.text = ("  \(optionKey.capitalized)")
+        if #available(iOS 13.0, *) {
+            searchbar.searchTextField.text = ("  \(optionKey.capitalized)")
+        } else {
+            // Fallback on earlier versions
+        }
         tableView.isHidden = true
-        searchbar.searchTextField.resignFirstResponder()
+        if #available(iOS 13.0, *) {
+            searchbar.searchTextField.resignFirstResponder()
+        } else {
+            // Fallback on earlier versions
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

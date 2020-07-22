@@ -56,7 +56,7 @@ class Vote {
         }
     }
     
-    func decreaseVote(_ option: Place) {
+    func decrementVote(_ option: Place) {
         if votes.keys.contains(option) {
             votes[option]! += 1
         }

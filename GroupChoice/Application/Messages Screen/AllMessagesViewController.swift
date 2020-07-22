@@ -12,10 +12,12 @@ import Firebase
 class AllMessagesViewController: UITableViewController {
     var users = [User]()
     let cellID = "cellID"
+    var chats = [Chat]()
+    var ref : Firebase.Database!
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .red
+        self.ref = Firebase.Database.database()
         self.navigationItem.title = "Chats"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(newMessage))
         tableView.register(NewMessageCell.self, forCellReuseIdentifier: cellID)
@@ -33,9 +35,9 @@ class AllMessagesViewController: UITableViewController {
     // MARK: - TableView methods
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
-        let user = users[indexPath.row]
-        cell.textLabel?.text = user.username
-        cell.detailTextLabel?.text = user.email
+        let chat = chats[indexPath.row]
+        cell.textLabel?.text = chat.users[1]
+        
         
         return cell
     }
@@ -44,7 +46,7 @@ class AllMessagesViewController: UITableViewController {
     }
     func showViewController (user: User) {
         let chatlogVC = ChatLogViewController()
-        chatlogVC.user = user
+        chatlogVC.recepeintUser = user
         chatlogVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(chatlogVC, animated: true)
         

@@ -150,6 +150,7 @@ class NearbyPlacesViewController: BaseViewControllerWithLocation, UICollectionVi
             appearance.shadowImage = UIImage()
             appearance.shadowColor = .clear
             
+            
             navigationItem.standardAppearance = appearance
             navigationItem.scrollEdgeAppearance = appearance
         } else {
@@ -162,6 +163,7 @@ class NearbyPlacesViewController: BaseViewControllerWithLocation, UICollectionVi
         
         
     }
+  
     func animateRedoSearchButton( show: Bool) {
         UIView.animate(withDuration: 0.7) {
             if show {

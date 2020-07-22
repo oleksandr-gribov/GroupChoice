@@ -1,0 +1,48 @@
+"users" : { 
+	"userId" : { 
+		"username" : "text",
+		"email" : "email@gmail.com",
+		"password" : "password",
+		"chats" : { 
+			"chatId" : "true",
+			}
+		}
+	}
+
+"conversations": { 
+	// Chats contains only meta info about each conversation
+	  // stored under the chats's unique ID
+
+	"chats" : { 
+		"chatId" : { 
+			"title" : "some name of chat",
+			"lastMessage" : "user2: Having trouble connecting", 
+			"timestamp" : 12845792050
+			}
+		}
+	
+	  // Conversation members are easily accessible
+	  // and stored by chat conversation ID
+
+	"members" : { 
+		"chatId" : { 
+			"user1" : "true", 
+			"user2" : "true", 
+			}
+		}
+
+	"messages: { 
+		"chatId" : { 
+			"message1" : { 
+				"sender" : "user2", 
+				"timestamp" : "143558917594", 
+				"message" : "This is a dope JSON structure",
+				}
+			"message2" : { 
+				"sender" : "user1", 
+				"timestamp" : "143558917489", 
+				"message" : "What do we think?",
+				}
+			}
+		}
+}
