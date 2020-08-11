@@ -20,6 +20,7 @@ import Firebase
         // Override point for customization after application launch.
         
         window = UIWindow(frame: UIScreen.main.bounds)
+        FirebaseApp.configure()
         
         if #available(iOS 13.0, *) {
             window?.overrideUserInterfaceStyle = .light
@@ -34,7 +35,7 @@ import Firebase
         
         window?.makeKeyAndVisible()
         
-        FirebaseApp.configure()
+       
         
     
         

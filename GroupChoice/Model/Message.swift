@@ -16,18 +16,22 @@ struct Message {
     var content: String
     var created: Date
     var senderID: String
-    var senderName: String
+    var createdDateString: String
     var dictionary: [String: Any] {
         return [
-            "id": id,
             "content": content,
-            "created": created,
-            "senderID": senderID,
-            "senderName":senderName]
+            "created": createdDateString,
+            "senderID": senderID]
     }
-}
+    
+    init(id: String, content: String, created: Date, senderID: String) {
+        self.id = id
+        self.content = content
+        self.created = created
+        self.createdDateString = ChatLogViewController.dateFormatter.string(from: created)
+        self.senderID = senderID
+    }
 
-extension Message {
     init?(dictionary: [String: Any]) {
         guard let id = dictionary["id"] as? String,
             let content = dictionary["content"] as? String,
@@ -35,21 +39,32 @@ extension Message {
             let senderID = dictionary["senderID"] as? String,
             let senderName = dictionary["senderName"] as? String
             else {return nil}
-        self.init(id: id, content: content, created: created, senderID: senderID, senderName:senderName)
+        self.init(id: id, content: content, created: created, senderID: senderID)
     }
 }
 
 extension Message: MessageType {
+    var sentDate: Date {
+        return created
+    }
     var sender: SenderType {
-        return Sender(id: senderID, displayName: senderName)
+        return Sender(id: senderID, displayName: senderID)
     }
     var messageId: String {
         return id
     }
-    var sentDate: Date {
-        return created
-    }
+    
     var kind: MessageKind {
         return .text(content)
     }
 }
+
+extension Message: Equatable {
+static func == (lhs: Message, rhs: Message) -> Bool {
+    if lhs.messageId == rhs.messageId {
+        return true
+    }
+    return false
+    }
+}
+

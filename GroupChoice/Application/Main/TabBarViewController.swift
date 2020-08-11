@@ -7,13 +7,22 @@
 //
 
 import UIKit
+import Firebase
 
 class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
     
     var location = "not set"
+    var ref: DatabaseReference!
+    
+    
+    static var currentUser: User!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.delegate = self
+        
+        self.ref = Firebase.Database.database().reference()
         
         let messagesViewController = UINavigationController(rootViewController: AllMessagesViewController())
         messagesViewController.tabBarItem = UITabBarItem(title: nil, image: #imageLiteral(resourceName: "message_grey"), selectedImage: #imageLiteral(resourceName: "message_blue"))
@@ -37,8 +46,41 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
         
         viewControllers = viewControllerList
         tabBar.barTintColor = .white
+        setCurrentUser()
    
     }
+    
+    func setCurrentUser() {
+        let authUser = Auth.auth().currentUser!
+        
+        self.fetchUserData(userID: authUser.uid) { (User) in
+            if let user  = User {
+                TabBarViewController.self.currentUser = user
+            } else {
+                print("couldnt construct currentUser from db")
+                return
+            }
+        }
+        
+    }
+    
+    func fetchUserData(userID: String, completion: @escaping (User?) -> ()) {
+        ref.child("users").observe(.value){ (snapshot, err) in
+            if let err = err {
+                completion(nil)
+            }
+            for child in snapshot.children {
+                if let firebaseUser = child as? DataSnapshot {
+                    if firebaseUser.key == userID {
+                        let email = firebaseUser.childSnapshot(forPath: "email").value as! String
+                        let username = firebaseUser.childSnapshot(forPath: "username").value as! String
+                        completion(User(uid: firebaseUser.key, username: username, email: email))
+                    }
+                }
+            }
+        }
+    }
+    
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         if viewController.isKind(of: FormTableViewController.self) {
            // let createViewController = CreatePollViewController()

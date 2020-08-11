@@ -16,6 +16,7 @@
 		D91FD0DC22FBF0A8009A9305 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91FD0DB22FBF0A8009A9305 /* Network.swift */; };
 		D921427824BD1C8D000A9953 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = D921427724BD1C8D000A9953 /* Chat.swift */; };
 		D921427A24BD1D63000A9953 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = D921427924BD1D63000A9953 /* Message.swift */; };
+		D923645B24CE51E9008F35AE /* SimplifiedChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D923645A24CE51E9008F35AE /* SimplifiedChatView.swift */; };
 		D9248769244DCDBC008AD836 /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9248768244DCDBC008AD836 /* CustomView.swift */; };
 		D926BF92245992CD0012BEE7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D926BF91245992CD0012BEE7 /* SettingsView.swift */; };
 		D926BF942459C0C90012BEE7 /* StarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D926BF932459C0C90012BEE7 /* StarView.swift */; };
@@ -63,6 +64,7 @@
 		D91FD0DB22FBF0A8009A9305 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		D921427724BD1C8D000A9953 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		D921427924BD1D63000A9953 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		D923645A24CE51E9008F35AE /* SimplifiedChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimplifiedChatView.swift; sourceTree = "<group>"; };
 		D9248768244DCDBC008AD836 /* CustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomView.swift; sourceTree = "<group>"; };
 		D926BF91245992CD0012BEE7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		D926BF932459C0C90012BEE7 /* StarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarView.swift; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 				D9EC84D02443B7FF00BB05D6 /* Vote.swift */,
 				D921427724BD1C8D000A9953 /* Chat.swift */,
 				D921427924BD1D63000A9953 /* Message.swift */,
+				D923645A24CE51E9008F35AE /* SimplifiedChatView.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -472,7 +475,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\n";
+			shellScript = "
+";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -506,6 +510,7 @@
 				D90D4EA8245181B300180383 /* SearchDetailViewController.swift in Sources */,
 				D93C11A322F9E9DA00CDD7E3 /* NewMessageViewController.swift in Sources */,
 				D9AB6A2222F24D6C001101D1 /* AllMessagesViewController.swift in Sources */,
+				D923645B24CE51E9008F35AE /* SimplifiedChatView.swift in Sources */,
 				D9B42BA0243D3D6100E3B186 /* SearchPlacesCollectionViewCell.swift in Sources */,
 				D90E56D0233E699900FC5852 /* ChatLogViewController.swift in Sources */,
 				D91C938F22F2579C005113D9 /* TabBarViewController.swift in Sources */,
